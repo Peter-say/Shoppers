@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('category_id')->constrained('product_categories')->cascadeOnDelete();
             $table->string('name');
-            $table->decimal('price_per_unit', 8, 2);
+            $table->decimal('price_per_unit', 10, 2);
             $table->string('basic_unit'); // e.g, fibre, kg, litre, etc //
             $table->integer('quantity');
             $table->string('size');

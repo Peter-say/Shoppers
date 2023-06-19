@@ -22,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('*',function($view){
             $view->with([
                 'web_assets' => url('/').env('RESOURCE_URL').'/web',
+                'dashboard_assets' => url('/').env('RESOURCE_URL').'/dashboard',
 
             ]);
         });

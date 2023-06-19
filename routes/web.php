@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\Dashboard\HomeController;
+use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Web\ShopController;
 use App\Http\Controllers\Web\WelcomeController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -22,8 +25,15 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::prefix('web')->as('web.')->group(function (){
-  Route::get('welcome', [WelcomeController::class, 'welcome'])->name('welcome');
-  Route::get('shop', [ShopController::class, 'index'])->name('shop');
+Route::prefix('web')->as('web.')->group(function () {
+    Route::get('welcome', [WelcomeController::class, 'welcome'])->name('welcome');
+    Route::get('shop', [ShopController::class, 'index'])->name('shop');
+});
 
+Route::prefix('dashboard')->as('dashboard')->middleware('auth')->group(function () {
+    Route::get('home', [HomeController::class, 'home'])->name('home');
+    Route::resources([
+        'product', Product::class,
+        'product-category', ProductController::class,
+    ]);
 });
