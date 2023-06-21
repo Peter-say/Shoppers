@@ -4,8 +4,8 @@
     <div class="bg-light py-3">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong
-                        class="text-black">Tank Top T-Shirt</strong></div>
+                <div class="col-md-12 mb-0"><a href="{{route('web.shop.index')}}">Home</a> <span class="mx-2 mb-0">/</span> <strong
+                        class="text-black">{{$product->name}}</strong></div>
             </div>
         </div>
     </div>
@@ -14,17 +14,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <img src="images/cloth_1.jpg" alt="Image" class="img-fluid">
+                    <img src="{{asset('web\images\person_1.jpg')}}" alt="Image" class="img-fluid">
                 </div>
                 <div class="col-md-6">
-                    <h2 class="text-black">Tank Top T-Shirt</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur, vitae, explicabo? Incidunt
-                        facere, natus soluta dolores iusto! Molestiae expedita veritatis nesciunt doloremque sint asperiores
-                        fuga voluptas, distinctio, aperiam, ratione dolore.</p>
-                    <p class="mb-4">Ex numquam veritatis debitis minima quo error quam eos dolorum quidem perferendis.
-                        Quos repellat dignissimos minus, eveniet nam voluptatibus molestias omnis reiciendis perspiciatis
-                        illum hic magni iste, velit aperiam quis.</p>
-                    <p><strong class="text-primary h4">$50.00</strong></p>
+                    <h2 class="text-black">{{$product->name}}</h2>
+                    <p>{{$product->description}}</p>
+                    <p><strong class="text-primary h4">${{$product->price_per_unit}}</strong></p>
                     <div class="mb-1 d-flex">
                         <label for="option-sm" class="d-flex mr-3 mb-3">
                             <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio"
@@ -75,70 +70,25 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
-                    <div class="nonloop-block-3 owl-carousel">
-                        <div class="item">
-                            <div class="block-4 text-center">
-                                <figure class="block-4-image">
-                                    <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="#">Tank Top</a></h3>
-                                    <p class="mb-0">Finding perfect t-shirt</p>
-                                    <p class="text-primary font-weight-bold">$50</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="block-4 text-center">
-                                <figure class="block-4-image">
-                                    <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="#">Corater</a></h3>
-                                    <p class="mb-0">Finding perfect products</p>
-                                    <p class="text-primary font-weight-bold">$50</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="block-4 text-center">
-                                <figure class="block-4-image">
-                                    <img src="images/cloth_2.jpg" alt="Image placeholder" class="img-fluid">
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="#">Polo Shirt</a></h3>
-                                    <p class="mb-0">Finding perfect products</p>
-                                    <p class="text-primary font-weight-bold">$50</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="block-4 text-center">
-                                <figure class="block-4-image">
-                                    <img src="images/cloth_3.jpg" alt="Image placeholder" class="img-fluid">
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="#">T-Shirt Mockup</a></h3>
-                                    <p class="mb-0">Finding perfect products</p>
-                                    <p class="text-primary font-weight-bold">$50</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="block-4 text-center">
-                                <figure class="block-4-image">
-                                    <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="#">Corater</a></h3>
-                                    <p class="mb-0">Finding perfect products</p>
-                                    <p class="text-primary font-weight-bold">$50</p>
-                                </div>
+              @foreach ($categories as $category)
+              <div class="col-md-12">
+                <div class="nonloop-block-3 owl-carousel">
+                    <div class="item">
+                        <div class="block-4 text-center">
+                            <figure class="block-4-image">
+                                <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
+                            </figure>
+                            <div class="block-4-text p-4">
+                                <h3><a href="#">{{$category->name}}</a></h3>
+                                <p class="mb-0">{{$category->description}}</p>
+                                <p class="text-primary font-weight-bold">${{$category->price_per_unit}}</p>
                             </div>
                         </div>
                     </div>
+                   
                 </div>
+            </div>
+              @endforeach
             </div>
         </div>
     </div>

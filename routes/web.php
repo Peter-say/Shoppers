@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\Dashboard\HomeController;
+use App\Http\Controllers\Dashboard\ProductCategoryController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Web\ShopController;
 use App\Http\Controllers\Web\WelcomeController;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -23,17 +25,16 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::prefix('web')->as('web.')->group(function () {
     Route::get('welcome', [WelcomeController::class, 'welcome'])->name('welcome');
-    Route::get('shop', [ShopController::class, 'index'])->name('shop');
+    Route::prefix('shop')->as('shop.')->group(function () {
+        Route::get('index', [ShopController::class, 'index'])->name('index');
+        Route::get('product/{id}/details', [ShopController::class, 'details'])->name('product.details');
+    });
 });
 
-Route::prefix('dashboard')->as('dashboard')->middleware('auth')->group(function () {
-    Route::get('home', [HomeController::class, 'home'])->name('home');
-    Route::resources([
-        'product', Product::class,
-        'product-category', ProductController::class,
-    ]);
+Route::prefix('dashboard')->as('dashboard.')->middleware('auth')->group(function () {
+    Route::get('/home', [HomeController::class, 'home'])->name('home');
+    Route::resource('product', ProductController::class);
+    Route::resource('product-category', ProductCategoryController::class);
 });

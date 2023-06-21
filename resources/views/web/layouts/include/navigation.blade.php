@@ -62,7 +62,7 @@
               <li><a href="#">Menu Three</a></li>
             </ul>
           </li>
-          <li><a href="{{route('web.shop')}}">Shop</a></li>
+          <li><a href="{{route('web.shop.index')}}">Shop</a></li>
           <li><a href="#">Catalogue</a></li>
           <li><a href="#">New Arrivals</a></li>
           <li><a href="contact.html">Contact</a></li>

@@ -55,11 +55,11 @@
                             <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
                                 <div class="block-4 text-center border">
                                     <figure class="block-4-image">
-                                        <a href="shop-single.html"><img src="images/cloth_1.jpg" alt="Image placeholder"
+                                        <a href="{{route('web.shop.product.details', $product->id)}}"><img src="{{asset('web\images\person_1.jpg')}}" alt="Image placeholder"
                                                 class="img-fluid"></a>
                                     </figure>
                                     <div class="block-4-text p-4">
-                                        <h3><a href="shop-single.html">{{ $product->name }}</a></h3>
+                                        <h3><a href="{{route('web.shop.product.details', $product->id)}}">{{ $product->name }}</a></h3>
                                         <p class="mb-0">{{ Str::limit($product->description, 20) }}</p>
                                         <p class="text-primary font-weight-bold">${{ $product->price_per_unit }}</p>
                                     </div>
