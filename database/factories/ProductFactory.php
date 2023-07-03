@@ -33,6 +33,7 @@ class ProductFactory extends Factory
     {
         $images = glob(public_path('web/images/*'));
         $random_images = $images[array_rand($images)];
+        $ImageFileName = basename($random_images);
 
         return [
             'user_id' => 1,
@@ -41,14 +42,13 @@ class ProductFactory extends Factory
             // 'brand_id' => 2,
             'currency_id' => 1,
             'name' => $this->faker->name,
-            'price_per_unit' =>  $this->faker->randomFloat(8, 2, 1000),
+            'amount' =>  $amount =   $this->faker->randomFloat(8, 2, 1000),
+            'discount_price' =>  $discount_price =  $this->faker->randomFloat(4, 2, 100),
+            'discount_percent' => (($amount - $discount_price) / $amount) * 100,
+            'discount_period' => null,
             'basic_unit' =>  'kg',
-            'quantity' =>  5,
-            'size' =>  'medium',
-            'color' => 'blue',
             'description' => $this->faker->paragraph($nbSentences = 30),
-            'images' => $random_images,
-            'active_for_sale' => '10',
+            'images' => $ImageFileName,
             'status' => 'active',
 
         ];

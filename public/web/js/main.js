@@ -10,7 +10,7 @@ jQuery(document).ready(function($) {
 
 	var slider = function() {
 		$('.nonloop-block-3').owlCarousel({
-	    center: false,
+	    center: true,
 	    items: 1,
 	    loop: false,
 			stagePadding: 15,

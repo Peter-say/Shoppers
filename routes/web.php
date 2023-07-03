@@ -3,6 +3,8 @@
 use App\Http\Controllers\Dashboard\HomeController;
 use App\Http\Controllers\Dashboard\ProductCategoryController;
 use App\Http\Controllers\Dashboard\ProductController;
+use App\Http\Controllers\Web\CartController;
+use App\Http\Controllers\Web\CatController;
 use App\Http\Controllers\Web\ShopController;
 use App\Http\Controllers\Web\WelcomeController;
 use App\Models\Product;
@@ -25,12 +27,13 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+Route::get('/', [WelcomeController::class, 'welcome']);
 Route::prefix('web')->as('web.')->group(function () {
-    Route::get('welcome', [WelcomeController::class, 'welcome'])->name('welcome');
     Route::prefix('shop')->as('shop.')->group(function () {
         Route::get('index', [ShopController::class, 'index'])->name('index');
         Route::get('product/{id}/details', [ShopController::class, 'details'])->name('product.details');
-    });
+        Route::post('/add-to-cart/{id}', [CartController::class, 'index'])->name('cart.store');
+    }); 
 });
 
 Route::prefix('dashboard')->as('dashboard.')->middleware('auth')->group(function () {
