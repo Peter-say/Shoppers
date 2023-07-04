@@ -128,19 +128,4 @@
     </div>
 
 
-    <script>
-        document.addEventListener('livewire:load', function() {
-            Livewire.on('hidePopupAfterDelay', function(delay) {
-                setTimeout(function() {
-                    Livewire.emit('resetPopup');
-                }, delay);
-            });
-        });
-        //   count items
-        document.addEventListener('livewire:load', function () {
-        Livewire.on('cartItemCountUpdated', function (count) {
-            document.querySelector('.cart-notification').textContent = count;
-        });
-    });
-    </script>
 </div>
