@@ -20,4 +20,9 @@ class CartController extends Controller
            ' related_products' =>  $related_products,
         ]);
     }
+
+    public function cartList()
+    {
+        return view('web.shop.cart-list');
+    }
 }

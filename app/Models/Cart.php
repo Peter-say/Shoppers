@@ -43,17 +43,4 @@ class Cart extends Model
 
         return $count;
     }
-
-
-    private function incrementCartItemCount()
-    {
-        if (Auth::check()) {
-            // User is authenticated
-            $user = Auth::user();
-            $this->cartItemCount = $user->cartItems->sum('quantity');
-        } else {
-            // User is not authenticated (guest)
-            $this->cartItemCount = $this->cartItems->sum('quantity');
-        }
-    }
 }
