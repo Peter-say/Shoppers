@@ -7,7 +7,7 @@
                     <strong class="text-black">{{ $product->name }}</strong>
                 </div>
             </div>
-            
+
         </div>
     </div>
 
@@ -16,10 +16,10 @@
             <form wire:submit.prevent="addToCart({{ $product->id }})" method="post">
                 @csrf
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 w-100">
                         <img src="{{ asset('web\images\person_1.jpg') }}" alt="Image" class="img-fluid">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                         <h2 class="text-black">{{ $product->name }}</h2>
                         <p>{{ $product->description }}</p>
                         <p><strong class="text-primary h4">${{ $product->amount }}</strong></p>
@@ -75,11 +75,22 @@
                         </div>
 
                         <input type="hidden" value="{{ $product->price }}" name="price" wire:model="price">
-                        <p><input type="submit" class="buy-now btn btn-sm btn-primary" value="Add To Cart"></p>
+                        <p><button class="buy-now btn btn-sm btn-primary">Add to cart</button></p>
+
+                        @if (session()->has('success_message'))
+                            <div class="popup-message-when-item-added" x-data="{ showPopup: @entangle('showPopup') }" x-show="showPopup"
+                                x-init="setTimeout(() => showPopup = false, 4000)">
+                                <p>{{ session('success_message') }}</p>
+                            </div>
+                            <div class="col-12 d-flex justify-content-center">
+                                <a href="{{ route('web.shop.index') }}" class="btn btn-primary">Continue Shopping</a>
+                            </div>
+                        @endif
 
                     </div>
                 </div>
             </form>
+
         </div>
     </div>
 
@@ -116,34 +127,20 @@
         </div>
     </div>
 
-    <div class="bg-light py-3">
-        <!-- ... -->
-
-        <div class="popup-message-when-item-added">
-            @if ($showPopup && session()->has('success_message'))
-                <div class="popup">
-                    <p>{{ session('success_message') }}</p>
-                </div>
-            @endif
-        </div>
-    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            removePopupAfterDelay();
-        });
-
         document.addEventListener('livewire:load', function() {
-            removePopupAfterDelay();
-        });
-
-        function removePopupAfterDelay() {
-            var popup = document.querySelector('.popup-message-when-item-added');
-            if (popup) {
+            Livewire.on('hidePopupAfterDelay', function(delay) {
                 setTimeout(function() {
-                    popup.remove();
-                }, 4000); // Remove after 4 seconds (4000 milliseconds)
-            }
-        }
+                    Livewire.emit('resetPopup');
+                }, delay);
+            });
+        });
+        //   count items
+        document.addEventListener('livewire:load', function () {
+        Livewire.on('cartItemCountUpdated', function (count) {
+            document.querySelector('.cart-notification').textContent = count;
+        });
+    });
     </script>
 </div>

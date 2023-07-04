@@ -41,6 +41,7 @@
 <body>
     <div class="site-wrap">
         @include('web.layouts.include.navigation')
+        <livewire:cart-counter />
         @yield('contents')
         @include('web.layouts.include.footer')
     </div>

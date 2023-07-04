@@ -17,7 +17,6 @@ class AddToCart extends Component
     public $quantity;
     public $size;
     public $price;
-
     public $showPopup = false;
 
     protected $rules = [
@@ -71,16 +70,19 @@ class AddToCart extends Component
         ];
         CartItem::create($data);
 
+
         $this->resetInput(); // Reset the input field
-        $this->showPopup = true;
         session()->flash('success_message', 'Item added to cart successfully');
         return redirect()->back();
+        // $this->showPopup = true;
+        // Hide the pop-up message after 4 seconds
+        $this->dispatchBrowserEvent('hidePopupAfterDelay', ['delay' => 4000]);
     }
 
 
-     private function resetInput()
+    private function resetInput()
     {
-        $this->quantity = null; 
+        $this->quantity = null;
         $this->size = null;
     }
 
@@ -114,4 +116,6 @@ class AddToCart extends Component
     {
         return view('livewire.add-to-cart');
     }
+
+
 }
