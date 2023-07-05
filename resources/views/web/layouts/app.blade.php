@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{{ $web_assets }}/css/style.css">
 
     <style>
-        .popup-message-when-item-added {
+        .popup-message {
             position: fixed;
             top: 50%;
             left: 50%;
@@ -59,19 +59,23 @@
     @livewireScripts
 
     <script>
-        document.addEventListener('livewire:load', function() {
-            Livewire.on('hidePopupAfterDelay', function(delay) {
-                setTimeout(function() {
-                    Livewire.emit('resetPopup');
-                }, delay);
-            });
+        var addToCartButton = document.getElementById('add-to-cart-button');
+        addToCartButton.addEventListener('click', function() {
+            showPopup();
         });
-        //   count items
-        document.addEventListener('livewire:load', function () {
-        Livewire.on('cartItemCountUpdated', function (count) {
-            document.querySelector('.cart-notification').textContent = count;
-        });
-    });
+
+        function showPopup() {
+            var popup = document.getElementById('popup-message');
+            popup.style.display = 'block';
+            setTimeout(function() {
+                hidePopup();
+            }, 4000);
+        }
+
+        function hidePopup() {
+            var popup = document.getElementById('popup-message');
+            popup.style.display = 'none';
+        }
     </script>
 </body>
 

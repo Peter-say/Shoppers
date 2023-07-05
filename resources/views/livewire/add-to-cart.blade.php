@@ -75,11 +75,11 @@
                         </div>
 
                         <input type="hidden" value="{{ $product->price }}" name="price" wire:model="price">
-                        <p><button class="buy-now btn btn-sm btn-primary">Add to cart</button></p>
+                        <p><button class="buy-now btn btn-sm btn-primary" id="add-to-cart-button" >Add to cart</button></p>
+                        
 
                         @if (session()->has('success_message'))
-                            <div class="popup-message-when-item-added" x-data="{ showPopup: @entangle('showPopup') }" x-show="showPopup"
-                                x-init="setTimeout(() => showPopup = false, 4000)">
+                            <div class="popup-message">
                                 <p>{{ session('success_message') }}</p>
                             </div>
                             <div class="col-12 d-flex justify-content-center">
@@ -90,6 +90,7 @@
                     </div>
                 </div>
             </form>
+
 
         </div>
     </div>

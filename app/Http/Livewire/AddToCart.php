@@ -74,9 +74,9 @@ class AddToCart extends Component
         $this->resetInput(); // Reset the input field
         session()->flash('success_message', 'Item added to cart successfully');
         return redirect()->back();
-        // $this->showPopup = true;
-        // Hide the pop-up message after 4 seconds
-        $this->dispatchBrowserEvent('hidePopupAfterDelay', ['delay' => 4000]);
+        $this->showPopup = true;
+        // Re-render the component after 4 seconds to hide the pop-up message
+        $this->dispatchBrowserEvent('refresh-popup');
     }
 
 
@@ -105,6 +105,7 @@ class AddToCart extends Component
 
     public function mount($id)
     {
+        $this->showPopup = false;
         $this->product = Product::where('status', 'active')->where('id', $id)->first();
         $this->related_products = Product::where('category_id', $this->product->category_id)
             ->where('status', 'active')
@@ -116,6 +117,4 @@ class AddToCart extends Component
     {
         return view('livewire.add-to-cart');
     }
-
-
 }

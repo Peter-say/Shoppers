@@ -1,448 +1,548 @@
 @extends('dashboard.layouts.app')
 
 @section('contents')
-    <div class="main-menu menu-fixed menu-dark menu-bg-default rounded menu-accordion menu-shadow">
-        <div class="main-menu-content"><a class="navigation-brand d-none d-md-block d-lg-block d-xl-block"
-                href="index.html"><img class="brand-logo" alt="CryptoDash admin logo"
-                    src="{{$dashboard_assets}}/app-assets/images/logo/logo.png" /></a>
-            <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class="active"><a href="../../../html/ltr/vertical-menu/index.html"><i class="icon-grid"></i><span
-                            class="menu-title" data-i18n="">Dashboard</span></a>
-                </li>
-                <li class=" nav-item"><a href="buy-ico.html"><i class="icon-layers"></i><span class="menu-title"
-                            data-i18n="">Buy ICO</span></a>
-                </li>
-                <li class=" nav-item"><a href="wallet.html"><i class="icon-wallet"></i><span class="menu-title"
-                            data-i18n="">Wallet</span></a>
-                </li>
-                <li class=" nav-item"><a href="transactions.html"><i class="icon-shuffle"></i><span class="menu-title"
-                            data-i18n="">Transactions</span></a>
-                </li>
-                <li class=" nav-item"><a href="faq.html"><i class="icon-support"></i><span class="menu-title"
-                            data-i18n="">FAQ</span></a>
-                </li>
-                <li class=" nav-item"><a href="#"><i class="icon-user-following"></i><span class="menu-title"
-                            data-i18n="">Account</span></a>
-                    <ul class="menu-content">
-                        <li><a class="menu-item" href="account-profile.html">Profile</a>
-                        </li>
-                        <li><a class="menu-item" href="account-login-history.html">Login History</a>
-                        </li>
-                        <li class="navigation-divider"></li>
-                        <li><a class="menu-item" href="#">Misc</a>
-                            <ul class="menu-content">
-                                <li><a class="menu-item" href="account-login.html">Login</a>
-                                </li>
-                                <li><a class="menu-item" href="account-register.html">Register</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
 
-    <div class="app-content content">
-        <div class="content-wrapper">
-            <div class="content-header row">
+ <!-- MAIN CONTENT-->
+ <div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1">overview</h2>
+                        <button class="au-btn au-btn-icon au-btn--blue">
+                            <i class="zmdi zmdi-plus"></i>add item</button>
+                    </div>
+                </div>
             </div>
-            <div class="content-body">
-                <!-- ICO Token &  Distribution-->
-                <div class="row match-height">
-                    <div class="col-xl-8 col-12">
-                        <div class="card card-transparent">
-                            <div class="card-header card-header-transparent py-20">
-                                <div class="btn-group dropdown">
-                                    <h6>ICO Token (Supply & Demand)</h6>
+            <div class="row m-t-25">
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c1">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="icon">
+                                    <i class="zmdi zmdi-account-o"></i>
+                                </div>
+                                <div class="text">
+                                    <h2>10368</h2>
+                                    <span>members online</span>
                                 </div>
                             </div>
-                            <div id="ico-token-supply-demand-chart" class="height-300"></div>
+                            <div class="overview-chart">
+                                <canvas id="widgetChart1"></canvas>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-xl-4 col-lg-12">
-                        <div class="card card-transparent">
-                            <div class="card-header card-header-transparent">
-                                <h6 class="card-title">Token distribution</h6>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c2">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="icon">
+                                    <i class="zmdi zmdi-shopping-cart"></i>
+                                </div>
+                                <div class="text">
+                                    <h2>388,688</h2>
+                                    <span>items solid</span>
+                                </div>
                             </div>
-                            <div class="card-content">
-                                <div id="token-distribution-chart" class="height-200 donut donutShadow"></div>
-                                <div class="card-body">
-                                    <div class="row mx-0">
-                                        <ul class="token-distribution-list col-md-6 mb-0">
-                                            <li class="crowd-sale">Crowd sale <span
-                                                    class="float-right text-muted">41%</span></li>
-                                            <li class="team">Team <span class="float-right text-muted">18%</span></li>
-                                            <li class="advisors">Advisors <span class="float-right text-muted">15%</span>
-                                            </li>
-                                        </ul>
-                                        <ul class="token-distribution-list col-md-6 mb-0">
-                                            <li class="project-reserve">Project <span
-                                                    class="float-right text-muted">10%</span></li>
-                                            <li class="master-nodes">Master nodes <span
-                                                    class="float-right text-muted">8%</span></li>
-                                            <li class="program">Program <span class="float-right text-muted">8%</span>
-                                            </li>
-                                        </ul>
+                            <div class="overview-chart">
+                                <canvas id="widgetChart2"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c3">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="icon">
+                                    <i class="zmdi zmdi-calendar-note"></i>
+                                </div>
+                                <div class="text">
+                                    <h2>1,086</h2>
+                                    <span>this week</span>
+                                </div>
+                            </div>
+                            <div class="overview-chart">
+                                <canvas id="widgetChart3"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c4">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="icon">
+                                    <i class="zmdi zmdi-money"></i>
+                                </div>
+                                <div class="text">
+                                    <h2>$1,060,386</h2>
+                                    <span>total earnings</span>
+                                </div>
+                            </div>
+                            <div class="overview-chart">
+                                <canvas id="widgetChart4"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="au-card recent-report">
+                        <div class="au-card-inner">
+                            <h3 class="title-2">recent reports</h3>
+                            <div class="chart-info">
+                                <div class="chart-info__left">
+                                    <div class="chart-note">
+                                        <span class="dot dot--blue"></span>
+                                        <span>products</span>
+                                    </div>
+                                    <div class="chart-note mr-0">
+                                        <span class="dot dot--green"></span>
+                                        <span>services</span>
+                                    </div>
+                                </div>
+                                <div class="chart-info__right">
+                                    <div class="chart-statis">
+                                        <span class="index incre">
+                                            <i class="zmdi zmdi-long-arrow-up"></i>25%</span>
+                                        <span class="label">products</span>
+                                    </div>
+                                    <div class="chart-statis mr-0">
+                                        <span class="index decre">
+                                            <i class="zmdi zmdi-long-arrow-down"></i>10%</span>
+                                        <span class="label">services</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="recent-report__chart">
+                                <canvas id="recent-rep-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="au-card chart-percent-card">
+                        <div class="au-card-inner">
+                            <h3 class="title-2 tm-b-5">char by %</h3>
+                            <div class="row no-gutters">
+                                <div class="col-xl-6">
+                                    <div class="chart-note-wrap">
+                                        <div class="chart-note mr-0 d-block">
+                                            <span class="dot dot--blue"></span>
+                                            <span>products</span>
+                                        </div>
+                                        <div class="chart-note mr-0 d-block">
+                                            <span class="dot dot--red"></span>
+                                            <span>services</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="percent-chart">
+                                        <canvas id="percent-chart"></canvas>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--/ ICO Token &  Distribution-->
-                <!-- Purchase token -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card pull-up">
-                            <div class="card-content collapse show">
-                                <div class="card-body">
-                                    <form class="form-horizontal form-purchase-token row" action="buy-ico.html">
-                                        <div class="col-md-2 col-12">
-                                            <fieldset class="form-label-group mb-0">
-                                                <input type="text" class="form-control" id="ico-token" value="5000"
-                                                    required="" autofocus="">
-                                                <label for="ico-token">ICO Token</label>
-                                            </fieldset>
+            </div>
+            <div class="row">
+                <div class="col-lg-9">
+                    <h2 class="title-1 m-b-25">Earnings By Items</h2>
+                    <div class="table-responsive table--no-card m-b-40">
+                        <table class="table table-borderless table-striped table-earning">
+                            <thead>
+                                <tr>
+                                    <th>date</th>
+                                    <th>order ID</th>
+                                    <th>name</th>
+                                    <th class="text-right">price</th>
+                                    <th class="text-right">quantity</th>
+                                    <th class="text-right">total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2018-09-29 05:57</td>
+                                    <td>100398</td>
+                                    <td>iPhone X 64Gb Grey</td>
+                                    <td class="text-right">$999.00</td>
+                                    <td class="text-right">1</td>
+                                    <td class="text-right">$999.00</td>
+                                </tr>
+                                <tr>
+                                    <td>2018-09-28 01:22</td>
+                                    <td>100397</td>
+                                    <td>Samsung S8 Black</td>
+                                    <td class="text-right">$756.00</td>
+                                    <td class="text-right">1</td>
+                                    <td class="text-right">$756.00</td>
+                                </tr>
+                                <tr>
+                                    <td>2018-09-27 02:12</td>
+                                    <td>100396</td>
+                                    <td>Game Console Controller</td>
+                                    <td class="text-right">$22.00</td>
+                                    <td class="text-right">2</td>
+                                    <td class="text-right">$44.00</td>
+                                </tr>
+                                <tr>
+                                    <td>2018-09-26 23:06</td>
+                                    <td>100395</td>
+                                    <td>iPhone X 256Gb Black</td>
+                                    <td class="text-right">$1199.00</td>
+                                    <td class="text-right">1</td>
+                                    <td class="text-right">$1199.00</td>
+                                </tr>
+                                <tr>
+                                    <td>2018-09-25 19:03</td>
+                                    <td>100393</td>
+                                    <td>USB 3.0 Cable</td>
+                                    <td class="text-right">$10.00</td>
+                                    <td class="text-right">3</td>
+                                    <td class="text-right">$30.00</td>
+                                </tr>
+                                <tr>
+                                    <td>2018-09-29 05:57</td>
+                                    <td>100392</td>
+                                    <td>Smartwatch 4.0 LTE Wifi</td>
+                                    <td class="text-right">$199.00</td>
+                                    <td class="text-right">6</td>
+                                    <td class="text-right">$1494.00</td>
+                                </tr>
+                                <tr>
+                                    <td>2018-09-24 19:10</td>
+                                    <td>100391</td>
+                                    <td>Camera C430W 4k</td>
+                                    <td class="text-right">$699.00</td>
+                                    <td class="text-right">1</td>
+                                    <td class="text-right">$699.00</td>
+                                </tr>
+                                <tr>
+                                    <td>2018-09-22 00:43</td>
+                                    <td>100393</td>
+                                    <td>USB 3.0 Cable</td>
+                                    <td class="text-right">$10.00</td>
+                                    <td class="text-right">3</td>
+                                    <td class="text-right">$30.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <h2 class="title-1 m-b-25">Top countries</h2>
+                    <div class="au-card au-card--bg-blue au-card-top-countries m-b-40">
+                        <div class="au-card-inner">
+                            <div class="table-responsive">
+                                <table class="table table-top-countries">
+                                    <tbody>
+                                        <tr>
+                                            <td>United States</td>
+                                            <td class="text-right">$119,366.96</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Australia</td>
+                                            <td class="text-right">$70,261.65</td>
+                                        </tr>
+                                        <tr>
+                                            <td>United Kingdom</td>
+                                            <td class="text-right">$46,399.22</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Turkey</td>
+                                            <td class="text-right">$35,364.90</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Germany</td>
+                                            <td class="text-right">$20,366.96</td>
+                                        </tr>
+                                        <tr>
+                                            <td>France</td>
+                                            <td class="text-right">$10,366.96</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Australia</td>
+                                            <td class="text-right">$5,366.96</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Italy</td>
+                                            <td class="text-right">$1639.32</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="au-card au-card--no-shadow au-card--no-pad m-b-40">
+                        <div class="au-card-title" style="background-image:url('images/bg-title-01.jpg');">
+                            <div class="bg-overlay bg-overlay--blue"></div>
+                            <h3>
+                                <i class="zmdi zmdi-account-calendar"></i>26 April, 2018</h3>
+                            <button class="au-btn-plus">
+                                <i class="zmdi zmdi-plus"></i>
+                            </button>
+                        </div>
+                        <div class="au-task js-list-load">
+                            <div class="au-task__title">
+                                <p>Tasks for John Doe</p>
+                            </div>
+                            <div class="au-task-list js-scrollbar3">
+                                <div class="au-task__item au-task__item--danger">
+                                    <div class="au-task__item-inner">
+                                        <h5 class="task">
+                                            <a href="#">Meeting about plan for Admin Template 2018</a>
+                                        </h5>
+                                        <span class="time">10:00 AM</span>
+                                    </div>
+                                </div>
+                                <div class="au-task__item au-task__item--warning">
+                                    <div class="au-task__item-inner">
+                                        <h5 class="task">
+                                            <a href="#">Create new task for Dashboard</a>
+                                        </h5>
+                                        <span class="time">11:00 AM</span>
+                                    </div>
+                                </div>
+                                <div class="au-task__item au-task__item--primary">
+                                    <div class="au-task__item-inner">
+                                        <h5 class="task">
+                                            <a href="#">Meeting about plan for Admin Template 2018</a>
+                                        </h5>
+                                        <span class="time">02:00 PM</span>
+                                    </div>
+                                </div>
+                                <div class="au-task__item au-task__item--success">
+                                    <div class="au-task__item-inner">
+                                        <h5 class="task">
+                                            <a href="#">Create new task for Dashboard</a>
+                                        </h5>
+                                        <span class="time">03:30 PM</span>
+                                    </div>
+                                </div>
+                                <div class="au-task__item au-task__item--danger js-load-item">
+                                    <div class="au-task__item-inner">
+                                        <h5 class="task">
+                                            <a href="#">Meeting about plan for Admin Template 2018</a>
+                                        </h5>
+                                        <span class="time">10:00 AM</span>
+                                    </div>
+                                </div>
+                                <div class="au-task__item au-task__item--warning js-load-item">
+                                    <div class="au-task__item-inner">
+                                        <h5 class="task">
+                                            <a href="#">Create new task for Dashboard</a>
+                                        </h5>
+                                        <span class="time">11:00 AM</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="au-task__footer">
+                                <button class="au-btn au-btn-load js-load-btn">load more</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="au-card au-card--no-shadow au-card--no-pad m-b-40">
+                        <div class="au-card-title" style="background-image:url('images/bg-title-02.jpg');">
+                            <div class="bg-overlay bg-overlay--blue"></div>
+                            <h3>
+                                <i class="zmdi zmdi-comment-text"></i>New Messages</h3>
+                            <button class="au-btn-plus">
+                                <i class="zmdi zmdi-plus"></i>
+                            </button>
+                        </div>
+                        <div class="au-inbox-wrap js-inbox-wrap">
+                            <div class="au-message js-list-load">
+                                <div class="au-message__noti">
+                                    <p>You Have
+                                        <span>2</span>
+
+                                        new messages
+                                    </p>
+                                </div>
+                                <div class="au-message-list">
+                                    <div class="au-message__item unread">
+                                        <div class="au-message__item-inner">
+                                            <div class="au-message__item-text">
+                                                <div class="avatar-wrap">
+                                                    <div class="avatar">
+                                                        <img src="{{$dashboard_assets}}/images/icon/avatar-02.jpg" alt="John Smith">
+                                                    </div>
+                                                </div>
+                                                <div class="text">
+                                                    <h5 class="name">John Smith</h5>
+                                                    <p>Have sent a photo</p>
+                                                </div>
+                                            </div>
+                                            <div class="au-message__item-time">
+                                                <span>12 Min ago</span>
+                                            </div>
                                         </div>
-                                        <div class="col-md-1 col-12 text-center">
-                                            <span class="la la-arrow-right"></span>
+                                    </div>
+                                    <div class="au-message__item unread">
+                                        <div class="au-message__item-inner">
+                                            <div class="au-message__item-text">
+                                                <div class="avatar-wrap online">
+                                                    <div class="avatar">
+                                                        <img src="{{$dashboard_assets}}/images/icon/avatar-03.jpg" alt="Nicholas Martinez">
+                                                    </div>
+                                                </div>
+                                                <div class="text">
+                                                    <h5 class="name">Nicholas Martinez</h5>
+                                                    <p>You are now connected on message</p>
+                                                </div>
+                                            </div>
+                                            <div class="au-message__item-time">
+                                                <span>11:00 PM</span>
+                                            </div>
                                         </div>
-                                        <div class="col-md-2 col-12">
-                                            <fieldset class="form-label-group mb-0">
-                                                <input type="text" class="form-control" id="selected-crypto"
-                                                    value="1" required="" autofocus="">
-                                                <label for="selected-crypto">ETH</label>
-                                            </fieldset>
+                                    </div>
+                                    <div class="au-message__item">
+                                        <div class="au-message__item-inner">
+                                            <div class="au-message__item-text">
+                                                <div class="avatar-wrap online">
+                                                    <div class="avatar">
+                                                        <img src="{{$dashboard_assets}}/images/icon/avatar-04.jpg" alt="Michelle Sims">
+                                                    </div>
+                                                </div>
+                                                <div class="text">
+                                                    <h5 class="name">Michelle Sims</h5>
+                                                    <p>Lorem ipsum dolor sit amet</p>
+                                                </div>
+                                            </div>
+                                            <div class="au-message__item-time">
+                                                <span>Yesterday</span>
+                                            </div>
                                         </div>
-                                        <div class="col-md-1 col-12">
-                                            <select class="custom-select">
-                                                <option selected>ETH</option>
-                                                <option value="1">BTC</option>
-                                                <option value="2">LTC</option>
-                                                <option value="3">USDT</option>
-                                                <option value="3">Credit Card</option>
-                                            </select>
+                                    </div>
+                                    <div class="au-message__item">
+                                        <div class="au-message__item-inner">
+                                            <div class="au-message__item-text">
+                                                <div class="avatar-wrap">
+                                                    <div class="avatar">
+                                                        <img src="{{$dashboard_assets}}/images/icon/avatar-05.jpg" alt="Michelle Sims">
+                                                    </div>
+                                                </div>
+                                                <div class="text">
+                                                    <h5 class="name">Michelle Sims</h5>
+                                                    <p>Purus feugiat finibus</p>
+                                                </div>
+                                            </div>
+                                            <div class="au-message__item-time">
+                                                <span>Sunday</span>
+                                            </div>
                                         </div>
-                                        <div class="col-md-4 col-12 mb-1">
-                                            <fieldset class="form-label-group mb-0">
-                                                <input type="text" class="form-control" id="wallet-address"
-                                                    value="0xe834a970619218d0a7db4ee5a3c87022e71e177f" required=""
-                                                    autofocus="">
-                                                <label for="wallet-address">Wallet address</label>
-                                            </fieldset>
+                                    </div>
+                                    <div class="au-message__item js-load-item">
+                                        <div class="au-message__item-inner">
+                                            <div class="au-message__item-text">
+                                                <div class="avatar-wrap online">
+                                                    <div class="avatar">
+                                                        <img src="{{$dashboard_assets}}/images/icon/avatar-04.jpg" alt="Michelle Sims">
+                                                    </div>
+                                                </div>
+                                                <div class="text">
+                                                    <h5 class="name">Michelle Sims</h5>
+                                                    <p>Lorem ipsum dolor sit amet</p>
+                                                </div>
+                                            </div>
+                                            <div class="au-message__item-time">
+                                                <span>Yesterday</span>
+                                            </div>
                                         </div>
-                                        <div class="col-md-2 col-12 text-center">
-                                            <button type="submit" class="btn-gradient-secondary">Buy now</button>
+                                    </div>
+                                    <div class="au-message__item js-load-item">
+                                        <div class="au-message__item-inner">
+                                            <div class="au-message__item-text">
+                                                <div class="avatar-wrap">
+                                                    <div class="avatar">
+                                                        <img src="{{$dashboard_assets}}/images/icon/avatar-05.jpg" alt="Michelle Sims">
+                                                    </div>
+                                                </div>
+                                                <div class="text">
+                                                    <h5 class="name">Michelle Sims</h5>
+                                                    <p>Purus feugiat finibus</p>
+                                                </div>
+                                            </div>
+                                            <div class="au-message__item-time">
+                                                <span>Sunday</span>
+                                            </div>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="au-message__footer">
+                                    <button class="au-btn au-btn-load js-load-btn">load more</button>
+                                </div>
+                            </div>
+                            <div class="au-chat">
+                                <div class="au-chat__title">
+                                    <div class="au-chat-info">
+                                        <div class="avatar-wrap online">
+                                            <div class="avatar avatar--small">
+                                                <img src="{{$dashboard_assets}}/images/icon/avatar-02.jpg" alt="John Smith">
+                                            </div>
+                                        </div>
+                                        <span class="nick">
+                                            <a href="#">John Smith</a>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="au-chat__content">
+                                    <div class="recei-mess-wrap">
+                                        <span class="mess-time">12 Min ago</span>
+                                        <div class="recei-mess__inner">
+                                            <div class="avatar avatar--tiny">
+                                                <img src="{{$dashboard_assets}}/images/icon/avatar-02.jpg" alt="John Smith">
+                                            </div>
+                                            <div class="recei-mess-list">
+                                                <div class="recei-mess">Lorem ipsum dolor sit amet, consectetur adipiscing elit non iaculis</div>
+                                                <div class="recei-mess">Donec tempor, sapien ac viverra</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="send-mess-wrap">
+                                        <span class="mess-time">30 Sec ago</span>
+                                        <div class="send-mess__inner">
+                                            <div class="send-mess-list">
+                                                <div class="send-mess">Lorem ipsum dolor sit amet, consectetur adipiscing elit non iaculis</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="au-chat-textfield">
+                                    <form class="au-form-icon">
+                                        <input class="au-input au-input--full au-input--h65" type="text" placeholder="Type a message">
+                                        <button class="au-input-icon">
+                                            <i class="zmdi zmdi-camera"></i>
+                                        </button>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--/ Purchase token -->
-                <!-- ICO Token balance & sale progress -->
-                <div class="row">
-                    <div class="col-md-8 col-12">
-                        <h6 class="my-2">ICO Token balance</h6>
-                        <div class="card pull-up">
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <div class="col-12">
-                                        <div class="row">
-                                            <div class="col-md-8 col-12">
-                                                <p><strong>Your balance:</strong></p>
-                                                <h1>3,458.88 CIC</h1>
-                                                <p class="mb-0">Welcome bonus <strong>+30%</strong> expires in 21 days.
-                                                </p>
-                                            </div>
-                                            <div class="col-md-4 col-12 text-center text-md-right">
-                                                <button type="button" class="btn-gradient-secondary mt-2">Withdraw <i
-                                                        class="la la-angle-right"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-12">
-                        <h6 class="my-2">Token sale progress</h6>
-                        <div class="card">
-                            <div class="card-content collapse show">
-                                <div class="card-body">
-                                    <div class="font-small-3 clearfix">
-                                        <span class="float-left">$0</span>
-                                        <span class="float-right">$5M</span>
-                                    </div>
-                                    <div class="progress progress-sm my-1 box-shadow-2">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 65%"
-                                            aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <div class="font-small-3 clearfix">
-                                        <span class="float-left">Distributed <br> <strong>6,235,125 CIC</strong></span>
-                                        <span class="float-right text-right">Contributed <br> <strong>5478 ETH | 80
-                                                BTC</strong></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="copyright">
+                        <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
                     </div>
                 </div>
-                <!--/ ICO Token balance & sale progress -->
-                <!-- Recent Transactions -->
-                <div class="row">
-                    <div id="recent-transactions" class="col-12">
-                        <h6 class="my-2">Recent Transactions</h6>
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="table-responsive">
-                                    <table id="recent-orders" class="table table-hover table-xl mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th class="border-top-0">Status</th>
-                                                <th class="border-top-0">Date</th>
-                                                <th class="border-top-0">Amount</th>
-                                                <th class="border-top-0">Currency</th>
-                                                <th class="border-top-0">Currency</th>
-                                                <th class="border-top-0">Tokens (CIC)</th>
-                                                <th class="border-top-0">Details</th>
-                                                <th class="border-top-0"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="text-truncate"><i
-                                                        class="la la-dot-circle-o success font-medium-1 mr-1"></i> Paid
-                                                </td>
-                                                <td class="text-truncate"><a href="#">2018-01-03</a></td>
-                                                <td class="text-truncate">
-                                                    <a href="#"
-                                                        class="mb-0 btn-sm btn btn-outline-success round">Deposit</a>
-                                                </td>
-                                                <td class="text-truncate p-1">5.34111</td>
-                                                <td>
-                                                    <i class="cc ETH-alt"></i> ETH
-                                                </td>
-                                                <td>-</td>
-                                                <td class="text-truncate">Deposit to your Balance</td>
-                                                <td><i class="la la-thumbs-up warning float-right"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-truncate"><i
-                                                        class="la la-dot-circle-o success font-medium-1 mr-1"></i> Paid
-                                                </td>
-                                                <td class="text-truncate"><a href="#">2018-01-03</a></td>
-                                                <td class="text-truncate">
-                                                    <a href="#"
-                                                        class="mb-0 btn-sm btn btn-outline-success round">Deposit</a>
-                                                </td>
-                                                <td class="text-truncate p-1">5.34111</td>
-                                                <td>
-                                                    <i class="cc ETH-alt"></i> ETH
-                                                </td>
-                                                <td>3,258</td>
-                                                <td class="text-truncate">Tokens Purchase</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-truncate"><i
-                                                        class="la la-dot-circle-o warning font-medium-1 mr-1"></i> in
-                                                    Process</td>
-                                                <td class="text-truncate"><a href="#">2018-01-21</a></td>
-                                                <td class="text-truncate">
-                                                    <a href="#"
-                                                        class="mb-0 btn-sm btn btn-outline-warning round">Referral</a>
-                                                </td>
-                                                <td class="text-truncate p-1">-</td>
-                                                <td>-</td>
-                                                <td>200.88</td>
-                                                <td class="text-truncate">Referral Promo Bonus</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-truncate"><i
-                                                        class="la la-dot-circle-o danger font-medium-1 mr-1"></i>
-                                                    Pending</td>
-                                                <td class="text-truncate"><a href="#">2018-01-25</a></td>
-                                                <td class="text-truncate">
-                                                    <a href="#"
-                                                        class="mb-0 btn-sm btn btn-outline-danger round">Withdrawal</a>
-                                                </td>
-                                                <td class="text-truncate p-1">-</td>
-                                                <td>-</td>
-                                                <td>-3,458.88</td>
-                                                <td class="text-truncate">Tokens withdrawn</td>
-                                                <td><i class="la la-dollar warning float-right"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-truncate"><i
-                                                        class="la la-dot-circle-o success font-medium-1 mr-1"></i> Paid
-                                                </td>
-                                                <td class="text-truncate"><a href="#">2018-01-28</a></td>
-                                                <td class="text-truncate">
-                                                    <a href="#"
-                                                        class="mb-0 btn-sm btn btn-outline-danger round">Deposit</a>
-                                                </td>
-                                                <td class="text-truncate p-1">0.8791</td>
-                                                <td><i class="cc BTC-alt"></i> BTC</td>
-                                                <td>--</td>
-                                                <td class="text-truncate">Deposit to your Balance</td>
-                                                <td><i class="la la-thumbs-up warning float-right"></i></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--/ Recent Transactions -->
-                <!-- Basic Horizontal Timeline -->
-                <div class="row match-height">
-                    <div class="col-xl-4 col-lg-12">
-                        <h6 class="my-2">Latest updates</h6>
-                        <div class="card">
-                            <div class="card-content">
-                                <img class="img-fluid" src="{{$dashboard_assets}}/app-assets/images/pages/blog-post.png"
-                                    alt="Card image cap">
-                                <div class="card-body">
-                                    <p class="card-text">Some quick example text to build on the card title and make up
-                                        the bulk of the card's content.</p>
-                                    <a href="#" class="card-link">Card link</a>
-                                    <a href="#" class="card-link">Another link</a>
-                                </div>
-                            </div>
-                            <div class="card-footer border-top-blue-grey border-top-lighten-5 text-muted">
-                                <span class="float-left">3 hours ago</span>
-                                <span class="float-right">
-                                    <a href="#" class="card-link">Read More <i class="fa fa-angle-right"></i></a>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-8 col-lg-12">
-                        <h6 class="my-2">Roadmap</h6>
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <div class="card-text">
-                                        <section class="cd-horizontal-timeline">
-                                            <div class="timeline">
-                                                <div class="events-wrapper">
-                                                    <div class="events">
-                                                        <ol>
-                                                            <li><a href="#0" data-date="16/01/2018"
-                                                                    class="selected">16
-                                                                    Jan</a></li>
-                                                            <li><a href="#0" data-date="28/02/2018">28 Feb</a></li>
-                                                            <li><a href="#0" data-date="20/04/2018">20 Mar</a></li>
-                                                            <li><a href="#0" data-date="20/05/2018">20 May</a></li>
-                                                            <li><a href="#0" data-date="09/07/2018">09 Jul</a></li>
-                                                            <li><a href="#0" data-date="30/08/2018">30 Aug</a></li>
-                                                            <li><a href="#0" data-date="15/09/2018">15 Sep</a></li>
-                                                        </ol>
-                                                        <span class="filling-line" aria-hidden="true"></span>
-                                                    </div>
-                                                    <!-- .events -->
-                                                </div>
-                                                <!-- .events-wrapper -->
-                                                <ul class="cd-timeline-navigation">
-                                                    <li><a href="#0" class="prev inactive">Prev</a></li>
-                                                    <li><a href="#0" class="next">Next</a></li>
-                                                </ul>
-                                                <!-- .cd-timeline-navigation -->
-                                            </div>
-                                            <!-- .timeline -->
-                                            <div class="events-content">
-                                                <ol>
-                                                    <li class="selected" data-date="16/01/2018">
-                                                        <blockquote class="blockquote border-0">
-                                                            <p class="text-bold-600">CryptoDash platform idea</p>
-                                                        </blockquote>
-                                                        <p class="lead mt-2">
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                                            Illum praesentium officia, fugit recusandae ipsa, quia velit
-                                                            nulla adipisci? Consequuntur aspernatur at.
-                                                        </p>
-                                                    </li>
-                                                    <li data-date="28/02/2018">
-                                                        <blockquote class="blockquote border-0">
-                                                            <p class="text-bold-600">Technical & strategy development
-                                                            </p>
-                                                        </blockquote>
-                                                        <p class="lead mt-2">
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                                            Illum praesentium officia, fugit recusandae ipsa, quia velit
-                                                            nulla adipisci? Consequuntur aspernatur at.
-                                                        </p>
-                                                    </li>
-                                                    <li data-date="20/04/2018">
-                                                        <blockquote class="blockquote border-0">
-                                                            <p class="text-bold-600">ICO Launched</p>
-                                                        </blockquote>
-                                                        <p class="lead mt-2">
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                                            Illum praesentium officia, fugit recusandae ipsa, quia velit
-                                                            nulla adipisci? Consequuntur aspernatur at.
-                                                        </p>
-                                                    </li>
-                                                    <li data-date="20/05/2018">
-                                                        <blockquote class="blockquote border-0">
-                                                            <p class="text-bold-600">CryptoDash beta version launched
-                                                            </p>
-                                                        </blockquote>
-                                                        <p class="lead mt-2">
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                                            Illum praesentium officia, fugit recusandae ipsa, quia velit
-                                                            nulla adipisci? Consequuntur aspernatur at.
-                                                        </p>
-                                                    </li>
-                                                    <li data-date="09/07/2018">
-                                                        <blockquote class="blockquote border-0">
-                                                            <p class="text-bold-600">Mobile apps for iOS & Android</p>
-                                                        </blockquote>
-                                                        <p class="lead mt-2">
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                                            Illum praesentium officia, fugit recusandae ipsa, quia velit
-                                                            nulla adipisci? Consequuntur aspernatur at.
-                                                        </p>
-                                                    </li>
-                                                    <li data-date="30/08/2018">
-                                                        <blockquote class="blockquote border-0">
-                                                            <p class="text-bold-600">Partnership with business merchant
-                                                            </p>
-                                                        </blockquote>
-                                                        <p class="lead mt-2">
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                                            Illum praesentium officia, fugit recusandae ipsa, quia velit
-                                                            nulla adipisci? Consequuntur aspernatur at.
-                                                        </p>
-                                                    </li>
-                                                    <li data-date="15/09/2018">
-                                                        <blockquote class="blockquote border-0">
-                                                            <p class="text-bold-600">Launch live paltform</p>
-                                                        </blockquote>
-                                                        <p class="lead mt-2">
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                                            Illum praesentium officia, fugit recusandae ipsa, quia velit
-                                                            nulla adipisci? Consequuntur aspernatur at.
-                                                        </p>
-                                                    </li>
-                                                </ol>
-                                            </div>
-                                            <!-- .events-content -->
-                                        </section>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--/ Basic Horizontal Timeline -->
             </div>
         </div>
     </div>
-    <!-- ////////////////////////////////////////////////////////////////////////////-->
+</div>
+<!-- END MAIN CONTENT-->
+
 @endsection
