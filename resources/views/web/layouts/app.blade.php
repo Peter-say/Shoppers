@@ -41,7 +41,6 @@
 <body>
     <div class="site-wrap">
         @include('web.layouts.include.navigation')
-        <livewire:cart-counter />
         @yield('contents')
         @include('web.layouts.include.footer')
     </div>
@@ -77,6 +76,41 @@
             popup.style.display = 'none';
         }
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Retrieve the active navigation item from local storage
+            var activeNavItem = localStorage.getItem('activeNavItem');
+
+            // Set the active state on the corresponding navigation item
+            if (activeNavItem) {
+                var activeItem = document.getElementById(activeNavItem);
+                if (activeItem) {
+                    activeItem.classList.add('active');
+                }
+            }
+
+            // Add click event listeners to the navigation items
+            var navItems = document.querySelectorAll('.site-menu li');
+            navItems.forEach(function(item) {
+                item.addEventListener('click', function() {
+                    // Remove active state from all navigation items
+                    navItems.forEach(function(navItem) {
+                        navItem.classList.remove('active');
+                    });
+
+                    // Set active state on the clicked navigation item
+                    this.classList.add('active');
+
+                    // Store the active navigation item in local storage
+                    var activeNavItem = this.id;
+                    localStorage.setItem('activeNavItem', activeNavItem);
+                });
+            });
+        });
+    </script>
+
 </body>
+
 
 </html>

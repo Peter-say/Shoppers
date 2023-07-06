@@ -16,13 +16,19 @@ class ShowCart extends Component
         $this->updateCartItems();
         $this->calculateTotalPrice();
     }
-
+    
     public function updateCartItems()
     {
         if (Auth::check()) {
             // User is authenticated
             $user = Auth::user();
-            $this->cartItems = $user->cart->cartItems;
+            $cart = $user->cart;
+
+            if ($cart) {
+                $this->cartItems = $cart->cartItems;
+            } else {
+                $this->cartItems = [];
+            }
         } else {
             // User is not authenticated (guest)
             $sessionId = session()->getId();
@@ -45,12 +51,15 @@ class ShowCart extends Component
         session()->flash('success_message', 'Item removed from cart successfully');
     }
 
-
     public function calculateTotalPrice()
     {
-        $this->totalPrice = collect($this->cartItems)->sum(function ($cartItem) {
-            return $cartItem->price * $cartItem->quantity;
-        });
+        if ($this->cartItems) {
+            $this->totalPrice = collect($this->cartItems)->sum(function ($cartItem) {
+                return $cartItem->price * $cartItem->quantity;
+            });
+        } else {
+            $this->totalPrice = 0;
+        }
     }
 
     public function render()

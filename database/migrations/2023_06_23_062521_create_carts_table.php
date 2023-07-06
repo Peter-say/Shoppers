@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->default(null)->constrained('users');
-            $table->foreignId('session_id')->constrained('carts');
+            $table->string('session_id', 255)->nullable();
             $table->string('status');
             $table->timestamps();
         });

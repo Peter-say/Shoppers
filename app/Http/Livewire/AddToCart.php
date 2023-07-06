@@ -47,37 +47,43 @@ class AddToCart extends Component
 
 
     public function addToCart($id)
-    {
-        $this->validate();
-        $request = request();
+{
+    $this->validate();
+    $request = request();
 
-        if (Auth::check()) {
-            // User is authenticated
-            $user = Auth::user();
-            $cart = $user->cart;
-        } else {
-            // User is not authenticated (guest)
-            $cart = $this->getGuestCart();
+    if (Auth::check()) {
+        // User is authenticated
+        $user = Auth::user();
+        $userCart = Cart::where('user_id', $user->id)->first();
+
+        if (!$userCart) {
+            $userCart = new Cart();
+            $userCart->user_id = $user->id;
+            $userCart->status = 'User';
+            $userCart->save();
         }
-
-        // Create a new cart item
-        $data = [
-            'cart_id' => $cart->id,
-            'product_id' => $id,
-            'quantity' => $this->quantity,
-            'price' => $this->product->amount,
-            'size' => $this->size,
-        ];
-        CartItem::create($data);
-
-
-        $this->resetInput(); // Reset the input field
-        session()->flash('success_message', 'Item added to cart successfully');
-        return redirect()->back();
-        $this->showPopup = true;
-        // Re-render the component after 4 seconds to hide the pop-up message
-        $this->dispatchBrowserEvent('refresh-popup');
+    } else {
+        // User is not authenticated (guest)
+        $userCart = $this->getGuestCart();
     }
+
+    // Create a new cart item
+    $data = [
+        'cart_id' => $userCart->id,
+        'product_id' => $id,
+        'quantity' => $this->quantity,
+        'price' => $this->product->amount,
+        'size' => $this->size,
+    ];
+    CartItem::create($data);
+    $this->resetInput(); // Reset the input field
+    session()->flash('success_message', 'Item added to cart successfully');
+    return redirect()->back();
+    $this->showPopup = true;
+    // Re-render the component after 4 seconds to hide the pop-up message
+    $this->dispatchBrowserEvent('refresh-popup');
+}
+
 
 
     private function resetInput()
@@ -100,8 +106,9 @@ class AddToCart extends Component
             $guestCart->save();
         }
 
-        return $guestCart;
+        return $guestCart->fresh(); // Retrieve a fresh instance of the Cart model
     }
+
 
     public function mount($id)
     {

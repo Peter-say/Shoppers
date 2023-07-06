@@ -110,7 +110,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <button class="btn btn-primary btn-lg py-3 btn-block"
-                                        onclick="window.location='checkout.html'">Proceed To Checkout</button>
+                                    onclick="redirectToCheckout()">Proceed To Checkout</button>
                                 </div>
                             </div>
                         </div>

@@ -1,14 +1,14 @@
 <?php
 
-use App\Http\Controllers\Dashboard\HomeController;
-use App\Http\Controllers\Dashboard\ProductCategoryController;
-use App\Http\Controllers\Dashboard\ProductController;
+use App\Http\Controllers\Dashboard\Admin\HomeController;
+use App\Http\Controllers\Dashboard\User\IndexController;
+use App\Http\Controllers\Dashboard\Admin\ProductCategoryController;
+use App\Http\Controllers\Dashboard\AdminProductController;
+use App\Http\Controllers\Dashboard\User\Cart\CheckOutController;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\CatController;
 use App\Http\Controllers\Web\ShopController;
 use App\Http\Controllers\Web\WelcomeController;
-use App\Models\Product;
-use App\Models\ProductCategory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -34,11 +34,25 @@ Route::prefix('web')->as('web.')->group(function () {
         Route::get('product/{id}/details', [ShopController::class, 'details'])->name('product.details');
         Route::post('/add-to-cart/{id}', [CartController::class, 'index'])->name('cart.store');
         Route::get('/cat', [CartController::class, 'cartList'])->name('cart');
-    }); 
+    });
 });
 
-Route::prefix('dashboard')->as('dashboard.')->middleware('auth')->group(function () {
-    Route::get('/home', [HomeController::class, 'home'])->name('home');
-    Route::resource('product', ProductController::class);
-    Route::resource('product-category', ProductCategoryController::class);
+Route::group(['middleware' => ['redirect.role', 'auth', 'admin']], function () {
+    Route::prefix('admin')->as('admin.')->group(function () {
+        Route::prefix('dashboard')->as('dashboard.')->group(function () {
+            Route::get('/home', [HomeController::class, 'home'])->name('home');
+            Route::resource('product', ProductController::class);
+            Route::resource('product-category', ProductCategoryController::class);
+        });
+    });
 });
+
+
+
+    Route::prefix('user')->as('user.')->group(function () {
+        Route::prefix('dashboard')->as('dashboard.')->middleware(['auth'])->group(function () {
+            Route::get('home', [IndexController::class, 'home'])->name('home');
+            Route::get('checkout', [CheckOutController::class, 'checkout'])->name('checkout');
+        });
+    });
+

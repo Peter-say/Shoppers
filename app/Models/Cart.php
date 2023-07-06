@@ -25,28 +25,29 @@ class Cart extends Model
     }
 
     public static function countItems()
-{
-    $count = 0;
+    {
+        $count = 0;
 
-    if (Auth::check()) {
-        // User is authenticated
-        $user = Auth::user();
-        $cart = $user->cart->first(); // Retrieve the first cart
-        if ($cart) {
-            $count = $cart->cartItems()->count();
+        if (Auth::check()) {
+            // User is authenticated
+            $user = Auth::user();
+            $cart = $user->cart;
+            if ($cart) {
+                $cart = $cart->first(); // Retrieve the first cart
+                if ($cart) {
+                    $count = $cart->cartItems()->count();
+                }
+            }
+        } else {
+            // User is not authenticated (guest)
+            $sessionId = session()->getId();
+            $cart = Cart::where('session_id', $sessionId)->first(); // Retrieve the first cart
+            if ($cart) {
+                $count = $cart->cartItems()->count();
+            }
         }
-    } else {
-        // User is not authenticated (guest)
-        $sessionId = session()->getId();
-        $cart = Cart::where('session_id', $sessionId)->first(); // Retrieve the first cart
-        if ($cart) {
-            $count = $cart->cartItems()->count();
-        }
+
+
+        return $count;
     }
-
-    return $count;
-}
-
-    
-    
 }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('guest_carts', function (Blueprint $table) {
             $table->id();
-            $table->string('session_id')->unique();
+            $table->string('session', 255)->unique();
             $table->timestamps();
         });
     }

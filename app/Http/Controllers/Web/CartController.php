@@ -16,8 +16,8 @@ class CartController extends Controller
             ->where('id', '!=', $product->id)
             ->get();
         return view('web.shop.product-details', [
-           'product' => $product,
-           ' related_products' =>  $related_products,
+            'product' => $product,
+            ' related_products' =>  $related_products,
         ]);
     }
 
