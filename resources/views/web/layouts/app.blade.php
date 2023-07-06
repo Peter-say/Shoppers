@@ -34,6 +34,39 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
             z-index: 9999;
         }
+
+        .profile-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .file-container {
+            text-align: center;
+        }
+
+        .file-button {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .file-button input[type="file"] {
+            display: none;
+        }
     </style>
 
 </head>
