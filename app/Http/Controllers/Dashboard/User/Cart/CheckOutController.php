@@ -9,6 +9,9 @@ class CheckOutController extends Controller
 {
    public function checkout()
    {
-    return view('dashboard.user.cart.checkout');
+      $user = auth()->user();
+    return view('dashboard.user.cart.checkout', [
+      'user' => $user,  
+    ]);
    }
 }

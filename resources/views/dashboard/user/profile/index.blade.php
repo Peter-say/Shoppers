@@ -77,23 +77,13 @@
                             </div>
 
                             <div class="form-group row mb-5">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <label for="c_email_address" class="text-black">Email Address <span
                                             class="text-danger">*</span></label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
                                         id="c_email_address" value="{{ $user->email }}" name="email"
                                         value="{{ old('email') }}" autocomplete="email">
                                     @error('email')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="c_phone" class="text-black">Phone <span
-                                            class="text-danger">*</span></label>
-                                    <input type="tel" class="form-control @error('phone_no') is-invalid @enderror"
-                                        id="c_phone" value="{{ $user->phone_no }}" name="phone_no"
-                                        placeholder="Phone Number" value="{{ old('phone_no') }}" autocomplete="phone_no">
-                                    @error('phone_no')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>

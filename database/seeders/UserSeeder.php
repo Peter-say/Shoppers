@@ -20,7 +20,6 @@ class UserSeeder extends Seeder
           'last_name' => 'Iriogbe',
           'email' => 'iriogbepeter22@gmail.com',
           'role' => 'User',
-          'avatar' => '08071439780',
           'avatar' => null,
           'email_verified_at' => now(),
           'password' => Hash::make('password'),

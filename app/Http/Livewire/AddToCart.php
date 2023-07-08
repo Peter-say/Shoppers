@@ -36,8 +36,6 @@ class AddToCart extends Component
         'size.required' => 'Please select a size.',
     ];
 
-
-
     public function incrementQuantity()
     {
         $this->quantity++;

@@ -11,6 +11,9 @@ class IndexController extends Controller
 {
    public function home()
    {
-    return view('dashboard.user.index');
+      $user = auth()->user();
+      return view('dashboard.user.index', [
+         'user' => $user,
+      ]);
    }
 }

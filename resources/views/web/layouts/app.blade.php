@@ -8,7 +8,8 @@
 
     <link rel="stylesheet" href="{{ $web_assets }}/https://fonts.googleapis.com/css?family=Mukta:300,400,700">
     <link rel="stylesheet" href="{{ $web_assets }}/fonts/icomoon/style.css">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    
     <link rel="stylesheet" href="{{ $web_assets }}/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ $web_assets }}/css/magnific-popup.css">
     <link rel="stylesheet" href="{{ $web_assets }}/css/jquery-ui.css">
@@ -76,6 +77,9 @@
         @include('web.layouts.include.footer')
     </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+
     <script src="{{ $web_assets }}/js/jquery-3.3.1.min.js"></script>
     <script src="{{ $web_assets }}/js/jquery-ui.js"></script>
     <script src="{{ $web_assets }}/js/popper.min.js"></script>
@@ -105,38 +109,43 @@
         });
     </script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Retrieve the active navigation item from local storage
-            var activeNavItem = localStorage.getItem('activeNavItem');
 
-            // Set the active state on the corresponding navigation item
-            if (activeNavItem) {
-                var activeItem = document.getElementById(activeNavItem);
-                if (activeItem) {
-                    activeItem.classList.add('active');
-                }
-            }
+<script>
+    $(document).ready(function() {
+        // Initialize Typeahead.js on the country input field
+        $('#c_country').typeahead({
+            source: function(query, process) {
+                // Send an AJAX request to fetch country suggestions from the server
+                $.ajax({
+                    url: 'search/countries',
+                    method: 'GET',
+                    data: { query: query },
+                    dataType: 'json',
+                    success: function(response) {
+                        // Process the response and extract the country names
+                        var countries = response.data.map(function(item) {
+                            return item.name;
+                        });
 
-            // Add click event listeners to the navigation items
-            var navItems = document.querySelectorAll('.site-menu li');
-            navItems.forEach(function(item) {
-                item.addEventListener('click', function() {
-                    // Remove active state from all navigation items
-                    navItems.forEach(function(navItem) {
-                        navItem.classList.remove('active');
-                    });
+                        // Process the filtered countries and display them as suggestions
+                        var filteredCountries = $.grep(countries, function(country) {
+                            return country.toLowerCase().startsWith(query.toLowerCase());
+                        });
 
-                    // Set active state on the clicked navigation item
-                    this.classList.add('active');
-
-                    // Store the active navigation item in local storage
-                    var activeNavItem = this.id;
-                    localStorage.setItem('activeNavItem', activeNavItem);
+                        // Process the filtered countries and display them as suggestions
+                        process(filteredCountries);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error); // Handle the error if the request fails
+                    }
                 });
-            });
+            }
         });
-    </script>
+    });
+</script>
+
+
+
 
 </body>
 

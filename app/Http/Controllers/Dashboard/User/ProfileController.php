@@ -27,7 +27,6 @@ class ProfileController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'phone_no' => 'nullable|string|max:20',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -36,7 +35,6 @@ class ProfileController extends Controller
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
-        $user->phone_no = $request->input('phone_no');
 
         if ($request->hasFile('avatar')) {
             // Get the path of the old avatar file

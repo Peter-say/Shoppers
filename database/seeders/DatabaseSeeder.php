@@ -18,10 +18,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(ProductCategorySeeder::class);
-        $this->call(CurrencyTableSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(ProductCategorySeeder::class);
         \App\Models\Product::factory(10)->create();
+        $this->call(CurrencyTableSeeder::class);
+        $this->call(CountryTableSeeder::class);
+        $this->call(StateTableSeeder::class);
 
     }
 }

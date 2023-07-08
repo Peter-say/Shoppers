@@ -52,7 +52,6 @@ class ShowCart extends Component
         } else {
             // User is not authenticated (guest)
             $sessionId = session()->getId();
-            dd($sessionId);
             $cart = Cart::where('session_id', $sessionId)->first();
 
             if ($cart) {

@@ -62,7 +62,8 @@ Route::group(['middleware' => ['redirect.role', 'auth', 'admin']], function () {
 
               // address controller below here //
 
-              Route::post('address', [AddressController::class, 'store']);
+              Route::post('address', [AddressController::class, 'saveAddress']);
+              Route::get('/search/countries', [AddressController::class, 'searchCountries']);
             });
         });
     });
