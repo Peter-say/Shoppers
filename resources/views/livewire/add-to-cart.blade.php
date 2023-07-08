@@ -13,10 +13,10 @@
 
     <div class="site-section">
         <div class="container">
-            <form wire:submit.prevent="addToCart({{ $product->id }})" method="post">
+            <form method="post">
                 @csrf
                 <div class="row">
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 w-100">
+                    <div class="0">
                         <img src="{{ asset('web\images\person_1.jpg') }}" alt="Image" class="img-fluid">
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
@@ -75,22 +75,21 @@
                         </div>
 
                         <input type="hidden" value="{{ $product->price }}" name="price" wire:model="price">
-                        <p><button class="buy-now btn btn-sm btn-primary" id="add-to-cart-button" >Add to cart</button></p>
-                        
+                        <button wire:click.prevent="addToCart({{ $product->id }})" class="buy-now btn btn-sm btn-primary" id="add-to-cart-button">Add to cart</button>
+                        </p>
 
-                        @if (session()->has('success_message'))
-                            <div class="popup-message">
-                                <p>{{ session('success_message') }}</p>
-                            </div>
-                            <div class="col-12 d-flex justify-content-center">
-                                <a href="{{ route('web.shop.index') }}" class="btn btn-primary">Continue Shopping</a>
-                            </div>
-                        @endif
 
                     </div>
                 </div>
             </form>
-
+            @if (session()->has('success_message'))
+            <div class="popup-message" id="popup-message">
+                <p class="text-white">{{ session('success_message') }}</p>
+            </div>
+            <div class="col-12 d-flex justify-content-center">
+                <a href="{{ route('web.shop.index') }}" class="btn btn-primary">Continue Shopping</a>
+            </div>
+        @endif
 
         </div>
     </div>
@@ -127,6 +126,6 @@
             </div>
         </div>
     </div>
-
+    
 
 </div>

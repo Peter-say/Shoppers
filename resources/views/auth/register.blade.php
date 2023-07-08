@@ -15,7 +15,7 @@
                             <div class="form-group">
                                 <label>First Name</label>
                                 <input id="first_name" type="text"
-                                    class="au-input au-input--full @error('first_name') is-invalid @enderror"
+                                    class="form-control @error('first_name') is-invalid @enderror"
                                     name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name"
                                     autofocus placeholder="First Name">
 
@@ -28,7 +28,7 @@
                             <div class="form-group">
                                 <label>Last Name</label>
                                 <input id="last_name" type="text"
-                                    class="au-input au-input--full @error('last_name') is-invalid @enderror"
+                                    class="form-control @error('last_name') is-invalid @enderror"
                                     name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name"
                                     autofocus placeholder="Last Name">
 
@@ -40,7 +40,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Email Address</label>
-                                <input class="au-input au-input--full @error('email') is-invalid @enderror"
+                                <input class="form-control @error('email') is-invalid @enderror"
                                     id="email" type="email" name="email" value="{{ old('email') }}" required
                                     autocomplete="email">
                                 @error('email')
@@ -51,7 +51,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
-                                <input class="au-input au-input--full @error('password') is-invalid @enderror"
+                                <input class="form-control @error('password') is-invalid @enderror"
                                     id="password" type="password" name="password" required autocomplete="new-password">
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -61,7 +61,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Cofirm Password</label>
-                                <input class="au-input au-input--full" id="password-confirm" type="password"
+                                <input class="form-control" id="password-confirm" type="password"
                                     name="password_confirmation" required autocomplete="new-password"
                                     placeholder="Password">
 

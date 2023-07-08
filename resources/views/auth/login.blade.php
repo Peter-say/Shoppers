@@ -14,7 +14,7 @@
                         @csrf
                         <div class="form-group">
                             <label>Email Address</label>
-                            <input class="au-input au-input--full @error('email') is-invalid @enderror" id="email"
+                            <input class="form-control @error('email') is-invalid @enderror" id="email"
                                 type="email" name="email" value="{{ old('email') }}" required autocomplete="email"
                                 autofocus>
                             @error('email')
@@ -26,7 +26,7 @@
                         <div class="form-group">
                             <label>Password</label>
                             <input id="password" type="password"
-                                class="au-input au-input--full  @error('password') is-invalid @enderror" name="password"
+                                class="form-control  @error('password') is-invalid @enderror" name="password"
                                 required autocomplete="current-password">
                             @error('password')
                                 <span class="invalid-feedback" role="alert">

@@ -22,16 +22,14 @@
     <link rel="stylesheet" href="{{ $web_assets }}/css/style.css">
 
     <style>
-        .popup-message {
+        #popup-message {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-10%, -10%);
+            top: 0;
+            left: 0;
+            width: 100%;
             background-color: green;
-            color: white;
-            padding: 20px;
-            border-radius: 4px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+            padding: 10px;
+            text-align: center;
             z-index: 9999;
         }
 
@@ -91,23 +89,20 @@
     @livewireScripts
 
     <script>
-        var addToCartButton = document.getElementById('add-to-cart-button');
-        addToCartButton.addEventListener('click', function() {
-            showPopup();
+        document.addEventListener('DOMContentLoaded', function() {
+            var popup = document.getElementById('popup-message');
+            setTimeout(function() {
+                popup.style.display = 'none';
+            }, 4000);
         });
 
-        function showPopup() {
+        // Optional: Hide the pop-up when clicking outside of it
+        document.addEventListener('click', function(event) {
             var popup = document.getElementById('popup-message');
-            popup.style.display = 'block';
-            setTimeout(function() {
-                hidePopup();
-            }, 4000);
-        }
-
-        function hidePopup() {
-            var popup = document.getElementById('popup-message');
-            popup.style.display = 'none';
-        }
+            if (event.target !== popup && !popup.contains(event.target)) {
+                popup.style.display = 'none';
+            }
+        });
     </script>
 
     <script>

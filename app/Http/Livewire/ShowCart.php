@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Cart;
+use App\Models\CartItem;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -16,26 +17,46 @@ class ShowCart extends Component
         $this->updateCartItems();
         $this->calculateTotalPrice();
     }
-    
+
+    public function incrementQuantity($item)
+    {
+        $cartItem = $this->cartItems[$item];
+        $cartItem->quantity++;
+        $cartItem->save();
+        $this->calculateTotalPrice();
+    }
+
+    public function decrementQuantity($item)
+    {
+        $cartItem = $this->cartItems[$item];
+        if ($cartItem->quantity > 1) {
+            $cartItem->quantity--;
+            $cartItem->save();
+            $this->calculateTotalPrice();
+        }
+    }
+
     public function updateCartItems()
     {
         if (Auth::check()) {
             // User is authenticated
             $user = Auth::user();
-            $cart = $user->cart;
-
+            $cart = Cart::where('user_id', $user->id)->first();
             if ($cart) {
-                $this->cartItems = $cart->cartItems;
+                $sessionId = session()->getId();
+                $userCart = $cart->cartItems()->get();
+                $this->cartItems = $userCart ?? [];
             } else {
                 $this->cartItems = [];
             }
         } else {
             // User is not authenticated (guest)
             $sessionId = session()->getId();
+            dd($sessionId);
             $cart = Cart::where('session_id', $sessionId)->first();
 
             if ($cart) {
-                $this->cartItems = $cart->cartItems;
+                $this->cartItems = $cart->cartItems()->get();
             } else {
                 $this->cartItems = [];
             }
@@ -51,15 +72,12 @@ class ShowCart extends Component
         session()->flash('success_message', 'Item removed from cart successfully');
     }
 
+
     public function calculateTotalPrice()
     {
-        if ($this->cartItems) {
-            $this->totalPrice = collect($this->cartItems)->sum(function ($cartItem) {
-                return $cartItem->price * $cartItem->quantity;
-            });
-        } else {
-            $this->totalPrice = 0;
-        }
+        $this->totalPrice = collect($this->cartItems)->sum(function ($cartItem) {
+            return $cartItem->price * $cartItem->quantity;
+        });
     }
 
     public function render()

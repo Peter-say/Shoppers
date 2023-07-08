@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use App\Models\CartItem;
 
 class Cart extends Model
 {
@@ -31,22 +32,20 @@ class Cart extends Model
         if (Auth::check()) {
             // User is authenticated
             $user = Auth::user();
-            $cart = $user->cart;
+            $cart = $user->cart()->first();
+
             if ($cart) {
-                $cart = $cart->first(); // Retrieve the first cart
-                if ($cart) {
-                    $count = $cart->cartItems()->count();
-                }
+                $count = $cart->cartItems()->count();
             }
         } else {
             // User is not authenticated (guest)
             $sessionId = session()->getId();
-            $cart = Cart::where('session_id', $sessionId)->first(); // Retrieve the first cart
+            $cart = Cart::where('session_id', $sessionId)->first();
+
             if ($cart) {
                 $count = $cart->cartItems()->count();
             }
         }
-
 
         return $count;
     }

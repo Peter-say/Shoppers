@@ -4,6 +4,7 @@ use App\Http\Controllers\Dashboard\Admin\HomeController;
 use App\Http\Controllers\Dashboard\User\IndexController;
 use App\Http\Controllers\Dashboard\Admin\ProductCategoryController;
 use App\Http\Controllers\Dashboard\AdminProductController;
+use App\Http\Controllers\Dashboard\User\AddressController;
 use App\Http\Controllers\Dashboard\User\Cart\CheckOutController;
 use App\Http\Controllers\Dashboard\User\ProfileController;
 use App\Http\Controllers\Web\CartController;
@@ -60,6 +61,8 @@ Route::group(['middleware' => ['redirect.role', 'auth', 'admin']], function () {
               Route::put('update', [ProfileController::class, 'update'])->name('update');
 
               // address controller below here //
+
+              Route::post('address', [AddressController::class, 'store']);
             });
         });
     });
