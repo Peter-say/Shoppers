@@ -48,14 +48,13 @@ class AddToCart extends Component
         }
     }
 
-
     public function addToCart($id)
     {
         $this->validate();
         $request = request();
 
         if (Auth::check()) {
-            // User is authenticated
+
             $user = Auth::user();
             $userCart = Cart::where('user_id', $user->id)->first();
 
@@ -65,27 +64,21 @@ class AddToCart extends Component
             $userCart->save();
 
             if (!Auth::viaRemember()) {
-                // User is not logged in via "Remember Me" option
                 $guestCartItems = session()->get('cartItems');
                 if ($guestCartItems) {
-                    // Associate the guest cart items with the authenticated user
-                    foreach ($guestCartItems as $cartItemData) {
-                        $data = [
-                            'cart_id' => $userCart->id,
-                            'product_id' => $cartItemData['product_id'],
-                            'quantity' => $cartItemData['quantity'],
-                            'price' => $cartItemData['price'],
-                            'size' => $cartItemData['size'],
-                        ];
-                        CartItem::create($data);
-                    }
-                    // Clear the guest cart items from the session
+                    $this->mergeGuestCartItems($userCart, $guestCartItems);
                     session()->forget('cartItems');
                 }
             }
         } else {
             // User is not authenticated (guest)
             $userCart = $this->getGuestCart();
+
+            // Retrieve guest cart items from the database
+            $guestCartItems = CartItem::where('cart_id', $userCart->id)->get();
+
+            // Store the guest cart items in the session
+            session()->put('cartItems', $guestCartItems->toArray());
         }
 
         // Create a new cart item
@@ -102,13 +95,31 @@ class AddToCart extends Component
         return redirect()->back();
     }
 
-
-
-    private function resetInput()
+    private function mergeGuestCartItems($userCart, $guestCartItems)
     {
-        $this->quantity = null;
-        $this->size = null;
+        foreach ($guestCartItems as $cartItemData) {
+            $existingCartItem = CartItem::where('cart_id', $userCart->id)
+                ->where('product_id', $cartItemData['product_id'])
+                ->first();
+
+            if ($existingCartItem) {
+                // Update the quantity of the existing cart item
+                $existingCartItem->quantity += $cartItemData['quantity'];
+                $existingCartItem->save();
+            } else {
+                // Create a new cart item
+                $data = [
+                    'cart_id' => $userCart->id,
+                    'product_id' => $cartItemData['product_id'],
+                    'quantity' => $cartItemData['quantity'],
+                    'price' => $cartItemData['price'],
+                    'size' => $cartItemData['size'],
+                ];
+                CartItem::create($data);
+            }
+        }
     }
+
 
     private function getGuestCart()
     {
@@ -126,6 +137,14 @@ class AddToCart extends Component
 
         return $guestCart;
     }
+
+
+    private function resetInput()
+    {
+        $this->quantity = null;
+        $this->size = null;
+    }
+
 
     public function mount($id)
     {

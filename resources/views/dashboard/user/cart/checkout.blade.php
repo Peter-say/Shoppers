@@ -21,7 +21,9 @@
                 </div>
             </div>
             <div class="row">
-                <livewire:shipping-address/>
+               
+                @include('dashboard.user.cart.shipping-address', ['shipping_address', $shipping_address])
+            
                 <div class="col-md-6">
 
                     <div class="row mb-5">

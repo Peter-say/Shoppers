@@ -6,6 +6,7 @@ use App\Http\Controllers\Dashboard\Admin\ProductCategoryController;
 use App\Http\Controllers\Dashboard\AdminProductController;
 use App\Http\Controllers\Dashboard\User\AddressController;
 use App\Http\Controllers\Dashboard\User\Cart\CheckOutController;
+use App\Http\Controllers\Dashboard\User\OrderController;
 use App\Http\Controllers\Dashboard\User\ProfileController;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\CatController;
@@ -55,15 +56,14 @@ Route::group(['middleware' => ['redirect.role', 'auth', 'admin']], function () {
         Route::prefix('dashboard')->as('dashboard.')->middleware(['auth'])->group(function () {
             Route::get('home', [IndexController::class, 'home'])->name('home');
             Route::get('checkout', [CheckOutController::class, 'checkout'])->name('checkout');
+            Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('place.order');
 
             Route::prefix('profile')->as('profile.')->group(function () {
               Route::get('index', [ProfileController::class, 'index'])->name('index');
               Route::put('update', [ProfileController::class, 'update'])->name('update');
 
-              // address controller below here //
-
-              Route::post('address', [AddressController::class, 'saveAddress']);
-              Route::get('/search/countries', [AddressController::class, 'searchCountries']);
+              Route::post('address', [AddressController::class, 'saveAddress'])->name('address.save');
+              Route::put('address', [AddressController::class, 'saveAddress'])->name('address.update');
             });
         });
     });

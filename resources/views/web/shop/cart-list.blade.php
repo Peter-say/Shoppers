@@ -5,7 +5,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12 mb-0"><a href="{{ route('web.shop.index') }}">Home</a> <span class="mx-2 mb-0">/</span>
-                    <strong class="text-black">Cart</strong></div>
+                    <strong class="text-black">Cart</strong>
+                </div>
             </div>
         </div>
     </div>
@@ -15,9 +16,11 @@
     <script>
         function redirectToCheckout() {
             if ({{ Auth::check() ? 'true' : 'false' }}) {
-                window.location = '{{ route("user.dashboard.checkout") }}';
+                window.location = '{{ route('user.dashboard.checkout') }}';
             } else {
-                window.location = '{{ route("login") }}';
+                // Store the current URL in the session
+                sessionStorage.setItem('redirectUrl', window.location.href);
+                window.location = '{{ route('login') }}';
             }
         }
     </script>

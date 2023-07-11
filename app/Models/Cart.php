@@ -37,6 +37,12 @@ class Cart extends Model
             if ($cart) {
                 $count = $cart->cartItems()->count();
             }
+
+            // Retrieve guest cart items from the session
+            $guestCartItems = session()->get('cartItems');
+            if ($guestCartItems) {
+                $count += count($guestCartItems);
+            }
         } else {
             // User is not authenticated (guest)
             $sessionId = session()->getId();

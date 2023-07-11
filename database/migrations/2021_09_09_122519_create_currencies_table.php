@@ -19,8 +19,7 @@ class CreateCurrenciesTable extends Migration
             $table->string("name");
             $table->enum("type", [CurrencyConstants::CURRENCY_TYPE])->unique();
             $table->double("price_per_dollar");
-            $table->string("short_name", 20)->unique();
-            $table->string("logo");
+            $table->string("symbol")->unique();
             $table->string("status");
             $table->timestamps();
             $table->softDeletes();

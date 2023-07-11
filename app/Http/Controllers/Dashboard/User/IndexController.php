@@ -12,8 +12,10 @@ class IndexController extends Controller
    public function home()
    {
       $user = auth()->user();
+      $wallet = $user->wallet;
       return view('dashboard.user.index', [
          'user' => $user,
+         'wallet' => $wallet,
       ]);
    }
 }

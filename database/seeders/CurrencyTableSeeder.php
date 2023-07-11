@@ -21,16 +21,14 @@ class CurrencyTableSeeder extends Seeder
                 "name" => "US Dollar",
                 "type" => CurrencyConstants::DOLLAR_CURRENCY,
                 "price_per_dollar" => 1,
-                "short_name" => "$",
-                "logo" => "/",
+                "symbol" => "$",
                 "status" => StatusConstants::ACTIVE,
             ],
             [
                 "name" => "Nigerian Naira",
                 "type" => CurrencyConstants::NAIRA_CURRENCY,
                 "price_per_dollar" => 570,
-                "short_name" => "₦",
-                "logo" => "/",
+                "symbol" => "₦",
                 "status" => StatusConstants::ACTIVE
             ],
         ];
