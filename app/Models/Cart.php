@@ -55,4 +55,12 @@ class Cart extends Model
 
         return $count;
     }
+
+    public function calculateTotalPrice()
+    {
+        $cartItems = $this->cartItems()->get();
+        return $cartItems->sum(function ($cartItem) {
+            return $cartItem->price * $cartItem->quantity;
+        });
+    }
 }

@@ -12,8 +12,6 @@ class WalletController extends Controller
     {
         $user = Auth::user();
         $wallet = $user->wallet;
-
-        return view('wallet.balance', ['wallet' => $wallet]);
     }
     public function addFunds(Request $request)
     {
@@ -33,18 +31,11 @@ class WalletController extends Controller
     {
         $user = Auth::user();
         $wallet = $user->wallet;
-
-        // Perform validation on the request data
-
-        // Check if the wallet has sufficient balance
         if ($wallet->balance < $request->input('amount')) {
-            // Display an error message or redirect with an error
+           return back()->with('error_message', 'Insufficient balance');
         }
-
-        // Deduct the funds from the wallet balance
         $wallet->balance -= $request->input('amount');
         $wallet->save();
-
-        // Redirect or display success message
+        return back()->with('success_message', 'Your payment has been made successfully');
     }
 }
