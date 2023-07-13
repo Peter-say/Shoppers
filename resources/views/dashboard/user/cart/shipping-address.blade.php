@@ -91,10 +91,17 @@
                 </div>
 
                 @if (session()->has('success_message'))
-                    <div class="popup-message" id="popup-message">
+                    <div class="popup-message success" id="popup-message">
                         <p class="text-white">{{ session('success_message') }}</p>
                     </div>
                 @endif
+
+                @if (session()->has('error_message'))
+                    <div class="popup-message error" id="popup-message">
+                        <p class="text-white">{{ session('error_message') }}</p>
+                    </div>
+                @endif
+
             </div>
 
             {{-- <div class="form-group">
@@ -184,7 +191,7 @@
             <div class="form-group">
                 <label for="c_order_notes" class="text-black">Order Notes</label>
                 <textarea name="order_notes" id="c_order_notes" cols="30" rows="5" class="form-control"
-                    placeholder="Write your notes here...">{{ $shipping_address->order_notes }}</textarea>
+                    placeholder="Write your notes here...">{{ $shipping_address->order_notes ?? '' }}</textarea>
             </div>
             <div class="form-group d-flex justify-content-center">
                 <button class="btn btn-primary btn-md w-100">Save address</button>

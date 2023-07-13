@@ -5,9 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Product;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Event;
 use Livewire\Component;
 
 
@@ -91,8 +89,7 @@ class AddToCart extends Component
         ];
         CartItem::create($data);
         $this->resetInput(); // Reset the input field
-        session()->flash('success_message', 'Item added to cart successfully');
-        return redirect()->back();
+        return redirect()->back()->with('success_message', 'Item added to cart successfully');
     }
 
     private function mergeGuestCartItems($userCart, $guestCartItems)

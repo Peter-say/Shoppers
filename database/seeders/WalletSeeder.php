@@ -16,7 +16,7 @@ class WalletSeeder extends Seeder
     {
        Wallet::create([
         'user_id' => 1,
-        'balance' => number_format(500.00),
+        'balance' => number_format(5000000.00),
         'currency' => 'USD',
         'symbol' => '$',
         'status' => 'active',

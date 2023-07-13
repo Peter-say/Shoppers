@@ -29,11 +29,19 @@
             top: 0;
             left: 0;
             width: 100%;
-            background-color: green;
             padding: 10px;
             text-align: center;
             z-index: 9999;
         }
+
+        .popup-message.success {
+            background-color: green;
+        }
+
+        .popup-message.error {
+            background-color: red;
+        }
+
 
         .profile-container {
             position: relative;
@@ -91,17 +99,43 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var popup = document.getElementById('popup-message');
+
             setTimeout(function() {
                 popup.style.display = 'none';
             }, 4000);
+
+            // Optional: Hide the pop-up when clicking outside of it
+            document.addEventListener('click', function(event) {
+                if (event.target !== popup && !popup.contains(event.target)) {
+                    popup.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+    <script>
+        var walletRadio = document.getElementById('wallet-check-input');
+        var paypalRadio = document.getElementById('paypal-check-input');
+        var walletButton = document.getElementById('pay-with-wallet-button');
+        var paypalButton = document.getElementById('pay-with-paypal-button');
+
+        paypalButton.style.display = 'none';
+        walletRadio.addEventListener('change', function() {
+            if (this.checked) {
+                walletButton.style.display = 'block';
+                paypalButton.style.display = 'none';
+            }
         });
 
-        // Optional: Hide the pop-up when clicking outside of it
-        document.addEventListener('click', function(event) {
-            var popup = document.getElementById('popup-message');
-            if (event.target !== popup && !popup.contains(event.target)) {
-                popup.style.display = 'none';
+        paypalRadio.addEventListener('change', function() {
+            if (this.checked) {
+                walletButton.style.display = 'none';
+                paypalButton.style.display = 'block';
             }
+        });
+
+        document.getElementById('proceed-to-pay-modal-button').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevents the default form submission
         });
     </script>
 </body>

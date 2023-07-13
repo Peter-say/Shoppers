@@ -14,8 +14,15 @@ class CheckOutController extends Controller
     $user = auth()->user();
     $shipping_address = Address::where('user_id', $user->id)->first();
     $cart = Cart::where('user_id', $user->id)->first();
-    $cartItems = $cart->cartItems;
-    $totalPrice = $cart->calculateTotalPrice();
+    $cart = Cart::where('user_id', $user->id)->first();
+    if ($cart) {
+      $cartItems = $cart->cartItems;
+      $totalPrice = $cart->calculateTotalPrice() ?? 0;
+    } else {
+      $cartItems = [];
+      $totalPrice = 0;
+    }
+
     $wallet = $user->wallet;
 
     return view('dashboard.user.cart.checkout', [

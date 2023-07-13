@@ -60,7 +60,8 @@
                         <div class="card-bottom pt-3 px-3 mb-2">
                             <div class="d-flex flex-row justify-content-between text-align-center">
                                 <div class="d-flex flex-column"><span>Balance amount</span>
-                                    <p>{{$wallet->symbol}}<span class="text-white">{{number_format($wallet->balance)}}</span></p>
+                                    <p>{{ $wallet->symbol }}<span
+                                            class="text-white">{{ number_format($wallet->balance) }}</span></p>
                                 </div>
                                 <a href="" class="btn btn-secondary">Manage</a>
                             </div>
@@ -143,5 +144,17 @@
                 </div>
             </div>
         </div>
+
+        @if (session()->has('success_message'))
+            <div class="popup-message success" id="popup-message">
+                <p class="text-white">{{ session('success_message') }}</p>
+            </div>
+        @endif
+
+        @if (session()->has('error_message'))
+            <div class="popup-message error" id="popup-message">
+                <p class="text-white">{{ session('error_message') }}</p>
+            </div>
+        @endif
     </div>
 @endsection
