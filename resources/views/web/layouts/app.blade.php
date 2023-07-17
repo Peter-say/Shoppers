@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="{{ $web_assets }}/https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
     <link rel="stylesheet" href="{{ $web_assets }}/fonts/icomoon/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{ $web_assets }}/css/aos.css">
 
     <link rel="stylesheet" href="{{ $web_assets }}/css/style.css">
+    <link rel="stylesheet" href="{{ $web_assets }}/css/not-found.css">
 
     <style>
         #popup-message {
@@ -91,7 +92,6 @@
     <script src="{{ $web_assets }}/js/owl.carousel.min.js"></script>
     <script src="{{ $web_assets }}/js/jquery.magnific-popup.min.js"></script>
     <script src="{{ $web_assets }}/js/aos.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="{{ $web_assets }}/js/main.js"></script>
 
@@ -100,16 +100,18 @@
         document.addEventListener('DOMContentLoaded', function() {
             var popup = document.getElementById('popup-message');
 
-            setTimeout(function() {
-                popup.style.display = 'none';
-            }, 4000);
-
-            // Optional: Hide the pop-up when clicking outside of it
-            document.addEventListener('click', function(event) {
-                if (event.target !== popup && !popup.contains(event.target)) {
+            if (popup) { // Check if the popup element exists on the page
+                setTimeout(function() {
                     popup.style.display = 'none';
-                }
-            });
+                }, 4000);
+
+                // Optional: Hide the pop-up when clicking outside of it
+                document.addEventListener('click', function(event) {
+                    if (event.target !== popup && !popup.contains(event.target)) {
+                        popup.style.display = 'none';
+                    }
+                });
+            }
         });
     </script>
 
@@ -134,9 +136,11 @@
             }
         });
 
-        document.getElementById('proceed-to-pay-modal-button').addEventListener('click', function(event) {
+        function preventDefaultFormSubmission(event) {
             event.preventDefault(); // Prevents the default form submission
-        });
+        }
+        document.getElementById('proceed-to-pay-modal-button').addEventListener('click', preventDefaultFormSubmission);
+        document.getElementById('pay-with-paypal-button').addEventListener('click', preventDefaultFormSubmission);
     </script>
 </body>
 

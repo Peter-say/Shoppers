@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Http\Livewire;
+
+use App\Models\Cart;
 use Livewire\Component;
 
 class CartCounter extends Component
 {
-    public $cartItemCount;
+    protected $cartItemCount;
 
-    protected $listeners = ['cartItemAdded' => 'updateCartItemCount'];
+    protected $listeners = ['itemAdded' => 'updateCartItemCount'];
 
     public function mount()
     {
@@ -16,7 +18,7 @@ class CartCounter extends Component
 
     public function updateCartItemCount()
     {
-        $this->cartItemCount = session('cart_item_count', 0);
+        $this->cartItemCount = Cart::countItems();
     }
 
     public function render()

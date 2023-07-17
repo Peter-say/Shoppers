@@ -18,4 +18,9 @@ class IndexController extends Controller
          'wallet' => $wallet,
       ]);
    }
+
+   public function thankYou()
+   {
+      return view('dashboard.user.cart.thank');
+   }
 }

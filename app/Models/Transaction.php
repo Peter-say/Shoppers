@@ -11,6 +11,11 @@ class Transaction extends Model
 
     protected $guarded = [];
 
+    public function wallet()
+    {
+        return $this->belongsTo(Wallet::class);
+    }
+
     public static function generateTransactionReference()
     {
         $prefix = 'TRN'; // Prefix for the transaction reference

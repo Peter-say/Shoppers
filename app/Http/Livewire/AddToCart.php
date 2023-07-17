@@ -21,6 +21,7 @@ class AddToCart extends Component
     public $quantity;
     public $size;
     public $price;
+    public $showSuccessMessage = false;
 
     protected $rules = [
         'quantity' => 'required|numeric|min:1',
@@ -113,6 +114,7 @@ class AddToCart extends Component
                     'size' => $cartItemData['size'],
                 ];
                 CartItem::create($data);
+                $this->showSuccessMessage = true;
             }
         }
     }

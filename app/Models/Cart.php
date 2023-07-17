@@ -53,8 +53,10 @@ class Cart extends Model
             }
         }
 
-        return $count;
+        return  $count;
     }
+
+    // this function handle the calculation of the total price of items added to cart //
 
     public function calculateTotalPrice()
     {

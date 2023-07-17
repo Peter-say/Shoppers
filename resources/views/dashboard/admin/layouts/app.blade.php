@@ -42,13 +42,13 @@
 <body class="animsition">
     <div class="page-wrapper">
         @if (Auth::check())
-            @include('dashboard.layouts.mobile-navigation')
-            @include('dashboard.layouts.sidebar')
+            @include('dashboard.admin.layouts.mobile-navigation')
+            @include('dashboard.admin.layouts.sidebar')
         @endif
         <!-- PAGE CONTAINER-->
         <div class="page-container">
             @if (Auth::check())
-                @include('dashboard.layouts.desktop-navigation')
+                @include('dashboard.admin.layouts.desktop-navigation')
             @endif
             @yield('contents')
 

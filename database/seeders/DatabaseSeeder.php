@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProductCategorySeeder::class);
         $this->call(CurrencyTableSeeder::class);
         \App\Models\Product::factory(15)->create();
-        // $this->call(WalletSeeder::class);
+        $this->call(WalletSeeder::class);
         $this->call(CountryTableSeeder::class);
         $this->call(StateTableSeeder::class);
 

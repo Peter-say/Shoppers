@@ -11,7 +11,11 @@ class OrderController extends Controller
 {
     public function placeOrder(Request $request, PaymentService $paymentService)
     {
-        OrderService::processOrder($request, $paymentService);
-        return redirect()->route('user.dashboard.home')->with('success_message', 'Your order has been made successfuly');
+        $result = OrderService::processOrder($request, $paymentService);
+        if ($result['success']) {
+            return redirect()->route('user.dashboard.thank-you');
+        } else {
+            return back()->with('error_message', $result['message']);
+        }
     }
 }

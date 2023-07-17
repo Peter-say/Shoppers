@@ -1,4 +1,4 @@
-@extends('dashboard.layouts.app')
+@extends('dashboard.admin.layouts.app')
 <div class="page-wrapper">
     <div class="page-content--bge5">
         <div class="container">

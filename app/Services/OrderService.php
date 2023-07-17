@@ -29,9 +29,11 @@ class OrderService
             return back()->with('error_message', 'No Items found in your cart. Kindly add items to continue');
         }
 
-        // Check if the user has a shipping address
         if (!Address::where('user_id', $user->id)->exists()) {
-            return back()->with('error_message', 'Please update your shipping address before placing an order.');
+            return [
+                'success' => false,
+                'message' => 'Please update your shipping address before placing an order.',
+            ];
         }
 
         // Retrieve the existing address
@@ -53,16 +55,32 @@ class OrderService
             ]);
         }
 
-         // clear the carts from database
+        // clear the carts from database
         $cart->cartItems()->delete();
         $cart->delete();
 
-        // process the payment here //
-        $paymentService->deductFunds($request);
-
-        // create new transaction instance //
+        // get the payment ment from the input
         $payment_method = $request->input('payment_method');
 
+
+        // Process the payment here
+        $deductedAmount = $request->input('amount');
+        $deductedAmount = $paymentService->deductFunds($request, $deductedAmount);
+
+        // Create a new wallet transaction record to store the deducted amount and other details
+        $transaction = new Transaction();
+        $transaction->user_id = $user->id;
+        $transaction->amount = $deductedAmount;
+        $transaction->type = 'deduction';
+        $transaction->status = 'completed';
+        $transaction->order_id = $order->id;
+        $transaction->payment_method = $payment_method;
+        $transaction->reference_no = Transaction::generateTransactionReference();
+        $transaction->description = 'Paid Purchase';
+        $transaction->save();
+
+
+        // create new transaction instance //
         $transaction = Transaction::create([
             'user_id' => $user->id,
             'order_id' => $order->id,
@@ -84,6 +102,6 @@ class OrderService
         $buyerEmail = $user->email;
         Mail::to($buyerEmail)->send(new OrderShipped($order));
 
-        return redirect()->route('user.dashboard.home')->with('success_message', 'Your order has been made successfuly');
+        return ['success' => true];
     }
 }

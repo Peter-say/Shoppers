@@ -24,11 +24,12 @@
                             <li>
                                 <a href="{{ route('web.shop.cart') }}" class="site-cart">
                                     <span class="icon icon-shopping_cart"></span>
-                                    @livewire('navigation-counter')
+                                    <span class="count">{{$cartItemCount}}</span>
+                                    
                                 </a>
                             </li>
-                            <li class="d-inline-block d-md-none ml-md-0"><a href="#"
-                                    class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
+                            <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
+
                         </ul>
                     </div>
                 </div>

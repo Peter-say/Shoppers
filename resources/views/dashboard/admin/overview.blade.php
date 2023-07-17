@@ -1,4 +1,4 @@
-@extends('dashboard.layouts.app')
+@extends('dashboard.admin.layouts.app')
 
 @section('contents')
 
@@ -78,7 +78,7 @@
                                     <i class="zmdi zmdi-money"></i>
                                 </div>
                                 <div class="text">
-                                    <h2>$1,060,386</h2>
+                                    <h2>${{ number_format($account_balance) }}</h2>
                                     <span>total earnings</span>
                                 </div>
                             </div>

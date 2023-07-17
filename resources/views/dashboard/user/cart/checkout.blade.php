@@ -117,13 +117,14 @@
                                     </div>
 
                                     <div class="form-group" id="pay-with-wallet-button">
-                                        <button id="proceed-to-pay-modal-button" class="btn btn-primary btn-lg py-3 btn-block " data-toggle="modal"
+                                        <button id="proceed-to-pay-modal-button"
+                                            class="btn btn-primary btn-lg py-3 btn-block " data-toggle="modal"
                                             data-target="#WalletModal">Proceed to pay
                                         </button>
                                     </div>
                                     <div class="form-group" id="pay-with-paypal-button">
-                                        <button class="btn btn-primary btn-lg py-3 btn-block" disabled>Continue with Paypal
-                                        </button>
+                                        <a href="{{route('user.dashboard.paypal.checkout')}}" class="btn btn-primary btn-lg py-3 btn-block">Continue with Paypal
+                                        </a>
                                     </div>
                                     @include('dashboard.user.wallet.modal')
 

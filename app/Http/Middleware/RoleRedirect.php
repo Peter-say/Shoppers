@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class RedirectBasedOnRole
+class RoleRedirect
 {
     /**
      * Handle an incoming request.
@@ -15,16 +15,19 @@ class RedirectBasedOnRole
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Check if the user is authenticated
         if ($request->user()) {
             // Check the role of the authenticated user
-            $role = $request->user()->role; // Replace 'role' with the actual column name for role in your user table
+            $role = $request->user()->role;
 
             // Redirect the user based on their role
-            if ($role === 'admin') {
-                return redirect()->route('admin.dashboard.home');
-            } else {
-                return redirect()->route('user.dashboard.home');
+            if ($role === 'User') {
+                if ($request->route()->getName() !== 'user.dashboard.home') {
+                    return redirect()->route('user.dashboard.home');
+                }
+            } else if ($role === 'Admin') {
+                if ($request->route()->getName() !== 'admin.dashboard.home') {
+                    return redirect()->route('admin.dashboard.home');
+                }
             }
         }
         return $next($request);

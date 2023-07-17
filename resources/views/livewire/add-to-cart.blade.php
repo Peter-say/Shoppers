@@ -75,7 +75,8 @@
                         </div>
 
                         <input type="hidden" value="{{ $product->price }}" name="price" wire:model="price">
-                        <button wire:click.prevent="addToCart({{ $product->id }})" class="buy-now btn btn-sm btn-primary" id="add-to-cart-button">Add to cart</button>
+                        <button wire:click.prevent="addToCart({{ $product->id }})"
+                            class="buy-now btn btn-sm btn-primary" id="add-to-cart-button">Add to cart</button>
                         </p>
 
 
@@ -83,13 +84,13 @@
                 </div>
             </form>
             @if (session()->has('success_message'))
-            <div class="popup-message success" id="popup-message">
-                <p class="text-white">{{ session('success_message') }}</p>
-            </div>
-            <div class="col-12 d-flex justify-content-center">
-                <a href="{{ route('web.shop.index') }}" class="btn btn-primary">Continue Shopping</a>
-            </div>
-        @endif
+                <div class="popup-message success" id="popup-message">
+                    <p class="text-white">{{ session('success_message') }}</p>
+                </div>
+                <div class="col-12 d-flex justify-content-center">
+                    <a href="{{ route('web.shop.index') }}" class="btn btn-primary">Continue Shopping</a>
+                </div>
+            @endif
 
         </div>
     </div>
@@ -126,6 +127,6 @@
             </div>
         </div>
     </div>
-    
+
 
 </div>
