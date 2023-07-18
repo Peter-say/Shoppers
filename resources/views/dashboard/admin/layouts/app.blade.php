@@ -12,6 +12,12 @@
     <!-- Title Page-->
     <title>Inbox</title>
 
+    <script>
+        tinymce.init({
+            selector: 'textarea', // Target the appropriate textarea elements
+        });
+    </script>
+
     <!-- Fontfaces CSS-->
     <link href="{{ $dashboard_assets }}/css/font-face.css" rel="stylesheet" media="all">
     <link href="{{ $dashboard_assets }}/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet"
@@ -37,6 +43,31 @@
 
     <!-- Main CSS-->
     <link href="{{ $dashboard_assets }}/css/theme.css" rel="stylesheet" media="all">
+    <style>
+        .required::after {
+            content: '*';
+            color: red;
+            margin-left: 5px;
+        }
+
+        #popup-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+            z-index: 9999;
+        }
+
+        .popup-message.success {
+            background-color: green;
+        }
+
+        .popup-message.error {
+            background-color: red;
+        }
+    </style>
 </head>
 
 <body class="animsition">
@@ -75,6 +106,29 @@
     <!-- Main JS-->
     <script src="{{ $dashboard_assets }}/js/main.js"></script>
 
+    {{-- TINYMCE --}}
+    <script src="https://cdn.tiny.cloud/1/9kceokxig3p7h7aj82ykjwy3ohrak2bq8wozjh90w23fr1mz/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script>
+    <script src="{{ $dashboard_assets }}/js/tinymce-config.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var popup = document.getElementById('popup-message');
+
+            if (popup) { // Check if the popup element exists on the page
+                setTimeout(function() {
+                    popup.style.display = 'none';
+                }, 4000);
+
+                // Optional: Hide the pop-up when clicking outside of it
+                document.addEventListener('click', function(event) {
+                    if (event.target !== popup && !popup.contains(event.target)) {
+                        popup.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Dashboard\Admin\HomeController;
 use App\Http\Controllers\Dashboard\User\IndexController;
 use App\Http\Controllers\Dashboard\Admin\ProductCategoryController;
+use App\Http\Controllers\Dashboard\Admin\ProductController;
 use App\Http\Controllers\Dashboard\AdminProductController;
 use App\Http\Controllers\Dashboard\User\AddressController;
 use App\Http\Controllers\Dashboard\User\Cart\CheckOutController;
@@ -47,6 +48,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('home', [HomeController::class, 'home'])->name('home');
         Route::resource('product', ProductController::class);
         Route::resource('product-category', ProductCategoryController::class);
+
     });
 });
 

@@ -35,11 +35,14 @@ class ProductFactory extends Factory
         $random_images = $images[array_rand($images)];
         $ImageFileName = basename($random_images);
 
+        $faker = \Faker\Factory::create();
+        $meta_keyword = implode(',', $faker->words(mt_rand(3, 5)));
+
         return [
             'user_id' => 1,
             'category_id' => mt_rand(1, 2),
-            // 'store_id' => 1,
-            // 'brand_id' => 2,
+            'store_id' => mt_rand(1, 5),
+            'brand_id' => mt_rand(1, 5),
             'currency_id' => 1,
             'name' => $this->faker->name,
             'amount' =>  $amount =   $this->faker->randomFloat(8, 2, 1000),
@@ -48,6 +51,8 @@ class ProductFactory extends Factory
             'discount_period' => null,
             'basic_unit' =>  'kg',
             'description' => $this->faker->paragraph($nbSentences = 30),
+            'meta_description' => $this->faker->text($nbSentences  = 5),
+            'meta_keyword' => $meta_keyword,
             'images' => $ImageFileName,
             'status' => 'active',
 

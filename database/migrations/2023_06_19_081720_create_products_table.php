@@ -15,16 +15,18 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('category_id')->constrained('product_categories')->cascadeOnDelete();
-            // $table->foreignId("store_id")->constrained("stores")->cascadeOnDelete();
-            // $table->foreignId("brand_id")->constrained("brands")->cascadeOnDelete();
+            $table->foreignId("store_id")->constrained("stores")->cascadeOnDelete();
+            $table->foreignId("brand_id")->constrained("brands")->cascadeOnDelete();
             $table->foreignId("currency_id")->constrained("currencies");
             $table->string('name');
             $table->decimal('amount', 8, 2);
             $table->decimal('discount_price', 8, 2)->nullable();
-            $table->decimal('discount_percent');
+            $table->decimal('discount_percent')->nullable();
             $table->string('discount_period')->nullable();
             $table->string('basic_unit'); // e.g, fibre, kg, litre, etc //
             $table->text('description'); // product spec and details
+            $table->string('meta_description')->nullable();
+            $table->string('meta_keyword')->nullable();
             $table->string('status')->default('active');
             $table->softDeletes();
             $table->timestamps();

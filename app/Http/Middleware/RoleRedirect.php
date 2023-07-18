@@ -24,11 +24,7 @@ class RoleRedirect
                 if ($request->route()->getName() !== 'user.dashboard.home') {
                     return redirect()->route('user.dashboard.home');
                 }
-            } else if ($role === 'Admin') {
-                if ($request->route()->getName() !== 'admin.dashboard.home') {
-                    return redirect()->route('admin.dashboard.home');
-                }
-            }
+            } 
         }
         return $next($request);
     }
