@@ -16,6 +16,9 @@
                      <a class="js-arrow" href="#">
                          <i class="fas fa-chart-bar"></i>Product</a>
                      <ul class="list-unstyled navbar__sub-list js-sub-list">
+                        <li>
+                            <a href="{{route('admin.dashboard.product.index')}}">View Product</a>
+                        </li>
                          <li>
                              <a href="{{route('admin.dashboard.product.create')}}">Add Product</a>
                          </li>

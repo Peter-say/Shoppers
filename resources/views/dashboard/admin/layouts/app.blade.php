@@ -68,6 +68,7 @@
             background-color: red;
         }
     </style>
+    @livewireStyles
 </head>
 
 <body class="animsition">
@@ -103,6 +104,9 @@
     <script src="{{ $dashboard_assets }}/vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="{{ $dashboard_assets }}/vendor/select2/select2.min.js"></script>
 
+ 
+    @livewireScripts
+
     <!-- Main JS-->
     <script src="{{ $dashboard_assets }}/js/main.js"></script>
 
@@ -118,7 +122,7 @@
             if (popup) { // Check if the popup element exists on the page
                 setTimeout(function() {
                     popup.style.display = 'none';
-                }, 4000);
+                }, 6000);
 
                 // Optional: Hide the pop-up when clicking outside of it
                 document.addEventListener('click', function(event) {
