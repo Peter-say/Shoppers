@@ -104,6 +104,8 @@
     <script src="{{ $dashboard_assets }}/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
     <script src="{{ $dashboard_assets }}/vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="{{ $dashboard_assets }}/vendor/select2/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/lightbox2/2.11.3/js/lightbox.min.js"></script>
+
 
 
     @livewireScripts

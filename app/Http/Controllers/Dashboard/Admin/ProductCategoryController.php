@@ -16,7 +16,7 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        $categories = ProductCategory::all();
+        $categories = ProductCategory::whereNull('parent_id')->get();
         return view('dashboard.admin.product.category.index', [
             'categories' => $categories,
         ]);

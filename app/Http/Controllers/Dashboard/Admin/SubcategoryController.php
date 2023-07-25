@@ -23,9 +23,9 @@ class SubcategoryController extends Controller
      */
     public function create()
     {
-       //
+        //
     }
-    
+
     public function createSubcategory($id)
     {
         $statusOption = StatusConstants::ACTIVE_OPTIONS;
@@ -87,16 +87,48 @@ class SubcategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $statusOption = StatusConstants::ACTIVE_OPTIONS;
+        $category = ProductCategory::findOrFail($id);
+        return view('dashboard.admin.product.category.subcategory.edit',[
+            'category' => $category,
+            'statusOptions' => $statusOption,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $request->validate([
+                'parent_id' => 'required|exists:product_categories,id',
+                'name' => 'required|string|max:30',
+                'image' => 'nullable|image', // Allow image to be nullable for updating
+                'status' => 'required|string|in:Active,Inactive',
+            ]);
+
+            $subcategory = ProductCategory::findOrFail($id); // Find the existing subcategory by its ID
+
+            // Update the subcategory attributes based on the validated request data
+            $subcategory->update([
+                'parent_id' => $request->input('parent_id'),
+                'name' => $request->input('name'),
+                'status' => $request->input('status'),
+            ]);
+
+            // Check if the request has an image and update it accordingly
+            if ($request->hasFile('image')) {
+                $image_path = FileHelpers::saveImageRequest($request->file('image'), 'product/category/subcategory/images/');
+                $subcategory->update(['image' => $image_path]);
+            }
+
+            return redirect()->route('admin.dashboard.product-category.index')->with('success_message', 'Subcategory Updated');
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(['image' => 'Error during image upload: ' . $e->getMessage()]);
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.
