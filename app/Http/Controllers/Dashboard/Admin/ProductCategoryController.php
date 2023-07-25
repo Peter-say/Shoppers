@@ -6,6 +6,7 @@ use App\Constants\StatusConstants;
 use App\Helpers\FileHelpers;
 use App\Http\Controllers\Controller;
 use App\Models\ProductCategory;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class ProductCategoryController extends Controller
@@ -16,7 +17,7 @@ class ProductCategoryController extends Controller
     public function index()
     {
         $categories = ProductCategory::all();
-        return view('dashboard.admin.product.category.index',[
+        return view('dashboard.admin.product.category.index', [
             'categories' => $categories,
         ]);
     }
@@ -78,41 +79,46 @@ class ProductCategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $status = StatusConstants::ACTIVE_OPTIONS;
+        $statusOptions = StatusConstants::ACTIVE_OPTIONS;
         $category = ProductCategory::where('id', $id)->first();
         return view('dashboard.admin.product.category.edit', [
             'category' => $category,
-            'status' => $status,
+            'statusOptions' => $statusOptions,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
+
+
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'name' => 'required|max:30',
-            'image' => 'required|image',
-            'status' => 'required|string',
-        ]);
+        try {
+            $category = ProductCategory::findOrFail($id);
+            $old_image = $category->image;
 
-        $category = ProductCategory::where('id', $id)->first();
-        $old_image = $category->image;
+            // Process image upload
+            if ($request->file('image')) {
+                $image_path = FileHelpers::saveImageRequest($request->image, 'product/category/images/');
+            } else {
+                $image_path = $old_image;
+            }
 
-        if ($request->file('image')) {
-            $image_path = FileHelpers::saveImageRequest($request->image, 'product/category/images/');
-        } else {
-            $image_path = $old_image;
+            $category->update([
+                'name' => $request->input('name'),
+                'image' => $image_path,
+                'status' => $request->input('status'),
+            ]);
+            return redirect()->route('admin.dashboard.product-category.index')
+                ->with('success_message', 'Category Updated');
+        } catch (ModelNotFoundException $e) {
+            return back()->with('error_message', 'Category not found.');
+        } catch (\Exception $e) {
+            return back()->with('error_message', 'An error occurred while updating the category.');
         }
-
-        $category->update([
-            'name' => $request->input('name'),
-            'image' => $image_path,
-            'status' => $request->input('status'),
-        ]);
-        return back()->with('success_message', 'Category Updated');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -121,5 +127,6 @@ class ProductCategoryController extends Controller
     {
         $category = ProductCategory::where('id', $id)->first();
         $category->delete();
+        return back()->with('success_message', 'Category Deleted');
     }
 }

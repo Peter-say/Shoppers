@@ -10,7 +10,8 @@
                 </div>
             </div>
             <div class="container-fluid au-card mb-2 col-8">
-                <form action="{{route('admin.dashboard.product-category.update', $category->id)}}" enctype="multipart/form-data" method="post">
+                <form action="{{ route('admin.dashboard.product-category.update', $category->id) }}"
+                    enctype="multipart/form-data" method="post">
                     @csrf @method('PUT')
                     <div class="row justify-content-center">
                         <!-- Use justify-content-center class here -->
@@ -21,7 +22,7 @@
                                         class="required"></span></label>
                                 <input id="cc-payment" type="text" name="name"
                                     class="form-control @error('name') is-invalid @enderror" required
-                                   value="{{old('name') ?? $category->name}}" placeholder="Enter Name">
+                                    value="{{ old('name') ?? $category->name }}" placeholder="Enter Name">
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -29,14 +30,14 @@
                                 @enderror
                             </div>
                         </div>
-                        
+
                         <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
                             <div class="form-group">
                                 <label for="cc-payment" class="control-label mb-1">Image<span
                                         class="required"></span></label>
-                                <input id="cc-payment"type="file"
-                                    class="form-control @error('image') is-invalid @enderror" required
-                                    value="{{ old('image') ?? $category->image}}" placeholder="upload image">
+                                <input id="cc-payment"type="file" name="image"
+                                    class="form-control @error('image') is-invalid @enderror"
+                                    value="{{ old('image') ?? $category->image }}" placeholder="upload image">
                                 @error('image')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -48,9 +49,15 @@
                             <div class="form-group">
                                 <label for="cc-payment" class="control-label mb-1">Status<span
                                         class="required"></span></label>
-                                <input id="cc-payment" type="text" status="status"
-                                    class="form-control @error('status') is-invalid @enderror" required
-                                    value="{{ old('status') ?? $category->status }}" placeholder="Enter status">
+                                <select id="status" name="status"
+                                    class="form-control  @error('status') is-invalid @enderror" required>
+                                    <option value="">Select Status</option>
+                                    @foreach ($statusOptions as $status)
+                                        <option value="{{ $status }}" {{ old('status', $category->status) == $status ? 'selected' : '' }}>
+                                            {{ $status }}
+                                        </option>
+                                    @endforeach
+                                </select>
                                 @error('status')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
