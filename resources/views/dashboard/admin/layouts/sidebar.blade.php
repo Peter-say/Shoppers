@@ -9,18 +9,30 @@
          <nav class="navbar-sidebar">
              <ul class="list-unstyled navbar__list">
                  <li class="active has-sub">
-                     <a class="js-arrow" href="{{route('admin.dashboard.home')}}">
+                     <a class="js-arrow" href="{{ route('admin.dashboard.home') }}">
                          <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                  </li>
                  <li>
                      <a class="js-arrow" href="#">
                          <i class="fas fa-chart-bar"></i>Product</a>
                      <ul class="list-unstyled navbar__sub-list js-sub-list">
-                        <li>
-                            <a href="{{route('admin.dashboard.product.index')}}">View Product</a>
-                        </li>
                          <li>
-                             <a href="{{route('admin.dashboard.product.create')}}">Add Product</a>
+                             <a href="{{ route('admin.dashboard.product.index') }}">View Product</a>
+                         </li>
+                         <li>
+                             <a href="{{ route('admin.dashboard.product.create') }}">Add Product</a>
+                         </li>
+                         <li>
+                             <a class="js-arrow" href="#">
+                                 <i class="fas fa-chart-bar"></i>Category</a>
+                             <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                 <li>
+                                     <a href="{{ route('admin.dashboard.product-category.index') }}">View Categories</a>
+                                 </li>
+                                 <li>
+                                     <a href="{{ route('admin.dashboard.product-category.create') }}">Add a Category</a>
+                                 </li>
+                             </ul>
                          </li>
                      </ul>
                  </li>

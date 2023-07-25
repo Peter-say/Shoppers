@@ -18,6 +18,7 @@
         });
     </script>
 
+
     <!-- Fontfaces CSS-->
     <link href="{{ $dashboard_assets }}/css/font-face.css" rel="stylesheet" media="all">
     <link href="{{ $dashboard_assets }}/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet"
@@ -104,7 +105,7 @@
     <script src="{{ $dashboard_assets }}/vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="{{ $dashboard_assets }}/vendor/select2/select2.min.js"></script>
 
- 
+
     @livewireScripts
 
     <!-- Main JS-->
@@ -132,6 +133,20 @@
                 });
             }
         });
+    </script>
+
+    <script>
+        function confirmDelete() {
+            if (confirm("Are you sure you want to delete this product?")) {
+                document.getElementById('delete-product-form').submit();
+            }
+        }
+        //   category
+        function confirmDelete() {
+            if (confirm("Are you sure you want to delete this category?")) {
+                document.getElementById('delete-category-form').submit();
+            }
+        }
     </script>
 </body>
 

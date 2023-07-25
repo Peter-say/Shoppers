@@ -126,13 +126,6 @@
             </div>
         @endif
 
-        <script>
-            function confirmDelete() {
-                if (confirm("Are you sure you want to delete this product?")) {
-                    document.getElementById('delete-product-form').submit();
-                }
-            }
-        </script>
     </div>
     <!-- END MAIN CONTENT-->
 @endsection

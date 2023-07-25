@@ -21,7 +21,7 @@ class AddToCart extends Component
     public $quantity;
     public $size;
     public $price;
-    public $showSuccessMessage = false;
+
 
     protected $rules = [
         'quantity' => 'required|numeric|min:1',
@@ -55,6 +55,7 @@ class AddToCart extends Component
         if (Auth::check()) {
 
             $user = Auth::user();
+
             $userCart = Cart::where('user_id', $user->id)->first();
 
             $userCart = $userCart ?? new Cart();
@@ -75,7 +76,7 @@ class AddToCart extends Component
 
             // Retrieve guest cart items from the database
             $guestCartItems = CartItem::where('cart_id', $userCart->id)->get();
-
+           
             // Store the guest cart items in the session
             session()->put('cartItems', $guestCartItems->toArray());
         }
@@ -97,27 +98,30 @@ class AddToCart extends Component
     {
         foreach ($guestCartItems as $cartItemData) {
             $existingCartItem = CartItem::where('cart_id', $userCart->id)
-                ->where('product_id', $cartItemData['product_id'])
+                ->where('product_id', $cartItemData->product_id) // Assuming product_id is the correct column name
                 ->first();
 
             if ($existingCartItem) {
                 // Update the quantity of the existing cart item
-                $existingCartItem->quantity += $cartItemData['quantity'];
+                $existingCartItem->quantity += $cartItemData->quantity;
                 $existingCartItem->save();
             } else {
+                // Debugging: Check if the new cart item data is correct
+
                 // Create a new cart item
                 $data = [
                     'cart_id' => $userCart->id,
-                    'product_id' => $cartItemData['product_id'],
-                    'quantity' => $cartItemData['quantity'],
-                    'price' => $cartItemData['price'],
-                    'size' => $cartItemData['size'],
+                    'product_id' => $cartItemData->product_id,
+                    'quantity' => $cartItemData->quantity,
+                    'price' => $cartItemData->price,
+                    'size' => $cartItemData->size,
                 ];
                 CartItem::create($data);
-                $this->showSuccessMessage = true;
             }
         }
     }
+
+
 
 
     private function getGuestCart()
@@ -136,8 +140,6 @@ class AddToCart extends Component
 
         return $guestCart;
     }
-
-
     private function resetInput()
     {
         $this->quantity = null;

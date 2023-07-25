@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{ $web_assets }}/css/owl.carousel.min.css">
     <link rel="stylesheet" href="{{ $web_assets }}/css/owl.theme.default.min.css">
     <link rel="stylesheet" href=" https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+    <link href="https://cdn.jsdelivr.net/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
 
     @livewireStyles
 
@@ -94,6 +95,7 @@
     <script src="{{ $web_assets }}/js/aos.js"></script>
 
     <script src="{{ $web_assets }}/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/lightbox2/2.11.3/js/lightbox.min.js"></script>
 
 
     <script>

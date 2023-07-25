@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
+use App\Constants\StatusConstants;
+use App\Helpers\FileHelpers;
 use App\Http\Controllers\Controller;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 
 class ProductCategoryController extends Controller
@@ -12,7 +15,10 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = ProductCategory::all();
+        return view('dashboard.admin.product.category.index',[
+            'categories' => $categories,
+        ]);
     }
 
     /**
@@ -20,7 +26,8 @@ class ProductCategoryController extends Controller
      */
     public function create()
     {
-        //
+        $statusOptions = StatusConstants::ACTIVE_OPTIONS;
+        return view('dashboard.admin.product.category.create', compact('statusOptions'));
     }
 
     /**
@@ -28,7 +35,34 @@ class ProductCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:30',
+            'status' => 'required|string',
+            'image' => 'required|image|mimes:png,jpg,webm',
+        ]);
+
+        try {
+
+            $status = $request->input('status');
+            if (!in_array($status, ['Active', 'Inactive'])) {
+                return back()->withInput()->withErrors(['status' => 'Invalid status value.']);
+            }
+
+            if ($request->file('image')) {
+                $image_path = FileHelpers::saveImageRequest($request->image, 'product/category/images/');
+            } else {
+                return back()->withInput()->withErrors(['image' => 'Image upload failed.']);
+            }
+            ProductCategory::create([
+                'name' => $request->input('name'),
+                'image' => $image_path,
+                'status' => $status,
+            ]);
+
+            return redirect()->route('admin.dashboard.product-category.index')->with('success_message', 'Category Created');
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(['image' => 'Error during image upload: ' . $e->getMessage()]);
+        }
     }
 
     /**
@@ -44,7 +78,12 @@ class ProductCategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $status = StatusConstants::ACTIVE_OPTIONS;
+        $category = ProductCategory::where('id', $id)->first();
+        return view('dashboard.admin.product.category.edit', [
+            'category' => $category,
+            'status' => $status,
+        ]);
     }
 
     /**
@@ -52,7 +91,27 @@ class ProductCategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:30',
+            'image' => 'required|image',
+            'status' => 'required|string',
+        ]);
+
+        $category = ProductCategory::where('id', $id)->first();
+        $old_image = $category->image;
+
+        if ($request->file('image')) {
+            $image_path = FileHelpers::saveImageRequest($request->image, 'product/category/images/');
+        } else {
+            $image_path = $old_image;
+        }
+
+        $category->update([
+            'name' => $request->input('name'),
+            'image' => $image_path,
+            'status' => $request->input('status'),
+        ]);
+        return back()->with('success_message', 'Category Updated');
     }
 
     /**
@@ -60,6 +119,7 @@ class ProductCategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = ProductCategory::where('id', $id)->first();
+        $category->delete();
     }
 }

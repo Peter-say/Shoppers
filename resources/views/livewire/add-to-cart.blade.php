@@ -16,8 +16,8 @@
             <form method="post">
                 @csrf
                 <div class="row">
-                    <div class="0">
-                        <img src="{{ asset('web\images\person_1.jpg') }}" alt="Image" class="img-fluid">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                        <img class="img-fluid " src="{{ asset($product->cover_image) }}" alt="Image placeholder"></a>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                         <h2 class="text-black">{{ $product->name }}</h2>
@@ -59,18 +59,20 @@
 
                         <div class="mb-5">
                             <div class="input-group mb-3" style="max-width: 120px;">
-                                {{-- <div class="input-group-prepend">
-                                    <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
-                                </div> --}}
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-outline-primary js-btn-minus"
+                                        wire:click="decrementQuantity()" type="button">&minus;</button>
+                                </div>
                                 <input type="text" name="quantity" class="form-control text-center" value="1"
                                     placeholder="Enter Quantity" aria-label="Example text with button addon"
                                     aria-describedby="button-addon1" wire:model="quantity">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-primary js-btn-plus" wire:click="incrementQuantity()"
+                                        type="button">&plus;</button>
+                                </div>
                                 @error('quantity')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
-                                {{-- <div class="input-group-append">
-                                    <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
-                                </div> --}}
                             </div>
                         </div>
 
@@ -89,6 +91,12 @@
                 </div>
                 <div class="col-12 d-flex justify-content-center">
                     <a href="{{ route('web.shop.index') }}" class="btn btn-primary">Continue Shopping</a>
+                </div>
+            @endif
+
+            @if (session()->has('success_message'))
+                <div class="popup-message success" id="popup-message">
+                    <p class="text-white">{{ session('success_message') }}</p>
                 </div>
             @endif
 

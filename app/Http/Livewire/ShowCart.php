@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Models\Cart;
-use App\Models\CartItem;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -68,7 +67,7 @@ class ShowCart extends Component
         $cartItem->delete();
         $this->updateCartItems();
         $this->calculateTotalPrice();
-        session()->flash('success_message', 'Item removed from cart successfully');
+        return back()->with('success_message', 'Item removed from cart successfully');
     }
 
 

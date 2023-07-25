@@ -9,7 +9,9 @@
                 </div>
             </div>
         </div>
+
     </div>
+
 
     @livewire('show-cart')
 

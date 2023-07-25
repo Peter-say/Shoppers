@@ -1,5 +1,10 @@
 @extends('web.layouts.app')
 
+<style>
+    .img-fluid {
+      height: 40vh;
+    }
+</style>
 @section('contents')
     <div class="bg-light py-3">
         <div class="container">
@@ -52,14 +57,17 @@
                     <div class="row mb-5">
 
                         @foreach ($products as $product)
-                            <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
+                            <div class="col-sm-6 col-lg-4 mb-4 product-cover" data-aos="fade-up">
                                 <div class="block-4 text-center border">
-                                    <figure class="block-4-image">
-                                        <a href="{{route('web.shop.product.details', $product->id)}}"><img src="{{public_path('web/imags/' .$product->images)}}" alt="Image placeholder"
-                                                class="img-fluid"></a>
+                                    <figure class="block-4-image ">
+                                        <a href="{{ route('web.shop.product.details', $product->id) }}">
+                                            <img class="img-fluid " src="{{ asset($product->cover_image) }}"
+                                                alt="Image placeholder"></a>
                                     </figure>
                                     <div class="block-4-text p-4">
-                                        <h3><a href="{{route('web.shop.product.details', $product->id)}}">{{ $product->name }}</a></h3>
+                                        <h3><a
+                                                href="{{ route('web.shop.product.details', $product->id) }}">{{ $product->name }}</a>
+                                        </h3>
                                         <p class="mb-0">{{ Str::limit($product->description, 20) }}</p>
                                         <p class="text-primary font-weight-bold">${{ $product->amount }}</p>
                                     </div>
