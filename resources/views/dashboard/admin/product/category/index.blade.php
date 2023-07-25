@@ -2,12 +2,12 @@
 
 @section('contents')
     <!-- MAIN CONTENT-->
-<style>
-    .category-list-image{
-        width: 60px;
-        height: 60px;
-    }
-</style>
+    <style>
+        .category-list-image {
+            width: 60px;
+            height: 60px;
+        }
+    </style>
     <div class="main-content">
         <div class="section__content section__content--p30">
             <div class="container-fluid">
@@ -37,22 +37,25 @@
                                             <td>{{ $category->created_at->format('d-m-y-h:m') }}</td>
                                             <td>{{ $category->id }}</td>
                                             <td>{{ $category->name }}</td>
-                                            <td class="category-list-image"><img class=" img-fluid" src="{{ asset($category->image ?? 'N/A') }}"
-                                                    alt=""></td>
+                                            <td class="category-list-image"><img class=" img-fluid"
+                                                    src="{{ asset($category->image ?? 'N/A') }}" alt=""></td>
                                             <td>{{ $category->status }}</td>
                                             <td>
                                                 <div class="d-flex justify-content-between">
-                                                    <a href="{{ route('admin.dashboard.product-category.edit', $category->id) }}"><i
-                                                            class="fa fa-edit"></i></a>
+                                                    <a
+                                                        href="{{ route('admin.dashboard.product-category.edit', $category->id) }}"><i
+                                                            class="fa fa-edit" title="Edit"></i></a>
                                                     <form id="delete-category-form"
                                                         action="{{ route('admin.dashboard.product-category.destroy', $category->id) }}"
                                                         method="post">
                                                         @csrf @method('DELETE')
                                                     </form>
-                                                    <a onclick="confirmDelete()">
+                                                    <a onclick="confirmDelete()" title="Delete">
                                                         <i class="fa fa-trash"></i>
                                                     </a>
-
+                                                    <a href="{{ route('admin.dashboard.create.subcategory', $category->id) }}"
+                                                       title="Add Subcategory" class="">
+                                                        <i class="fa fa-folder"></i></a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -66,7 +69,7 @@
 
                 </div>
             </div>
-           
+
         </div>
         @if (session()->has('success_message'))
             <div class="popup-message success" id="popup-message">

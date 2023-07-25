@@ -49,6 +49,8 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('home', [HomeController::class, 'home'])->name('home');
         Route::resource('product', ProductController::class);
         Route::resource('product-category', ProductCategoryController::class);
+
+        Route::get('create/subcategory/{id}', [SubcategoryController::class , 'createSubcategory'])->name('create.subcategory');
         Route::resource('subcategory', SubcategoryController::class);
 
     });
