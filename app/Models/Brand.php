@@ -15,4 +15,16 @@ class Brand extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    static function generateUUID(int $length): string
+    {
+        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $uuid = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $uuid .= $characters[rand(0, strlen($characters) - 1)];
+        }
+
+        return $uuid;
+    }
 }

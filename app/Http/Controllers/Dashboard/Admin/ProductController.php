@@ -221,7 +221,7 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         if ($product) {
-            $product->delete(); // This will perform a soft delete
+            $product->delete();
             return back()->with('success_message', 'Product deleted successfully');
         } else {
             return back()->with('error_message', 'Product not found');

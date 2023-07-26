@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class BrandController extends Controller
@@ -17,7 +18,8 @@ class BrandController extends Controller
      */
     public function index()
     {
-      return view('dashboard.admin.brand.index');
+        $brands = Brand::get();
+        return view('dashboard.admin.brand.index', compact('brands'));
     }
 
     /**
@@ -46,7 +48,7 @@ class BrandController extends Controller
                 return back()->withInput()->withErrors(['logo' => 'Logo upload failed.']);
             }
 
-            $uuid = $this->generateUUID(20);
+            $uuid = Brand::generateUUID(20);
 
             Brand::create([
                 'logo' => $logo_path,
@@ -76,7 +78,12 @@ class BrandController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $statusOptions = StatusConstants::ACTIVE_OPTIONS;
+        $brand = Brand::findOrFail($id);
+        return view('dashboard.admin.brand.edit', [
+            'brand' => $brand,
+            'statusOptions' => $statusOptions,
+        ]);
     }
 
     /**
@@ -84,7 +91,33 @@ class BrandController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $request->validate([
+                'logo' => 'required|image',
+                'name' => ['required', 'string', Rule::unique('brands', 'name')->ignore($id)],
+                'status' => 'required|string',
+            ]);
+
+
+            if ($request->file('logo')) {
+                $logo_path = FileHelpers::saveImageRequest($request->logo, 'brands/logos/');
+            } else {
+                return back()->withInput()->withErrors(['logo' => 'Logo upload failed.']);
+            }
+
+            $brand = Brand::findOrFail($id);
+            $brand->update([
+                'logo' => $logo_path,
+                'name' => $request->input('name'),
+                'status' => $request->input('status'),
+            ]);
+
+            return redirect()->route('admin.dashboard.brand.index')->with('success_message', 'Brand Updated');
+        } catch (ValidationException $e) {
+            return back()->withInput()->withErrors($e->errors());
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors(['logo' => 'An error occurred while updating the brand.']);
+        }
     }
 
     /**
@@ -92,18 +125,8 @@ class BrandController extends Controller
      */
     public function destroy(string $id)
     {
-        //
-    }
-
-    function generateUUID(int $length): string
-    {
-        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $uuid = '';
-
-        for ($i = 0; $i < $length; $i++) {
-            $uuid .= $characters[rand(0, strlen($characters) - 1)];
-        }
-
-        return $uuid;
+        $brand = Brand::findOrFail($id);
+        $brand->delete();
+        return back()->with('success_message', 'Brand Deleted Successfully');
     }
 }

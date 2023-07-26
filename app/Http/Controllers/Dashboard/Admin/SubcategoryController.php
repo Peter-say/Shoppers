@@ -108,16 +108,13 @@ class SubcategoryController extends Controller
                 'status' => 'required|string|in:Active,Inactive',
             ]);
 
-            $subcategory = ProductCategory::findOrFail($id); // Find the existing subcategory by its ID
-
-            // Update the subcategory attributes based on the validated request data
+            $subcategory = ProductCategory::findOrFail($id);
             $subcategory->update([
                 'parent_id' => $request->input('parent_id'),
                 'name' => $request->input('name'),
                 'status' => $request->input('status'),
             ]);
 
-            // Check if the request has an image and update it accordingly
             if ($request->hasFile('image')) {
                 $image_path = FileHelpers::saveImageRequest($request->file('image'), 'product/category/subcategory/images/');
                 $subcategory->update(['image' => $image_path]);
