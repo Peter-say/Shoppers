@@ -53,7 +53,7 @@
                     <a href="about.html">About</a>
                 </li>
                 <li><a href="{{ route('web.shop.index') }}">Shop</a></li>
-                <li><a href="#">Catalogue</a></li>
+                <li><a href="{{route('web.shop.category')}}">Category</a></li>
                 <li><a href="#">New Arrivals</a></li>
                 @if (Auth::check())
                     <li>

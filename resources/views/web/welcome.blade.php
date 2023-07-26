@@ -1,5 +1,12 @@
 @extends('web.layouts.app')
 
+<style>
+    .image{
+        width: 300px;
+        height: 300px;
+        margin: 8px 10px 10px;
+    }
+</style>
 @section('contents')
     <div class="site-blocks-cover" style="background-image: url({{$web_assets}}/images/hero_1.jpg);" data-aos="fade">
         <div class="container">
@@ -58,39 +65,23 @@
     <div class="site-section site-blocks-2">
         <div class="container">
             <div class="row">
+                <div class=" col-12 d-flex justify-content-center">
+                    <h4>Go With Category</h4>
+                </div>
+                @foreach ($categories as $category)
                 <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
                     <a class="block-2-item" href="#">
                         <figure class="image">
-                            <img src="{{$web_assets}}/images/women.jpg" alt="" class="img-fluid">
+                            <img src="{{asset($category->image)}}" alt="" class="img-fluid">
                         </figure>
                         <div class="text">
                             <span class="text-uppercase">Collections</span>
-                            <h3>Women</h3>
+                            <h3>{{$category->name}}</h3>
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="100">
-                    <a class="block-2-item" href="#">
-                        <figure class="image">
-                            <img src="{{$web_assets}}/images/children.jpg" alt="" class="img-fluid">
-                        </figure>
-                        <div class="text">
-                            <span class="text-uppercase">Collections</span>
-                            <h3>Children</h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="200">
-                    <a class="block-2-item" href="#">
-                        <figure class="image">
-                            <img src="{{$web_assets}}/images/men.jpg" alt="" class="img-fluid">
-                        </figure>
-                        <div class="text">
-                            <span class="text-uppercase">Collections</span>
-                            <h3>Men</h3>
-                        </div>
-                    </a>
-                </div>
+                @endforeach
+              
             </div>
         </div>
     </div>
@@ -180,7 +171,7 @@
             </div>
             <div class="row align-items-center">
                 <div class="col-md-12 col-lg-7 mb-5">
-                    <a href="#"><img src="images/blog_1.jpg" alt="Image placeholder"
+                    <a href="#"><img src="{{$web_assets}}/images/blog_1.jpg" alt="Image placeholder"
                             class="img-fluid rounded"></a>
                 </div>
                 <div class="col-md-12 col-lg-5 text-center pl-md-5">

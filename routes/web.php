@@ -14,6 +14,7 @@ use App\Http\Controllers\Dashboard\User\Payment\PayPalController;
 use App\Http\Controllers\Dashboard\User\ProfileController;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\CatController;
+use App\Http\Controllers\Web\Category\CategoryController;
 use App\Http\Controllers\Web\ShopController;
 use App\Http\Controllers\Web\WelcomeController;
 use Illuminate\Support\Facades\Auth;
@@ -41,6 +42,10 @@ Route::prefix('web')->as('web.')->group(function () {
         Route::get('product/{id}/details', [ShopController::class, 'details'])->name('product.details');
         Route::post('/add-to-cart/{id}', [CartController::class, 'index'])->name('cart.store');
         Route::get('/cat', [CartController::class, 'cartList'])->name('cart');
+        Route::get('category', [CategoryController::class, 'category'])->name('category');
+        Route::get('category/{subcategory}', [CategoryController::class, 'subcategory'])->name('category.sucategory')->where('subcategory', '[A-Za-z0-9\-]+');
+        Route::get('category/{subcategory}/{name}/products', [CategoryController::class, 'categoryProducts'])->name('category.products');
+
     });
 });
 
@@ -51,11 +56,10 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('product', ProductController::class);
         Route::resource('product-category', ProductCategoryController::class);
 
-        Route::get('create/subcategory/{id}', [SubcategoryController::class , 'createSubcategory'])->name('create.subcategory');
+        Route::get('create/subcategory/{id}', [SubcategoryController::class, 'createSubcategory'])->name('create.subcategory');
         Route::resource('subcategory', SubcategoryController::class);
 
         Route::resource('brand', BrandController::class);
-
     });
 });
 

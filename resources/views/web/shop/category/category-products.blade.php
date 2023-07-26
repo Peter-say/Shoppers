@@ -2,7 +2,7 @@
 
 <style>
     .img-fluid {
-      height: 40vh;
+        height: 40vh;
     }
 </style>
 @section('contents')
@@ -15,13 +15,14 @@
         </div>
     </div>
 
-    <div class="site-blocks-cover" style="background-image: url({{$web_assets}}/images/hero_1.jpg);" data-aos="fade">
+    <div class="site-blocks-cover" style="background-image: url({{ $web_assets }}/images/hero_1.jpg);" data-aos="fade">
         <div class="container">
             <div class="row align-items-start align-items-md-center justify-content-end">
                 <div class="col-md-5 text-center text-md-left pt-5 pt-md-0">
                     <h1 class="mb-2">Finding Your Perfect Shoes</h1>
                     <div class="intro-text text-center text-md-left">
-                        <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at iaculis quam.
+                        <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at iaculis
+                            quam.
                             Integer accumsan tincidunt fringilla. </p>
                         <p>
                             <a href="#" class="btn btn-sm btn-primary">Shop Now</a>
@@ -73,26 +74,32 @@
                     </div>
                     <div class="row mb-5">
 
-                        @foreach ($products as $product)
-                            <div class="col-sm-6 col-lg-4 mb-4 product-cover" data-aos="fade-up">
-                                <div class="block-4 text-center border">
-                                    <figure class="block-4-image ">
-                                        <a href="{{ route('web.shop.product.details', $product->id) }}">
-                                            <img class="img-fluid " src="{{ asset($product->cover_image) }}"
-                                                alt="Image placeholder"></a>
-                                    </figure>
-                                    <div class="block-4-text p-4">
-                                        <h3><a
-                                                href="{{ route('web.shop.product.details', $product->id) }}">{{ $product->name }}</a>
-                                        </h3>
-                                        <p class="mb-0">{{ Str::limit($product->description, 20) }}</p>
-                                        <p class="text-primary font-weight-bold">${{ $product->amount }}</p>
+                        @if ($products->count())
+                            @foreach ($products as $product)
+                                <div class="col-sm-6 col-lg-4 mb-4 product-cover" data-aos="fade-up">
+                                    <div class="block-4 text-center border">
+                                        <figure class="block-4-image ">
+                                            <a href="{{ route('web.shop.product.details', $product->id) }}">
+                                                <img class="img-fluid " src="{{ asset($product->cover_image) }}"
+                                                    alt="Image placeholder"></a>
+                                        </figure>
+                                        <div class="block-4-text p-4">
+                                            <h3><a
+                                                    href="{{ route('web.shop.product.details', $product->id) }}">{{ $product->name }}</a>
+                                            </h3>
+                                            <p class="mb-0">{{ Str::limit($product->description, 20) }}</p>
+                                            <p class="text-primary font-weight-bold">${{ $product->amount }}</p>
+                                        </div>
                                     </div>
                                 </div>
+                            @endforeach
+                        @else
+                            <div class="d-flex justify-conten-center">
+                                <h4>
+                                    No Products for this category at the momment!
+                                </h4>
                             </div>
-                        @endforeach
-
-
+                        @endif
                     </div>
                     <div class="row" data-aos="fade-up">
                         <div class="col-md-12 text-center">
@@ -128,8 +135,8 @@
                         <div class="mb-4">
                             <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter by Price</h3>
                             <div id="slider-range" class="border-primary"></div>
-                            <input type="text" name="text" id="amount" class="form-control border-0 pl-0 bg-white"
-                                disabled="" />
+                            <input type="text" name="text" id="amount"
+                                class="form-control border-0 pl-0 bg-white" disabled="" />
                         </div>
 
                         <div class="mb-4">
