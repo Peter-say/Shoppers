@@ -37,8 +37,16 @@
                      </ul>
                  </li>
                  <li>
-                     <a href="table.html">
-                         <i class="fas fa-table"></i>Tables</a>
+                     <a class="js-arrow" href="#">
+                         <i class="fas fa-chart-bar"></i>Brand</a>
+                     <ul class="list-unstyled navbar__sub-list js-sub-list">
+                         <li>
+                             <a href="{{ route('admin.dashboard.brand.index') }}">View List</a>
+                         </li>
+                         <li>
+                             <a href="{{ route('admin.dashboard.brand.create') }}">Add a Brand</a>
+                         </li>
+                     </ul>
                  </li>
                  <li>
                      <a href="form.html">

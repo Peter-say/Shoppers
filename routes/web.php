@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\Admin\BrandController;
 use App\Http\Controllers\Dashboard\Admin\HomeController;
 use App\Http\Controllers\Dashboard\User\IndexController;
 use App\Http\Controllers\Dashboard\Admin\ProductCategoryController;
@@ -52,6 +53,8 @@ Route::prefix('admin')->as('admin.')->group(function () {
 
         Route::get('create/subcategory/{id}', [SubcategoryController::class , 'createSubcategory'])->name('create.subcategory');
         Route::resource('subcategory', SubcategoryController::class);
+
+        Route::resource('brand', BrandController::class);
 
     });
 });
