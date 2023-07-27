@@ -70,7 +70,7 @@
                 </div>
                 @foreach ($categories as $category)
                 <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
-                    <a class="block-2-item" href="#">
+                    <a class="block-2-item" href="{{ route('web.shop.category.sucategory', urlencode($category->name)) }}">
                         <figure class="image">
                             <img src="{{asset($category->image)}}" alt="" class="img-fluid">
                         </figure>

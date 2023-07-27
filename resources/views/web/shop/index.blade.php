@@ -2,7 +2,35 @@
 
 <style>
     .img-fluid {
-      height: 40vh;
+        height: 40vh;
+    }
+
+    /* Custom Pagination Style */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        padding: 0;
+    }
+
+    .pagination li {
+        margin: 0 5px;
+    }
+
+    .pagination a,
+    .pagination span {
+        padding: 6px 12px;
+        border: 1px solid #ddd;
+        text-decoration: none;
+        color: #333;
+        border-radius: 4px;
+    }
+
+    .pagination .active a,
+    .pagination .active span {
+        background-color: #007bff;
+        color: #fff;
+        border-color: #007bff;
     }
 </style>
 @section('contents')
@@ -15,13 +43,14 @@
         </div>
     </div>
 
-    <div class="site-blocks-cover" style="background-image: url({{$web_assets}}/images/hero_1.jpg);" data-aos="fade">
+    <div class="site-blocks-cover" style="background-image: url({{ $web_assets }}/images/hero_1.jpg);" data-aos="fade">
         <div class="container">
             <div class="row align-items-start align-items-md-center justify-content-end">
                 <div class="col-md-5 text-center text-md-left pt-5 pt-md-0">
                     <h1 class="mb-2">Finding Your Perfect Shoes</h1>
                     <div class="intro-text text-center text-md-left">
-                        <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at iaculis quam.
+                        <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at iaculis
+                            quam.
                             Integer accumsan tincidunt fringilla. </p>
                         <p>
                             <a href="#" class="btn btn-sm btn-primary">Shop Now</a>
@@ -95,32 +124,48 @@
 
                     </div>
                     <div class="row" data-aos="fade-up">
-                        <div class="col-md-12 text-center">
+                        <div class="col-md-12 text-center justify-content-center">
                             <div class="site-block-27">
-                                <ul>
-                                    <li><a href="#">&lt;</a></li>
-                                    <li class="active"><span>1</span></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#">&gt;</a></li>
+                                <ul class="pagination">
+                                    <!-- Previous Page Link -->
+                                    @if ($products->onFirstPage())
+                                        <li class="page-item disabled"><span class="page-link">&gt;</span></li>
+                                    @else
+                                        <li class="page-item"><a class="page-link"
+                                                href="{{ $products->previousPageUrl() }}">&lt;</a></li>
+                                    @endif
+
+                                    <!-- Numbered Pagination Links -->
+                                    @for ($i = 1; $i <= $products->lastPage(); $i++)
+                                        <li class="page-item @if ($i === $products->currentPage()) active @endif">
+                                            <a class="page-link" href="{{ $products->url($i) }}">{{ $i }}</a>
+                                        </li>
+                                    @endfor
+
+                                    <!-- Next Page Link -->
+                                    @if ($products->hasMorePages())
+                                        <li class="page-item"><a class="page-link"
+                                                href="{{ $products->nextPageUrl() }}">&gt;</a></li>
+                                    @else
+                                        <li class="page-item disabled"><span class="page-link">&gt;</span></li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="col-md-3 order-1 mb-5 mb-md-0">
                     <div class="border p-4 rounded mb-4">
                         <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
                         <ul class="list-unstyled mb-0">
-                            <li class="mb-1"><a href="#" class="d-flex"><span>Men</span> <span
-                                        class="text-black ml-auto">(2,220)</span></a></li>
-                            <li class="mb-1"><a href="#" class="d-flex"><span>Women</span> <span
-                                        class="text-black ml-auto">(2,550)</span></a></li>
-                            <li class="mb-1"><a href="#" class="d-flex"><span>Children</span> <span
-                                        class="text-black ml-auto">(2,124)</span></a></li>
+                            @foreach ($categories as $category)
+                                <li class="mb-1"><a href="{{route('web.shop.category.sucategory', $category->name)}}" class="d-flex"><span>{{ $category->name }}</span>
+                                        <span class="text-black ml-auto">({{ $category->products->count() }})</span></a>
+                                </li>
+                            @endforeach
+                          
                         </ul>
                     </div>
 
@@ -128,8 +173,8 @@
                         <div class="mb-4">
                             <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter by Price</h3>
                             <div id="slider-range" class="border-primary"></div>
-                            <input type="text" name="text" id="amount" class="form-control border-0 pl-0 bg-white"
-                                disabled="" />
+                            <input type="text" name="text" id="amount"
+                                class="form-control border-0 pl-0 bg-white" disabled="" />
                         </div>
 
                         <div class="mb-4">

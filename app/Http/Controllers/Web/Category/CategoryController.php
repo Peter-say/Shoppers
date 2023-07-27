@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Category;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 
@@ -32,8 +33,10 @@ class CategoryController extends Controller
 
     public function categoryProducts($name)
     {
-        $category  = ProductCategory::with('products')->where('name', $name)->firstOrFail();
-        $products = $category->products->where('status', 'active');
+    $subcategory = ProductCategory::with('children.products')->where('name', $name)->firstOrFail();
+    $productIds = $subcategory->children->pluck('products')->flatten()->pluck('id')->toArray();
+    $products = Product::whereIn('id', $productIds)->where('status', 'active')->get();
+
         return view('web.shop.category.category-products', compact('products'));
     }
 }
