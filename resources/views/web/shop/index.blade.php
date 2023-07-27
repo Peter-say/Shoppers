@@ -80,9 +80,13 @@
                                         Latest
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-                                        <a class="dropdown-item" href="#">Men</a>
-                                        <a class="dropdown-item" href="#">Women</a>
-                                        <a class="dropdown-item" href="#">Children</a>
+                                        @foreach ($categories as $category)
+                                            <a class="dropdown-item category-link"
+                                                href="{{ route('web.shop.search.category.products', ['name' => $category->name]) }}">{{ $category->name }}</a>
+                                        @endforeach
+                                    </div>
+                                    <div id="product-container">
+                                        <!-- The filtered products will be displayed here -->
                                     </div>
                                 </div>
                                 <div class="btn-group">
@@ -161,11 +165,12 @@
                         <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
                         <ul class="list-unstyled mb-0">
                             @foreach ($categories as $category)
-                                <li class="mb-1"><a href="{{route('web.shop.category.sucategory', $category->name)}}" class="d-flex"><span>{{ $category->name }}</span>
+                                <li class="mb-1"><a href="{{ route('web.shop.category.sucategory', $category->name) }}"
+                                        class="d-flex"><span>{{ $category->name }}</span>
                                         <span class="text-black ml-auto">({{ $category->products->count() }})</span></a>
                                 </li>
                             @endforeach
-                          
+
                         </ul>
                     </div>
 

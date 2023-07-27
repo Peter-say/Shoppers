@@ -12,9 +12,9 @@ class ShopController extends Controller
     public function index()
     {
         $categories = ProductCategory::where('status', 'active')
-        ->whereNull('parent_id')
-        ->get();
-        $products = Product::where('status', 'active')->paginate(3);
+            ->whereNull('parent_id')
+            ->get();
+        $products = Product::where('status', 'active')->paginate(50);
         return view('web.shop.index', [
             'products' => $products,
             'categories' => $categories,
@@ -34,6 +34,16 @@ class ShopController extends Controller
         return view('web.shop.product-details', [
             'product' => $product,
             'related_products' => $related_products,
+        ]);
+    }
+
+    public function fetchProductsByCategory($name)
+    {
+        $category = ProductCategory::where('status', 'active')->where('name', $name)->firstOrFail();
+        $filteredProducts = $category->products()->where('status', 'active')->latest()->get();
+    
+        return view('web.shop.index', [
+            'filteredProducts' => $filteredProducts,
         ]);
     }
 }

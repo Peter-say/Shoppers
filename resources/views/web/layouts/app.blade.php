@@ -117,6 +117,33 @@
         });
     </script>
 
+<script>
+    $(document).ready(function() {
+        $('.category-link').on('click', function(e) {
+            e.preventDefault();
+            var category = $(this).text().trim(); // Extract the category name from the link's text
+            fetchProductsByCategory(category);
+        });
+
+        function fetchProductsByCategory(category) {
+            $.ajax({
+                url: '/web/shop/search/category/' + category + '/products',
+                type: 'GET',
+                dataType: 'html',
+                success: function(response) {
+                    $('#product-container').html(response);
+                },
+                error: function(error) {
+                    console.log('Error fetching products:', error);
+                }
+            });
+        }
+    });
+</script>
+
+
+
+
     <script>
         var walletRadio = document.getElementById('wallet-check-input');
         var paypalRadio = document.getElementById('paypal-check-input');
