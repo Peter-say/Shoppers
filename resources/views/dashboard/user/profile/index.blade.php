@@ -17,9 +17,13 @@
     </div>
     <div class="site-section">
         <div class="container">
-            @include('notifications.flash-messages')
+            @if (session()->has('success_message'))
+                <div class="popup-message success" id="popup-message">
+                    <p class="text-white">{{ session('success_message') }}</p>
+                </div>
+            @endif
 
-            <form action="{{ route('user.dashboard.profile.update') }}" enctype="multipart/form-data" method="POST">
+            <form action="{{ route('account.profile.update') }}" enctype="multipart/form-data" method="POST">
                 @csrf @method('PUT')
                 <div class="row d-flex justify-content-center">
                     <div class="col-12">
@@ -34,8 +38,8 @@
 
                                 <div class="col-12 d-flex justify-content-center">
                                     <div class="profile-container">
-                                        @if (!$user->avatar ==null)
-                                            <img class="profile-image" src="{{ asset($user->avatar) }}" alt="">
+                                        @if (!$user->avatar == null)
+                                            <img class="profile-image" src="{{ asset('users/avatar/'.$user->avatar) }}" alt="">
                                         @else
                                             <img class="profile-image img-fluid" src="{{ asset('web/images/avatar.jpeg') }}"
                                                 alt="">

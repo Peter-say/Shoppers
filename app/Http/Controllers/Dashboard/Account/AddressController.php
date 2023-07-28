@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard\User;
+namespace App\Http\Controllers\Dashboard\Account;
 
 use App\Constants\StatusConstants;
 use App\Http\Controllers\Controller;

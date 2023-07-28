@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard\User;
+namespace App\Http\Controllers\Dashboard\Account;
 
 use App\Helpers\FileHelpers;
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
@@ -38,13 +38,26 @@ class ProfileController extends Controller
 
         if ($request->hasFile('avatar')) {
             // Get the path of the old avatar file
-            $oldAvatarPath = public_path($user->avatar);
+            $oldAvatarPath = public_path('users/avatar' . $user->avatar, PATHINFO_BASENAME);
             // Delete the old avatar file if it exists
-            if (file_exists($oldAvatarPath)) {
-                unlink($oldAvatarPath);
-            } else {
+            try {
+                if (file_exists($oldAvatarPath)) {
+                    echo "Old Avatar Path: $oldAvatarPath<br>";
+                    if (unlink($oldAvatarPath)) {
+                        echo "Old avatar file deleted successfully<br>";
+                    } else {
+                        echo "Failed to delete the old avatar file<br>";
+                    }
+                } else {
+                    echo "Old avatar file not found: $oldAvatarPath<br>";
+                }
+
                 $avatarPath = FileHelpers::saveImageRequest($request->file('avatar'), 'users/avatar');
-                $user->avatar = $avatarPath;
+                $avatarFileName = basename($avatarPath);
+                $user->avatar = $avatarFileName;
+            } catch (Exception $e) {
+                echo "Error: " . $e->getMessage();
+                return redirect()->back()->with('error_message', 'An error occurred. Please try again later.', $e);
             }
         }
         // dd($request->all(), $user);

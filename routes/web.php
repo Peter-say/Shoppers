@@ -1,19 +1,17 @@
 <?php
 
+use App\Http\Controllers\Dashboard\Account\AddressController;
+use App\Http\Controllers\Dashboard\Account\ProfileController;
 use App\Http\Controllers\Dashboard\Admin\BrandController;
 use App\Http\Controllers\Dashboard\Admin\HomeController;
 use App\Http\Controllers\Dashboard\User\IndexController;
 use App\Http\Controllers\Dashboard\Admin\ProductCategoryController;
 use App\Http\Controllers\Dashboard\Admin\ProductController;
 use App\Http\Controllers\Dashboard\Admin\SubcategoryController;
-use App\Http\Controllers\Dashboard\AdminProductController;
-use App\Http\Controllers\Dashboard\User\AddressController;
 use App\Http\Controllers\Dashboard\User\Cart\CheckOutController;
 use App\Http\Controllers\Dashboard\User\OrderController;
 use App\Http\Controllers\Dashboard\User\Payment\PayPalController;
-use App\Http\Controllers\Dashboard\User\ProfileController;
 use App\Http\Controllers\Web\CartController;
-use App\Http\Controllers\Web\CatController;
 use App\Http\Controllers\Web\Category\CategoryController;
 use App\Http\Controllers\Web\ShopController;
 use App\Http\Controllers\Web\WelcomeController;
@@ -76,13 +74,13 @@ Route::prefix('user')->as('user.')->group(function () {
         // payment method with paypal
         Route::get('/paypal/checkout', [PayPalController::class, 'checkout'])->name('paypal.checkout');
 
-
-        Route::prefix('profile')->as('profile.')->group(function () {
-            Route::get('index', [ProfileController::class, 'index'])->name('index');
-            Route::put('update', [ProfileController::class, 'update'])->name('update');
-
-            Route::post('address', [AddressController::class, 'saveAddress'])->name('address.save');
-            Route::put('address', [AddressController::class, 'saveAddress'])->name('address.update');
-        });
     });
+});
+
+Route::prefix('account')->as('account.')->group(function () {
+    Route::get('profile/index', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('profile/update', [ProfileController::class, 'update'])->name('profile.update');
+
+    Route::post('address', [AddressController::class, 'saveAddress'])->name('address.save');
+    Route::put('address', [AddressController::class, 'saveAddress'])->name('address.update');
 });
