@@ -3,11 +3,15 @@
 namespace App\Http\Livewire;
 
 use App\Models\Cart;
+use App\Models\CartItem;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class ShowCart extends Component
 {
+
+    protected $listeners = ['updateCartItems' => 'updateCartItems'];
+    
     public $cartItems;
     public $totalPrice;
 
@@ -35,16 +39,26 @@ class ShowCart extends Component
         }
     }
 
+
     public function updateCartItems()
     {
         if (Auth::check()) {
             // User is authenticated
             $user = Auth::user();
             $cart = Cart::where('user_id', $user->id)->first();
+
             if ($cart) {
-                $sessionId = session()->getId();
-                $userCart = $cart->cartItems()->get();
-                $this->cartItems = $userCart ?? [];
+                // Retrieve guest cart items from the session
+                $guestCartItems = session()->get('cartItems');
+
+                // Merge guest cart items with the user's cart items
+                if ($guestCartItems) {
+                    $this->mergeGuestCartItems($cart, $guestCartItems);
+                    session()->forget('cartItems');
+                }
+
+                // Retrieve updated cart items associated with the user's cart
+                $this->cartItems = $cart->cartItems;
             } else {
                 $this->cartItems = [];
             }
@@ -53,10 +67,31 @@ class ShowCart extends Component
             $sessionId = session()->getId();
             $cart = Cart::where('session_id', $sessionId)->first();
 
-            if ($cart) {
-                $this->cartItems = $cart->cartItems()->get();
+            // Retrieve cart items associated with the guest cart
+            $this->cartItems = $cart ? $cart->cartItems : [];
+        }
+    }
+    private function mergeGuestCartItems($userCart, $guestCartItems)
+    {
+        foreach ($guestCartItems as $cartItemData) {
+            $existingCartItem = CartItem::where('cart_id', $userCart->id)
+                ->where('product_id', $cartItemData['product_id'])
+                ->first();
+
+            if ($existingCartItem) {
+                // Update the quantity of the existing cart item
+                $existingCartItem->quantity += $cartItemData['quantity'];
+                $existingCartItem->save();
             } else {
-                $this->cartItems = [];
+                // Create a new cart item
+                $data = [
+                    'cart_id' => $userCart->id,
+                    'product_id' => $cartItemData['product_id'],
+                    'quantity' => $cartItemData['quantity'],
+                    'price' => $cartItemData['price'],
+                    'size' => $cartItemData['size'],
+                ];
+                CartItem::create($data);
             }
         }
     }

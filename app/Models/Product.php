@@ -21,7 +21,7 @@ class Product extends Model
 
     public function cartItem()
     {
-        return $this->belongsTo(CartItem::class);
+        return $this->hasOne(CartItem::class);
     }
 
     public function currency()

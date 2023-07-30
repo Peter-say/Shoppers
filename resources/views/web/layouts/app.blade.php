@@ -38,6 +38,7 @@
 
         .popup-message.success {
             background-color: green;
+            color: #ffffff
         }
 
         .popup-message.error {

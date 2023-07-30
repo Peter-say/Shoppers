@@ -50,37 +50,28 @@ class AddToCart extends Component
     public function addToCart($id)
     {
         $this->validate();
-        $request = request();
-
         if (Auth::check()) {
-
             $user = Auth::user();
-
             $userCart = Cart::where('user_id', $user->id)->first();
 
             $userCart = $userCart ?? new Cart();
             $userCart->user_id = $user->id;
             $userCart->status = 'User';
             $userCart->save();
-
-            if (!Auth::viaRemember()) {
-                $guestCartItems = session()->get('cartItems');
-                if ($guestCartItems) {
-                    $this->mergeGuestCartItems($userCart, $guestCartItems);
-                    session()->forget('cartItems');
-                }
-            }
         } else {
             // User is not authenticated (guest)
             $userCart = $this->getGuestCart();
 
-            // Retrieve guest cart items from the database
-            $guestCartItems = CartItem::where('cart_id', $userCart->id)->get();
-           
-            // Store the guest cart items in the session
-            session()->put('cartItems', $guestCartItems->toArray());
+            // Store the new item in the guest cart session
+            $cartItems = session()->get('cartItems', []);
+            $cartItems[] = [
+                'product_id' => $id,
+                'quantity' => $this->quantity,
+                'price' => $this->product->amount,
+                'size' => $this->size,
+            ];
+            session()->put('cartItems', $cartItems);
         }
-
         // Create a new cart item
         $data = [
             'cart_id' => $userCart->id,
@@ -93,35 +84,6 @@ class AddToCart extends Component
         $this->resetInput(); // Reset the input field
         return redirect()->back()->with('success_message', 'Item added to cart successfully');
     }
-
-    private function mergeGuestCartItems($userCart, $guestCartItems)
-    {
-        foreach ($guestCartItems as $cartItemData) {
-            $existingCartItem = CartItem::where('cart_id', $userCart->id)
-                ->where('product_id', $cartItemData->product_id) // Assuming product_id is the correct column name
-                ->first();
-
-            if ($existingCartItem) {
-                // Update the quantity of the existing cart item
-                $existingCartItem->quantity += $cartItemData->quantity;
-                $existingCartItem->save();
-            } else {
-                // Debugging: Check if the new cart item data is correct
-
-                // Create a new cart item
-                $data = [
-                    'cart_id' => $userCart->id,
-                    'product_id' => $cartItemData->product_id,
-                    'quantity' => $cartItemData->quantity,
-                    'price' => $cartItemData->price,
-                    'size' => $cartItemData->size,
-                ];
-                CartItem::create($data);
-            }
-        }
-    }
-
-
 
 
     private function getGuestCart()
@@ -149,12 +111,48 @@ class AddToCart extends Component
 
     public function mount($id)
     {
-        $this->product = Product::where('status', 'active')->where('id', $id)->first();
+        $this->product = Product::with('cartItem')->where('status', 'active')->where('id', $id)->first();
         $this->related_products = Product::where('category_id', $this->product->category_id)
             ->where('status', 'active')
             ->where('id', '!=', $this->product->id)
             ->get();
+            
     }
+
+    public function removeFromCart($productId)
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            $cart = Cart::where('user_id', $user->id)->first();
+        } else {
+            // User is not authenticated (guest)
+            $sessionId = session()->getId();
+            $cart = Cart::where('session_id', $sessionId)->first();
+        }
+    
+        if ($cart) {
+            // Find the cart item for the given product ID and fetch its associated product
+            $cartItem = CartItem::where('cart_id', $cart->id)->where('product_id', $productId)->first();
+            if ($cartItem) {
+                // Fetch the associated product before deleting the cart item
+                $product = $cartItem->product;
+    
+                // Delete the cart item
+                $cartItem->delete();
+    
+                // Set the $this->product variable to the fetched product
+                $this->product = $product;
+            }
+        }
+    
+        // Update the cart items after removal
+        $this->emit('updateCartItems');
+        session()->flash('item_removed', true);
+        session()->flash('success_message', 'Item removed from cart successfully');
+    }
+    
+
+
 
     public function render()
     {
