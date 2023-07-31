@@ -100,6 +100,16 @@
 
 
     <script>
+        // wishlist form
+        const wishlistForm = document.getElementById('wishlistForm');
+
+        const heartIcon = document.querySelector('.icon-heart-o');
+        heartIcon.addEventListener('click', function() {
+            wishlistForm.submit();
+        });
+
+        // end wishlist form
+
         document.addEventListener('DOMContentLoaded', function() {
             var popup = document.getElementById('popup-message');
 
@@ -118,29 +128,29 @@
         });
     </script>
 
-<script>
-    $(document).ready(function() {
-        $('.category-link').on('click', function(e) {
-            e.preventDefault();
-            var category = $(this).text().trim(); // Extract the category name from the link's text
-            fetchProductsByCategory(category);
-        });
-
-        function fetchProductsByCategory(category) {
-            $.ajax({
-                url: '/web/shop/search/category/' + category + '/products',
-                type: 'GET',
-                dataType: 'html',
-                success: function(response) {
-                    $('#product-container').html(response);
-                },
-                error: function(error) {
-                    console.log('Error fetching products:', error);
-                }
+    <script>
+        $(document).ready(function() {
+            $('.category-link').on('click', function(e) {
+                e.preventDefault();
+                var category = $(this).text().trim(); // Extract the category name from the link's text
+                fetchProductsByCategory(category);
             });
-        }
-    });
-</script>
+
+            function fetchProductsByCategory(category) {
+                $.ajax({
+                    url: '/web/shop/search/category/' + category + '/products',
+                    type: 'GET',
+                    dataType: 'html',
+                    success: function(response) {
+                        $('#product-container').html(response);
+                    },
+                    error: function(error) {
+                        console.log('Error fetching products:', error);
+                    }
+                });
+            }
+        });
+    </script>
 
 
 

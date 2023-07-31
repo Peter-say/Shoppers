@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Livewire\Wishlist as LivewireWishlist;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Product;
+use App\Models\Wishlist;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -14,8 +16,8 @@ class AddToCart extends Component
 {
     protected $listeners = [
         'cartUpdated' => 'updateCartItemCount',
+        'addToWishlist'
     ];
-
     public $product;
     public $related_products;
     public $quantity;
@@ -34,6 +36,8 @@ class AddToCart extends Component
         'quantity.min' => 'Quantity must be at least 1.',
         'size.required' => 'Please select a size.',
     ];
+
+
 
     public function incrementQuantity()
     {
@@ -116,7 +120,6 @@ class AddToCart extends Component
             ->where('status', 'active')
             ->where('id', '!=', $this->product->id)
             ->get();
-            
     }
 
     public function removeFromCart($productId)
@@ -129,29 +132,61 @@ class AddToCart extends Component
             $sessionId = session()->getId();
             $cart = Cart::where('session_id', $sessionId)->first();
         }
-    
+
         if ($cart) {
             // Find the cart item for the given product ID and fetch its associated product
             $cartItem = CartItem::where('cart_id', $cart->id)->where('product_id', $productId)->first();
             if ($cartItem) {
                 // Fetch the associated product before deleting the cart item
                 $product = $cartItem->product;
-    
+
                 // Delete the cart item
                 $cartItem->delete();
-    
+
                 // Set the $this->product variable to the fetched product
                 $this->product = $product;
             }
         }
-    
+
         // Update the cart items after removal
         $this->emit('updateCartItems');
         session()->flash('item_removed', true);
         session()->flash('success_message', 'Item removed from cart successfully');
     }
-    
 
+
+    public function addToWishlist()
+    {
+
+        if (Auth::check()) {
+            $this->addToAuthenticatedUserWishlist();
+        } else {
+            session()->flash('error_message', 'You need to log in to save item to wishlist');
+        }
+    }
+
+    private function addToAuthenticatedUserWishlist()
+    {
+        $user = Auth::user();
+        $wishlistItem = Wishlist::where('user_id', $user->id)
+            ->where('product_id', $this->product->id)
+            ->first();
+
+        if (!$wishlistItem) {
+            $wishlistItem = new Wishlist();
+            $wishlistItem->user_id = $user->id;
+            $wishlistItem->product_id = $this->product->id;
+            $wishlistItem->save();
+
+            // Flash a message to the user
+            session()->flash('success_message', 'Item added to wishlist successfully');
+        }
+    }
+
+    public function removeFromWishlist()
+    {
+        //
+    }
 
 
     public function render()

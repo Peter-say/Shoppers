@@ -109,11 +109,22 @@
 
     <div class="site-section">
         <div class="container">
+            <div class="d-flex justify-content-end">
+                @if ($product->id)
+                    <form wire:click.prevent="addToWishlist({{ $product->id }})" method="post" id="wishlistForm">
+                        <span class=" pl-5 icon  fa-lg icon-heart-o"></span>
+                    </form>
+                @else
+                    <form wire:click.prevent="removeFromWishlist({{ $product->id }})" method="post" id="wishlistForm">
+                        <span class=" pl-5 icon bg-primary fa-lg icon-heart-o"></span>
+                    </form>
+                @endif
+            </div>
             <form method="post">
                 @csrf
                 <div class="row">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                        <img class="img-fluid " src="{{ asset($product->cover_image) }}" alt="Image placeholder"></a>
+                        <img class="img-fluid " src="{{ asset($product->cover_image) }}" alt="Image placeholder">
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                         <h2 class="text-black">{{ $product->name }}</h2>
@@ -177,69 +188,72 @@
                             </div>
                         @endif
 
-                        <input type="hidden" value="{{ $product->price }}" name="price" wire:model="price">
-                        @if ($product->cartItem == true)
-                            <button wire:click.prevent="removeFromCart({{ $product->id }})"
-                                class="buy-now btn btn-sm btn-primary" id="remove-from-cart-button">Remove from
-                                cart</button>
-                        @else
-                            <button wire:click.prevent="addToCart({{ $product->id }})"
-                                class="buy-now btn btn-sm btn-primary" id="add-to-cart-button">Add to cart</button>
-                        @endisset
+                        <div class="d-flex ">
+                            <input type="hidden" value="{{ $product->price }}" name="price" wire:model="price">
+                            @if ($product->cartItem == true)
+                                <button wire:click.prevent="removeFromCart({{ $product->id }})"
+                                    class="buy-now btn btn-sm btn-primary" id="remove-from-cart-button">Remove from
+                                    cart</button>
+                            @else
+                                <button wire:click.prevent="addToCart({{ $product->id }})"
+                                    class="buy-now btn btn-sm btn-primary" id="add-to-cart-button">Add to cart</button>
+                            @endisset
 
-
+                    </div>
                 </div>
-            </div>
         </form>
-        @if (session()->has('success_message'))
-            <div class="popup-message success" id="popup-message">
-                <p class="text-white">{{ session('success_message') }}</p>
-            </div>
+    </div>
+</div>
 
-            @if (session()->has('success_message') && !session()->has('item_removed'))
-                <div class="overlay">
-                    <div class="container-popup">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="popup-message success" id="popup-message">
-                                    <p class="text-white">{{ session('success_message') }}</p>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <img class="img-fluid" src="{{ asset($product->cover_image) }}"
-                                    alt="Image placeholder">
-                            </div>
-                            <div class="col-8">
-                                <div class="text-black">
-                                    <h5>{{ $product->name }}</h5>
-                                </div>
-                                <div class="">
-                                  
-                                    <span class="text-black">
-                                        <b>Price:</b>
-                                        <b>{{ $product->currency->symbol }}{{ $product->amount }}</b>
-                                    </span>
-                                </div>
-                                <div class="bottom-section">
-                                    <div class="d-flex justify-content-between">
-                                        <a href="{{ route('web.shop.cart') }}"
-                                            class="btn btn-primary btn-sm text-sm">Checkout</a>
-                                        <span>
-                                            <a href="{{ route('web.shop.index') }}"
-                                                class="btn btn-primary btn-sm text-sm">Continue Shopping</a>
-                                        </span>
-                                    </div>
-                                </div>
+
+
+@if (session()->has('success_message'))
+    <div class="popup-message success" id="popup-message">
+        <p class="text-white">{{ session('success_message') }}</p>
+    </div>
+
+    @if (session()->has('success_message') && !session()->has('item_removed') && !session()->has('add-wishlist'))
+        <div class="overlay">
+            <div class="container-popup">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="popup-message success" id="popup-message">
+                            <p class="text-white">{{ session('success_message') }}</p>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <img class="img-fluid" src="{{ asset($product->cover_image) }}" alt="Image placeholder">
+                    </div>
+                    <div class="col-8">
+                        <div class="text-black">
+                            <h5>{{ $product->name }}</h5>
+                        </div>
+                        <div class="">
+
+                            <span class="text-black">
+                                <b>Price:</b>
+                                <b>{{ $product->currency->symbol }}{{ $product->amount }}</b>
+                            </span>
+                        </div>
+                        <div class="bottom-section">
+                            <div class="d-flex justify-content-between">
+                                <a href="{{ route('web.shop.cart') }}"
+                                    class="btn btn-primary btn-sm text-sm">Checkout</a>
+                                <span>
+                                    <a href="{{ route('web.shop.index') }}"
+                                        class="btn btn-primary btn-sm text-sm">Continue Shopping</a>
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
-            @endif
+            </div>
+        </div>
+    @endif
 
-        @endif
+@endif
 
-    </div>
-</div>
+
 
 <div class="site-section block-3 site-blocks-2 bg-light">
     <div class="container">
@@ -272,7 +286,11 @@
 
         </div>
     </div>
-</div>
 
+    @if (session()->has('error_message'))
+        <div class="popup-message error" id="popup-message">
+            <p class="text-white">{{ session('error_message') }}</p>
+        </div>
+    @endif
 
 </div>
