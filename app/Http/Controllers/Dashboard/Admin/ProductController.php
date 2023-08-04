@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
+use App\Constants\StatusConstants;
 use App\Helpers\FileHelpers;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
@@ -226,5 +227,13 @@ class ProductController extends Controller
         } else {
             return back()->with('error_message', 'Product not found');
         }
+    }
+
+
+    public function featuredProduct(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+        $product->update(['featured' => $request->input('featured')]);
+        session()->flash('seccess_message', 'Product featured updated');
     }
 }

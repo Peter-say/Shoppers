@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Product;
 use App\Models\Wishlist;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -116,10 +117,10 @@ class AddToCart extends Component
     public function mount($id)
     {
         $this->product = Product::with('cartItem')->where('status', 'active')->where('id', $id)->first();
-        $this->related_products = Product::where('category_id', $this->product->category_id)
-            ->where('status', 'active')
-            ->where('id', '!=', $this->product->id)
-            ->get();
+        // $this->related_products = Product::where('category_id', $this->product->category_id)
+        //     ->where('status', 'active')
+        //     ->where('id', '!=', $this->product->id)
+        //     ->get();
     }
 
     public function removeFromCart($productId)
@@ -157,35 +158,48 @@ class AddToCart extends Component
 
     public function addToWishlist()
     {
-
         if (Auth::check()) {
             $this->addToAuthenticatedUserWishlist();
         } else {
-            session()->flash('error_message', 'You need to log in to save item to wishlist');
+            return back()->with('error_message', 'You need to log in to save item to wishlist');
         }
     }
 
     private function addToAuthenticatedUserWishlist()
     {
-        $user = Auth::user();
-        $wishlistItem = Wishlist::where('user_id', $user->id)
-            ->where('product_id', $this->product->id)
-            ->first();
+        try {
+            $user = Auth::user();
+            $wishlistItem = Wishlist::where('user_id', $user->id)
+                ->where('product_id', $this->product->id)
+                ->first();
 
-        if (!$wishlistItem) {
-            $wishlistItem = new Wishlist();
-            $wishlistItem->user_id = $user->id;
-            $wishlistItem->product_id = $this->product->id;
-            $wishlistItem->save();
+            if (!$wishlistItem) {
+                $wishlistItem = new Wishlist();
+                $wishlistItem->user_id = $user->id;
+                $wishlistItem->product_id = $this->product->id;
+                $wishlistItem->save();
 
-            // Flash a message to the user
-            session()->flash('success_message', 'Item added to wishlist successfully');
+                // Flash a message to the user
+               return back()->with('success_message', 'Item added to wishlist successfully');
+            }
+        } catch (Exception $e) {
+            return 'An error occured' . $e->getMessage();
         }
     }
 
     public function removeFromWishlist()
     {
-        //
+        if (Auth::check()) {
+            $user = Auth::user();
+            $wishlistItem = Wishlist::where('user_id', $user->id)
+                ->where('product_id', $this->product->id)
+                ->first();
+
+            $wishlistItem->delete();
+            session()->flash('success_message', 'Item removed from wishlist successfully');
+        } else {
+            session()->flash('error_message', 'You need to log in to remove item from wishlist');
+        }
     }
 
 

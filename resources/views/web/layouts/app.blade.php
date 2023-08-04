@@ -45,6 +45,12 @@
             background-color: red;
         }
 
+        #cancel-popup {
+            font-size: 24px;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
 
         .profile-container {
             position: relative;
@@ -110,10 +116,9 @@
 
         // end wishlist form
 
-        document.addEventListener('DOMContentLoaded', function() {
+        Livewire.hook('afterDomUpdate', () => {
             var popup = document.getElementById('popup-message');
-
-            if (popup) { // Check if the popup element exists on the page
+            if (popup) {
                 setTimeout(function() {
                     popup.style.display = 'none';
                 }, 4000);
@@ -125,6 +130,13 @@
                     }
                 });
             }
+        });
+
+        var popupMessage = document.querySelector('.popup-message');
+        var cancelPopUp = document.getElementById('cancel-popup');
+
+        cancelPopUp.addEventListener('click', function() {
+            popupMessage.style.display = 'none';
         });
     </script>
 

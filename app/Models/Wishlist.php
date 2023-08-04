@@ -20,4 +20,16 @@ class Wishlist extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function isInWishlist($product_id)
+    {
+        $wishlistItems = $this('product_id', $product_id);
+        foreach ($wishlistItems as $item) {
+            if ($item->id === $product_id) {
+                return true; 
+            }
+        }
+
+        return false;
+    }
 }

@@ -16,6 +16,12 @@ class Transaction extends Model
         return $this->belongsTo(Wallet::class);
     }
 
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+
+
     public static function generateTransactionReference()
     {
         $prefix = 'TRN'; // Prefix for the transaction reference

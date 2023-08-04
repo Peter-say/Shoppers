@@ -93,6 +93,10 @@
             max-width: 600px;
             /* Adjust the width as needed */
         }
+
+        .custom-color {
+            color: rgba(24, 24, 136, 0.589);
+        }
     </style>
 
     <div class="bg-light py-3">
@@ -110,15 +114,10 @@
     <div class="site-section">
         <div class="container">
             <div class="d-flex justify-content-end">
-                @if ($product->id)
+             
                     <form wire:click.prevent="addToWishlist({{ $product->id }})" method="post" id="wishlistForm">
-                        <span class=" pl-5 icon  fa-lg icon-heart-o"></span>
+                        <span style="cursor: pointer" class=" pl-5 icon  fa-lg icon-heart-o"></span>
                     </form>
-                @else
-                    <form wire:click.prevent="removeFromWishlist({{ $product->id }})" method="post" id="wishlistForm">
-                        <span class=" pl-5 icon bg-primary fa-lg icon-heart-o"></span>
-                    </form>
-                @endif
             </div>
             <form method="post">
                 @csrf
@@ -196,7 +195,8 @@
                                     cart</button>
                             @else
                                 <button wire:click.prevent="addToCart({{ $product->id }})"
-                                    class="buy-now btn btn-sm btn-primary" id="add-to-cart-button">Add to cart</button>
+                                    class="buy-now btn btn-sm btn-primary" id="add-to-cart-button">Add to
+                                    cart</button>
                             @endisset
 
                     </div>
@@ -208,8 +208,9 @@
 
 
 @if (session()->has('success_message'))
-    <div class="popup-message success" id="popup-message">
+    <div class=" d-flex justify-content-around popup-message success" id="popup-message">
         <p class="text-white">{{ session('success_message') }}</p>
+        <span id="cancel-popup">X</span>
     </div>
 
     @if (session()->has('success_message') && !session()->has('item_removed') && !session()->has('add-wishlist'))
@@ -217,8 +218,9 @@
             <div class="container-popup">
                 <div class="row">
                     <div class="col-12">
-                        <div class="popup-message success" id="popup-message">
+                        <div class=" d-flex justify-content-around popup-message success" id="popup-message">
                             <p class="text-white">{{ session('success_message') }}</p>
+                            <span id="cancel-popup">X</span>
                         </div>
                     </div>
                     <div class="col-4">
@@ -252,45 +254,3 @@
     @endif
 
 @endif
-
-
-
-<div class="site-section block-3 site-blocks-2 bg-light">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-7 site-section-heading text-center pt-4">
-                <h2>Featured Products</h2>
-            </div>
-        </div>
-        <div class="row">
-
-            <div class="col-md-12">
-                @foreach ($related_products as $related)
-                    <div class=" nonloop-block-3 owl-carousel">
-                        <div class="item">
-                            <div class="block-4 text-center">
-                                <figure class="block-4-image">
-                                    <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
-                                </figure>
-                                <div class="block-4-text p-4">
-                                    <h3><a href="#">{{ $related->name }}</a></h3>
-                                    <p class="mb-0">{{ Str::limit($related->description, 40) }}</p>
-                                    <p class="text-primary font-weight-bold">${{ $related->amount }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                @endforeach
-            </div>
-
-        </div>
-    </div>
-
-    @if (session()->has('error_message'))
-        <div class="popup-message error" id="popup-message">
-            <p class="text-white">{{ session('error_message') }}</p>
-        </div>
-    @endif
-
-</div>

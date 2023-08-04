@@ -1,7 +1,7 @@
 <div class="col-md-6 mb-5 mb-md-0">
     <h2 class="h3 mb-3 text-black">Billing Details</h2>
     <form
-        action="{{ isset($shipping_address) ? route('account.address.update', $shipping_address->id) : route('user.dashboard.profile.address.save') }}"
+        action="{{ isset($shipping_address) ? route('account.address.update', $shipping_address->id) : route('account.address.save') }}"
         method="post">
         @csrf
         <input type="hidden" name="user_id" value="{{ $user->id }}">

@@ -11,7 +11,7 @@ class ShowCart extends Component
 {
 
     protected $listeners = ['updateCartItems' => 'updateCartItems'];
-    
+
     public $cartItems;
     public $totalPrice;
 
@@ -45,15 +45,20 @@ class ShowCart extends Component
         if (Auth::check()) {
             // User is authenticated
             $user = Auth::user();
+
+            // Retrieve guest cart items from the session
+            $guestCartItems = session()->get('cartItems');
+
+            // Ensure $guestCartItems is an array
+            $guestCartItems = $guestCartItems ?: [];
+
             $cart = Cart::where('user_id', $user->id)->first();
 
             if ($cart) {
-                // Retrieve guest cart items from the session
-                $guestCartItems = session()->get('cartItems');
 
                 // Merge guest cart items with the user's cart items
-                if ($guestCartItems) {
-                    $this->mergeGuestCartItems($cart, $guestCartItems);
+                if (!empty($guestCartItems)) {
+                    $this->mergeGuestCartItems($cart, $guestCartItems); // Swap arguments
                     session()->forget('cartItems');
                 }
 
@@ -71,6 +76,7 @@ class ShowCart extends Component
             $this->cartItems = $cart ? $cart->cartItems : [];
         }
     }
+
     private function mergeGuestCartItems($userCart, $guestCartItems)
     {
         foreach ($guestCartItems as $cartItemData) {
@@ -95,6 +101,7 @@ class ShowCart extends Component
             }
         }
     }
+
 
     public function removeFromCart($item)
     {

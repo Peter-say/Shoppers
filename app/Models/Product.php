@@ -39,7 +39,7 @@ class Product extends Model
         return $this->belongsTo(Store::class);
     }
 
-    public function wishlists()
+    public function wishlist()
     {
         return $this->hasMany(Wishlist::class);
     }

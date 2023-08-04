@@ -12,10 +12,10 @@ class OrderController extends Controller
     public function placeOrder(Request $request, PaymentService $paymentService)
     {
         $result = OrderService::processOrder($request, $paymentService);
-        if ($result['success']) {
+        if ($result == true) {
             return redirect()->route('user.dashboard.thank-you');
         } else {
-            return back()->with('error_message', $result['message']);
+            return back()->with('error_message', 'Something went wrong');
         }
     }
 }

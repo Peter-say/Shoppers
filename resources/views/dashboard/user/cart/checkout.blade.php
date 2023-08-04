@@ -80,7 +80,7 @@
                                     </tbody>
                                 </table>
 
-                                <form action="{{ route('user.dashboard.place.order') }}" method="post">
+                                <form action="{{ route('user.dashboard.place-order') }}" method="post">
                                     @csrf
                                     <div class="m-2">
 
@@ -123,7 +123,8 @@
                                         </button>
                                     </div>
                                     <div class="form-group" id="pay-with-paypal-button">
-                                        <a href="{{route('user.dashboard.paypal.checkout')}}" class="btn btn-primary btn-lg py-3 btn-block">Continue with Paypal
+                                        <a href="{{ route('user.dashboard.paypal.checkout') }}"
+                                            class="btn btn-primary btn-lg py-3 btn-block">Continue with Paypal
                                         </a>
                                     </div>
                                     @include('dashboard.user.wallet.modal')

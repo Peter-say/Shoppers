@@ -38,6 +38,20 @@
     .btn-secondary:focus {
         box-shadow: none;
     }
+
+    #user-order-count {
+        background: #7971ea;
+        color: white;
+        padding: 6px;
+        border-radius: 50%;
+        font-size: 10px;
+        width: 2px;
+        height: 24px;
+
+
+
+
+    }
 </style>
 
 @section('contents')
@@ -52,12 +66,12 @@
     </div>
     <div class="site-section">
         <div class="container">
-            <div class="row mb-5">
+            {{-- <div class="row d-flex justify-content-end">
                 <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-3">
                     <div class="border p-4 rounded">
 
                         <p class="text-dark">Your Account Ballance</p>
-                        <div class="card-bottom pt-3 px-3 mb-2">
+                        <div class="card-bottom pt-3 px-3 mb-2 justify-content-center">
                             <div class="d-flex flex-row justify-content-between text-align-center">
                                 <div class="d-flex flex-column"><span>Balance amount</span>
                                     <p>{{ $wallet->symbol }}<span
@@ -68,14 +82,70 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-3">
+            </div> --}}
+            <div class="row mb-5">
+                <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 mb-3">
                     <div class="border p-4 rounded" role="alert">
-                        Your Orders
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <div class="border p-4 rounded" role="alert">
-                        Cart Lists
+                        <div class="d-flex justify-content-center">
+                            <p class="text-dark"> Your Orders <sup id="user-order-count">{{ $totalOrderCount }}</sup> </p>
+
+                        </div>
+
+                        <div style="overflow: auto; width:100%">
+                            <table class="table">
+                                @if ($transactions->count())
+                                    <thead>
+                                        <tr>
+                                            <th>No. of Items</th>
+                                            <th>Tracking No.</th>
+                                            <th>Status</th>
+                                            <th>Purchased Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @foreach ($orders as $order)
+                                            @php
+                                                $orderStatus = $order->status;
+                                                $orderStatusColor = '';
+                                                
+                                                if ($orderStatus == 'Completed') {
+                                                    $orderStatusColor = 'text-success';
+                                                }
+                                                if ($orderStatus == 'Pending') {
+                                                    $orderStatusColor = 'text-warning';
+                                                }
+                                                if ($orderStatus == 'Rejected') {
+                                                    $orderStatusColor = 'text-danger';
+                                                }
+                                            @endphp
+                                            <tr>
+                                                <td>{{ number_format($order->total) }}</td>
+                                                <td>{{ $order->tracking_number }}</td>
+                                                <td class="{{ $orderStatusColor }}">{{ $order->status }}</td>
+                                                <td>{{ $order->created_at->format('d-m-y') }}</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-between">
+                                                        <a href="" class="btn btn-primary">view</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <div class="d-flex justify-content-center">
+                                            <h6>You have not place an order yet.</h6>
+                                        </div>
+
+
+                                    </tbody>
+                                @endif
+
+                            </table>
+                            <div class="d-flex justify-content-center">
+                                <a href="" class="btn btn-primary btn-sm text-sm">View All</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -83,64 +153,66 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="border p-4 rounded" role="alert">
-                        <h4>Transaction Details</h4>
+                        <div class="d-flex justify-content-center">
+                            <h4>Transaction Details</h4>
+                        </div>
                         <div style="overflow: auto; width:100%">
                             <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Item</th>
-                                        <th>Price</th>
-                                        <th>Status</th>
-                                        <th>Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Item 1</td>
-                                        <td>$10</td>
-                                        <td>Pending</td>
-                                        <td>06-07-2023</td>
+                                @if ($transactions->count())
+                                    <thead>
+                                        <tr>
+                                            <th>No. of Items</th>
+                                            <th>Description</th>
+                                            <th>Reference No.</th>
+                                            <th>Price</th>
+                                            <th>Status</th>
+                                            <th>Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Item 1</td>
-                                        <td>$10</td>
-                                        <td>Pending</td>
-                                        <td>06-07-2023</td>
+                                        @foreach ($transactions as $transaction)
+                                            <tr>
+                                                <td>{{ number_format($transaction->order->total) }}<a href=""><small
+                                                            class="pl-2">view</small></a> </td>
+                                                <td>{{ $transaction->description ?? 'Not Available' }}</td>
+                                                <td>{{ $transaction->reference_no }}</td>
+                                                <td>${{ $transaction->amount }}</td>
+                                                <td>{{ $transaction->status }}</td>
+                                                <td>{{ $transaction->created_at }}</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-between">
+                                                        <a href="" class="btn btn-primary">view</a>
+                                                        <a href="" class="btn btn-danger">Discard</a>
+                                                    </div>
+                                                </td>
 
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Item 1</td>
-                                        <td>$10</td>
-                                        <td>Pending</td>
-                                        <td>06-07-2023</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <div class="d-flex justify-content-center">
+                                            <h6>No Transaction at the momment</h6>
+                                        </div>
 
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Item 1</td>
-                                        <td>$10</td>
-                                        <td>Pending</td>
-                                        <td>06-07-2023</td>
 
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Item 1</td>
-                                        <td>$10</td>
-                                        <td>Pending</td>
-                                        <td>06-07-2023</td>
+                                    </tbody>
+                                @endif
 
-                                    </tr>
-
-                                </tbody>
                             </table>
+
                         </div>
+
                     </div>
+                    @if (!empty($transactions))
+                        <div class="d-flex justify-content-center mt-2 text-dark">
+                            {!! $transactions->links('pagination::simple-bootstrap-4') !!}
+                        </div>
+                        <div class="text-center mb-2 text-dark">
+                            Showing {{ $transactions->firstItem() }} to {{ $transactions->lastItem() }} of
+                            {{ $transactions->total() }}
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
