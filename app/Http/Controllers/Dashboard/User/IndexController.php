@@ -16,7 +16,7 @@ class IndexController extends Controller
       $user = auth()->user();
       $wallet = $user->wallet;
       $transactions = Transaction::with('order')->where('type', 'purchase')->where('user_id', $user->id)->paginate(10);
-      $orders = Order::where('user_id', $user->id)->oldest()->limit(2)->get();
+      $orders = Order::where('user_id', $user->id)->latest()->limit(2)->get();
       $totalOrderCount = Order::where('user_id', $user->id)->count();
       return view('dashboard.user.index', [
          'user' => $user,

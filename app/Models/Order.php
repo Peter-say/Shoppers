@@ -13,7 +13,7 @@ class Order extends Model
 
     public function orderItems()
     {
-        return $this->belongsTo(OrderItem::class);
+        return $this->hasMany(OrderItem::class);
     }
 
     public function transaction()
@@ -25,6 +25,8 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    
 
     public function shippingAddress()
     {

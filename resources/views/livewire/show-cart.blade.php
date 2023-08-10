@@ -111,7 +111,7 @@
                                     <div class="col-md-12 text-right border-bottom mb-5">
                                         <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
                                     </div>
-                                </div>
+                            </div>
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <span class="text-black">Subtotal</span>

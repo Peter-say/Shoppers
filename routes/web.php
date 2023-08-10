@@ -70,6 +70,8 @@ Route::prefix('user')->as('user.')->group(function () {
         Route::get('thank-you', [IndexController::class, 'thankYou'])->name('thank-you');
         Route::get('checkout', [CheckOutController::class, 'checkout'])->name('checkout');
         Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('place-order');
+        Route::get('/orders', [OrderController::class, 'orders'])->name('orders');
+        Route::get('/order/{id}/products', [OrderController::class, 'orderProducts'])->name('order.products');
 
         // payment method with paypal
         Route::get('/paypal/checkout', [PayPalController::class, 'checkout'])->name('paypal.checkout');
