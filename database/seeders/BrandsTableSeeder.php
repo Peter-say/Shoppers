@@ -8,7 +8,7 @@ class BrandsTableSeeder extends Seeder
 {
     public function run()
     {
-        $brandsData = [
+        $brandsDatas = [
             [
                 'logo' => 'brand1.png',
                 'name' => 'Brand 1',
@@ -46,7 +46,7 @@ class BrandsTableSeeder extends Seeder
             ],
         ];
 
-        foreach ($brandsData as $brandData) {
+        foreach ($brandsDatas as $brandData) {
             Brand::create($brandData);
         }
     }

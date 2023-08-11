@@ -114,10 +114,10 @@
     <div class="site-section">
         <div class="container">
             <div class="d-flex justify-content-end">
-             
-                    <form wire:click.prevent="addToWishlist({{ $product->id }})" method="post" id="wishlistForm">
-                        <span style="cursor: pointer" class=" pl-5 icon  fa-lg icon-heart-o"></span>
-                    </form>
+
+                <form wire:click.prevent="addToWishlist({{ $product->id }})" method="post" id="wishlistForm">
+                    <span style="cursor: pointer" class=" pl-5 icon  fa-lg icon-heart-o"></span>
+                </form>
             </div>
             <form method="post">
                 @csrf
@@ -189,68 +189,72 @@
 
                         <div class="d-flex ">
                             <input type="hidden" value="{{ $product->price }}" name="price" wire:model="price">
-                            @if ($product->cartItem == true)
+                            @if ($product->cartItem)
+                                {{-- <p>Item already added to cart. Go to cart page to update or remove it</p> --}}
                                 <button wire:click.prevent="removeFromCart({{ $product->id }})"
-                                    class="buy-now btn btn-sm btn-primary" id="remove-from-cart-button">Remove from
-                                    cart</button>
+                                    class="buy-now btn btn-sm btn-primary"
+                                    wire:key="remove-button-{{ $product->id }}">
+                                    Remove from cart
+                                </button>
                             @else
                                 <button wire:click.prevent="addToCart({{ $product->id }})"
                                     class="buy-now btn btn-sm btn-primary" id="add-to-cart-button">Add to
                                     cart</button>
-                            @endisset
+                            @endif
 
+                        </div>
                     </div>
-                </div>
-        </form>
-    </div>
-</div>
-
-
-
-@if (session()->has('success_message'))
-    <div class=" d-flex justify-content-around popup-message success" id="popup-message">
-        <p class="text-white">{{ session('success_message') }}</p>
-        <span id="cancel-popup">X</span>
+            </form>
+        </div>
     </div>
 
-    @if (session()->has('success_message') && !session()->has('item_removed') && !session()->has('add-wishlist'))
-        <div class="overlay">
-            <div class="container-popup">
-                <div class="row">
-                    <div class="col-12">
-                        <div class=" d-flex justify-content-around popup-message success" id="popup-message">
-                            <p class="text-white">{{ session('success_message') }}</p>
-                            <span id="cancel-popup">X</span>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <img class="img-fluid" src="{{ asset($product->cover_image) }}" alt="Image placeholder">
-                    </div>
-                    <div class="col-8">
-                        <div class="text-black">
-                            <h5>{{ $product->name }}</h5>
-                        </div>
-                        <div class="">
 
-                            <span class="text-black">
-                                <b>Price:</b>
-                                <b>{{ $product->currency->symbol }}{{ $product->amount }}</b>
-                            </span>
+
+    @if (session()->has('success_message'))
+        <div class=" d-flex justify-content-around popup-message success" id="popup-message">
+            <p class="text-white">{{ session('success_message') }}</p>
+            <span id="cancel-popup">X</span>
+        </div>
+
+        @if (session()->has('success_message') && !session()->has('item_removed') && !session()->has('add-wishlist'))
+            <div class="overlay">
+                <div class="container-popup">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class=" d-flex justify-content-around popup-message success" id="popup-message">
+                                <p class="text-white">{{ session('success_message') }}</p>
+                                <span id="cancel-popup">X</span>
+                            </div>
                         </div>
-                        <div class="bottom-section">
-                            <div class="d-flex justify-content-between">
-                                <a href="{{ route('web.shop.cart') }}"
-                                    class="btn btn-primary btn-sm text-sm">Checkout</a>
-                                <span>
-                                    <a href="{{ route('web.shop.index') }}"
-                                        class="btn btn-primary btn-sm text-sm">Continue Shopping</a>
+                        <div class="col-4">
+                            <img class="img-fluid" src="{{ asset($product->cover_image) }}" alt="Image placeholder">
+                        </div>
+                        <div class="col-8">
+                            <div class="text-black d-flex justify-content-between">
+                                <h5>{{ $product->name }}</h5> <a href="{{ url()->previous() }}"
+                                    class="btn btn-secodary">Back</a>
+                            </div>
+                            <div class="">
+
+                                <span class="text-black">
+                                    <b>Price:</b>
+                                    <b>{{ $product->currency->symbol }}{{ $product->amount }}</b>
                                 </span>
+                            </div>
+                            <div class="bottom-section">
+                                <div class="d-flex justify-content-between">
+                                    <a href="{{ route('web.shop.cart') }}"
+                                        class="btn btn-primary btn-sm text-sm">Checkout</a>
+                                    <span>
+                                        <a href="{{ route('web.shop.index') }}"
+                                            class="btn btn-primary btn-sm text-sm">Continue Shopping</a>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    @endif
+        @endif
 
-@endif
+    @endif

@@ -8,7 +8,9 @@ use App\Models\CartItem;
 use App\Models\Product;
 use App\Models\Wishlist;
 use Exception;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 
@@ -20,10 +22,12 @@ class AddToCart extends Component
         'addToWishlist'
     ];
     public $product;
+    public $productId;
     public $related_products;
     public $quantity;
     public $size;
     public $price;
+
 
 
     protected $rules = [
@@ -55,20 +59,37 @@ class AddToCart extends Component
     public function addToCart($id)
     {
         $this->validate();
+
         if (Auth::check()) {
             $user = Auth::user();
             $userCart = Cart::where('user_id', $user->id)->first();
 
-            $userCart = $userCart ?? new Cart();
-            $userCart->user_id = $user->id;
-            $userCart->status = 'User';
-            $userCart->save();
+            if (!$userCart) {
+                $userCart = new Cart();
+                $userCart->user_id = $user->id;
+                $userCart->status = 'User';
+                $userCart->save();
+            }
+
+            // Check if the product is already in the cart
+            $existingCartItem = CartItem::where('cart_id', $userCart->id)
+                ->where('product_id', $id)
+                ->first();
+
+            $this->product->cartItem = $existingCartItem ? true : false;
         } else {
             // User is not authenticated (guest)
             $userCart = $this->getGuestCart();
 
-            // Store the new item in the guest cart session
+            // Check if the product is already in the guest cart
             $cartItems = session()->get('cartItems', []);
+            $existingCartItem = collect($cartItems)->first(function ($item) use ($id) {
+                return $item['product_id'] == $id;
+            });
+
+            $this->product->cartItem = $existingCartItem ? true : false;
+
+            // Store the new item in the guest cart session
             $cartItems[] = [
                 'product_id' => $id,
                 'quantity' => $this->quantity,
@@ -77,6 +98,7 @@ class AddToCart extends Component
             ];
             session()->put('cartItems', $cartItems);
         }
+
         // Create a new cart item
         $data = [
             'cart_id' => $userCart->id,
@@ -86,9 +108,25 @@ class AddToCart extends Component
             'size' => $this->size,
         ];
         CartItem::create($data);
+
         $this->resetInput(); // Reset the input field
-        return redirect()->back()->with('success_message', 'Item added to cart successfully');
+
+        session()->flash('success_message', 'Item added to cart successfully');
     }
+
+    public function removeFromCart($id)
+    {
+        $cartItem = CartItem::where('product_id', $this->product->id)
+            ->first();
+        if ($cartItem) {
+            $cartItem->delete();
+            session()->flash('item_removed');
+            session()->flash('success_message', 'Item added to cart successfully');
+        } else {
+            session()->flash('error_message', 'Can not remove cart');
+        }
+    }
+
 
 
     private function getGuestCart()
@@ -123,38 +161,6 @@ class AddToCart extends Component
         //     ->get();
     }
 
-    public function removeFromCart($productId)
-    {
-        if (Auth::check()) {
-            $user = Auth::user();
-            $cart = Cart::where('user_id', $user->id)->first();
-        } else {
-            // User is not authenticated (guest)
-            $sessionId = session()->getId();
-            $cart = Cart::where('session_id', $sessionId)->first();
-        }
-
-        if ($cart) {
-            // Find the cart item for the given product ID and fetch its associated product
-            $cartItem = CartItem::where('cart_id', $cart->id)->where('product_id', $productId)->first();
-            if ($cartItem) {
-                // Fetch the associated product before deleting the cart item
-                $product = $cartItem->product;
-
-                // Delete the cart item
-                $cartItem->delete();
-
-                // Set the $this->product variable to the fetched product
-                $this->product = $product;
-            }
-        }
-
-        // Update the cart items after removal
-        $this->emit('updateCartItems');
-        session()->flash('item_removed', true);
-        session()->flash('success_message', 'Item removed from cart successfully');
-    }
-
 
     public function addToWishlist()
     {
@@ -180,7 +186,7 @@ class AddToCart extends Component
                 $wishlistItem->save();
 
                 // Flash a message to the user
-               return back()->with('success_message', 'Item added to wishlist successfully');
+                return back()->with('success_message', 'Item added to wishlist successfully');
             }
         } catch (Exception $e) {
             return 'An error occured' . $e->getMessage();
@@ -196,6 +202,7 @@ class AddToCart extends Component
                 ->first();
 
             $wishlistItem->delete();
+
             session()->flash('success_message', 'Item removed from wishlist successfully');
         } else {
             session()->flash('error_message', 'You need to log in to remove item from wishlist');

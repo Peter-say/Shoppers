@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Cart;
 use App\Models\CartItem;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class ShowCart extends Component
@@ -105,12 +106,23 @@ class ShowCart extends Component
 
     public function removeFromCart($item)
     {
-        $cartItem = $this->cartItems[$item];
-        $cartItem->delete();
-        $this->updateCartItems();
-        $this->calculateTotalPrice();
-        return back()->with('success_message', 'Item removed from cart successfully');
+        try {
+            DB::beginTransaction();
+    
+            $cartItem = $this->cartItems[$item];
+            $cartItem->delete();
+            $this->updateCartItems();
+            $this->calculateTotalPrice();
+    
+            DB::commit();
+    
+            return back()->with('success_message', 'Item removed from cart successfully');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error_message', 'An error occurred while removing the item from the cart.');
+        }
     }
+    
 
 
     public function calculateTotalPrice()
