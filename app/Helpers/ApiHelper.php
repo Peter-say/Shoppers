@@ -15,27 +15,30 @@ class ApiHelper
         ], $status);
     }
 
-    public static function errorResponse($message, $status = 500)
+    public static function errorResponse($message, $errors = [], $status = 500)
     {
         return response()->json([
             'success' => false,
             'message' => $message,
+            'errors' => $errors,
         ], $status);
     }
 
-    public static function notFoundResponse($message, $status = 404)
+    public static function notFoundResponse($message, $errors = [], $status = 404)
     {
         return response()->json([
             'success' => false,
             'message' => $message,
+            'errors' => $errors,
         ], $status);
     }
 
-    public static function validationErrorResponse($message, $status = 422)
+    public static function validationErrorResponse($message, $errors = [], $status = 422)
     {
         return response()->json([
             'success' => false,
             'message' => $message,
+            'errors' => $errors,
         ], $status);
     }
 }

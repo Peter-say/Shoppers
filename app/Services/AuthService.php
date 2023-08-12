@@ -24,9 +24,9 @@ class AuthService
             'password' => bcrypt($validatedData['password']),
         ]);
 
-        $accessToken = $user->createToken('authToken')->accessToken;
+        $accessToken = $user->createToken('authToken');
 
-        return response()->json(['user' => $user, 'access_token' => $accessToken], 201);
+        return response()->json(['user' => $user, 'access_token' => $accessToken->plainTextToken], 201);
     }
 
     public static function login(Request $request)
@@ -39,8 +39,8 @@ class AuthService
         if (!Auth::attempt($loginData)) {
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
-
-        $accessToken = Auth::user()->createToken('authToken');
+        $user = Auth::user();
+        $accessToken = $user->createToken('authToken');
 
         return response()->json(['user' => Auth::user(), 'access_token' => $accessToken->plainTextToken]);
     }

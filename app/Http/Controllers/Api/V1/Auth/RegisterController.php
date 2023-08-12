@@ -14,9 +14,17 @@ class RegisterController extends Controller
     {
         try {
             $data = AuthService::register($request);
-            return ApiHelper::successResponse('User registered successfully');
+            
+            if ($data) {
+                return ApiHelper::successResponse('User registered successfully', $data);
+            } else {
+                return ApiHelper::errorResponse('An error occurred while registering the user. Please try again.', 500);
+            }
         } catch (ValidationException $e) {
-            return ApiHelper::validationErrorResponse($e);
+            return ApiHelper::validationErrorResponse('Validation error', $e->errors());
+        } catch (\Exception $e) {
+            return ApiHelper::errorResponse('An error occurred while registering the user. Please try again later.', 500);
         }
+        
     }
 }
