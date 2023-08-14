@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Services\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class LoginController extends Controller
 {
@@ -21,4 +22,6 @@ class LoginController extends Controller
             return ApiHelper::errorResponse('Login attempt failed. Invalid credentials.', 401);
         }
     }
+
+   
 }

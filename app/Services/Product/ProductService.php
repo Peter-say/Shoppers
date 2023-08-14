@@ -46,6 +46,7 @@ class ProductService
 
         $user_id = Auth::user()->id;
         $cover_image = FileHelpers::saveImageRequest($request->file('cover_image'), 'product/cover_images/');
+        $cover_image_path = pathinfo($cover_image, PATHINFO_BASENAME);
 
         $amount = floatval($request->input('amount'));
         $discount_price = floatval($request->input('discount_price'));
@@ -63,7 +64,7 @@ class ProductService
             'brand_id' => $request->input('brand_id'),
             'store_id' => $request->input('store_id') ?? null,
             'currency_id' => $request->input('currency_id'),
-            'cover_image' => $cover_image,
+            'cover_image' => $cover_image_path,
             'amount' => $amount,
             'discount_price' => $discount_price ?? null,
             'discount_percent' => $discount_percent,

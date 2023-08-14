@@ -10,6 +10,7 @@ use App\Http\Controllers\Dashboard\Admin\ProductController;
 use App\Http\Controllers\Dashboard\Admin\SubcategoryController;
 use App\Http\Controllers\Dashboard\User\Cart\CheckOutController;
 use App\Http\Controllers\Dashboard\User\OrderController;
+use App\Http\Controllers\Dashboard\User\Payment\FlutterwaveController;
 use App\Http\Controllers\Dashboard\User\Payment\PayPalController;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\Category\CategoryController;
@@ -73,8 +74,9 @@ Route::prefix('user')->as('user.')->group(function () {
         Route::get('/orders', [OrderController::class, 'orders'])->name('orders');
         Route::get('/order/{id}/products', [OrderController::class, 'orderProducts'])->name('order.products');
 
-        // payment method with paypal
-        Route::get('/paypal/checkout', [PayPalController::class, 'checkout'])->name('paypal.checkout');
+        // payment method with flutterwave
+        Route::get('/flutterwave/payment/initiate', [FlutterwaveController::class, 'initiatePayment'])->name('flutterwave.payment.initiate');
+        Route::get('/flutterwave/payment/callback', [FlutterwaveController::class, 'paymentCallback'])->name('flutterwave.payment.callback');
 
     });
 });

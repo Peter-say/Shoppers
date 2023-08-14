@@ -93,8 +93,9 @@
                                 <div class="block-4 text-center border">
                                     <figure class="block-4-image ">
                                         <a href="{{ route('web.shop.product.details', $product->id) }}">
-                                            <img class="img-fluid " src="{{ asset($product->cover_image) }}"
-                                                alt="Image placeholder"></a>
+                                           
+                                            <img class="img-fluid" src="{{ asset( $product->cover_image) }}" alt="Product Cover Image">
+
                                     </figure>
                                     <div class="block-4-text p-4">
                                         <h3><a

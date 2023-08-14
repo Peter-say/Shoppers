@@ -31,10 +31,14 @@ class ProductFactory extends Factory
 
     public function definition(): array
     {
+        // cover images generation
         $cover_image = glob(public_path('web/images/*'));
+        $randonCoverImages  = $cover_image[array_rand($cover_image)];
+
+        // other images generation
         $images = glob(public_path('web/images/*'));
         $random_images = $images[array_rand($images)];
-        $ImageFileName = basename($random_images);
+       
 
         $faker = \Faker\Factory::create();
         $meta_keyword = implode(',', $faker->words(mt_rand(3, 5)));
@@ -54,8 +58,8 @@ class ProductFactory extends Factory
             'description' => $this->faker->paragraph($nbSentences = 30),
             'meta_description' => $this->faker->text($nbSentences  = 5),
             'meta_keyword' => $meta_keyword,
-            'images' => $ImageFileName,
-            'cover_image' => $cover_image[array_rand($cover_image)],
+            'images' => $random_images,
+            'cover_image' =>  $randonCoverImages ,
             'status' => 'active',
 
         ];

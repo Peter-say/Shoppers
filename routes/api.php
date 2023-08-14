@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Auth\ForgetPasswordController;
 use App\Http\Controllers\Api\V1\Auth\LoginController;
 use App\Http\Controllers\Api\V1\Auth\RegisterController;
 use App\Http\Controllers\Api\V1\Product\ProductCategoryController;
@@ -32,6 +33,8 @@ Route::prefix('v1')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('register', [RegisterController::class, 'register']);
         Route::post('login', [LoginController::class, 'login']);
+        Route::post('password/forget', [ForgetPasswordController::class, 'forgetPassword']);
+        Route::post('password/reset', [ForgetPasswordController::class, 'ResetPassword']);
     });
 });
 
