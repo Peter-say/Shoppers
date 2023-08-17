@@ -74,7 +74,7 @@ class AuthService
             // Save the reset code and expiration time in the database
             $data =  [
                 'email' => $request->email,
-                'token' => Hash::make($resetCode),
+                'token' => $resetCode,
                 'created_at' => Carbon::now(),
                 'expires_at' => $expiration,
             ];
@@ -95,5 +95,50 @@ class AuthService
             return ApiHelper::errorResponse('Could not send reset code. Please try again', $e->getMessage());
         }
         return $data;
+    }
+
+
+    public static function resetPassword(Request $request)
+    {
+        try {
+            $request->validate([
+                'code' => 'required|max:6|min:6|exists:password_resets,token', // Assuming the token column is used for the reset code
+                'password' => 'required|min:8|confirmed',
+            ]);
+
+            // Find the user based on the email associated with the reset code
+            $resetRecord = DB::table('password_resets')
+                ->where('token', $request->code)
+                ->first();
+
+            if (!$resetRecord) {
+                return ApiHelper::errorResponse('Invalid input');
+            }
+
+            // Check if the reset code has expired
+            if (Carbon::now()->isAfter($resetRecord->expires_at)) {
+                return ApiHelper::errorResponse('Reset code has expired');
+            }
+
+            $user = User::where('email', $resetRecord->email)->first();
+            if (!$user) {
+                throw new Exception('No code found on this email');
+            }
+
+            // Update the user's password
+            $user->password = Hash::make($request->password);
+            $user->save();
+
+            // Delete the reset code entry from the password_resets table
+            DB::table('password_resets')
+                ->where('token', $request->code)
+                ->delete();
+
+            return ApiHelper::successResponse('Password reset successfully');
+        } catch (ValidationException $e) {
+            return ApiHelper::errorResponse('Invalid input');
+        } catch (Exception $e) {
+            return ApiHelper::errorResponse('Password reset failed', $e->getMessage());
+        }
     }
 }

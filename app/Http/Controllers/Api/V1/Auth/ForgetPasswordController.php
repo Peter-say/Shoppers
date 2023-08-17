@@ -16,10 +16,20 @@ class ForgetPasswordController extends Controller
     public function forgetPassword(Request $request)
     {
         try {
-         $response = AuthService::sendCode($request);
+            $response = AuthService::sendCode($request);
             return $response;
         } catch (Exception $e) {
             return ApiHelper::errorResponse('Could not send reset code. Please, try again', $e->getMessage());
+        }
+    }
+
+    public function resetUserPassword(Request $request)
+    {
+        try {
+            $response = AuthService::resetPassword($request);
+            return $response;
+        } catch (Exception $e) {
+            return ApiHelper::errorResponse('Password reset process failed', $e->getMessage());
         }
     }
 }
