@@ -42,19 +42,21 @@ class ForgetPasswordController extends Controller
             $expiration = Carbon::now()->addMinutes(10);
 
             // Save the reset code and expiration time in the database
-            DB::table('password_resets')->updateOrInsert(
+          $data =  [
+            'email' => $request->email,
+            'token' => Hash::make($resetCode),
+            'created_at' => Carbon::now(),
+            'expires_at' => $expiration,
+          ];
+          
+          DB::table('password_resets')->updateOrInsert(
                 ['email' => $request->email],
-                [
-                    'email' => $request->email,
-                    'token' => Hash::make($resetCode),
-                    'created_at' => Carbon::now(),
-                    'expires_at' => $expiration,
-                ]
+             $data,
             );
             // Send the reset code to the user's email
             Mail::to($request->email)->send(new ResetPasswordMail($resetCode));
 
-            return ApiHelper::successResponse('Reset code sent to your email');
+            return ApiHelper::successResponse('Reset code sent to your email', $data);
         } catch (Exception $e) {
             return ApiHelper::errorResponse('Could not send reset code. Please, try again', $e->getMessage());
         }

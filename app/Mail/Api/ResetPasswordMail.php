@@ -4,8 +4,9 @@ namespace App\Mail\Api;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailables\Markdown;
 
 class ResetPasswordMail extends Mailable
 {
@@ -21,15 +22,12 @@ class ResetPasswordMail extends Mailable
         $this->resetCode = $resetCode;
     }
 
-
     /**
-     * Get the message content definition.
+     * Build the message.
      */
-    public function content(): Content
+    public function build()
     {
-        return new Content(
-            view: 'emails.reset-password',
-        );
+        return $this->subject('Reset Your Password')
+                    ->markdown('emails.reset-password');
     }
-
 }

@@ -7,9 +7,8 @@ use App\Mail\OrderShipped;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\Transaction;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Flutterwave\Flutterwave; // Import the Flutterwave class
+use Flutterwave\Payments\Facades\Flutterwave;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
