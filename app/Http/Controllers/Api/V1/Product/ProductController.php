@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Services\Product\ProductService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -41,8 +42,11 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         try {
-            $createdProduct = ProductService::storeProduct($request);
-
+            if (Auth::check()) {
+                $createdProduct = ProductService::storeProduct($request);
+            } else {
+                return ApiHelper::errorResponse('You must be logged in to create a product');
+            }
             if ($createdProduct) {
                 return ApiHelper::successResponse('Product successfully created.', $createdProduct, 201);
             } else {
@@ -88,11 +92,12 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        try {
-            $createdProduct = ProductService::updateProduct($request, $id);
 
-            if ($createdProduct) {
-                return ApiHelper::successResponse('Product successfully updated.', $createdProduct, 201);
+        try {
+            $updatedProduct = ProductService::updateProduct($request, $id);
+            dd($updatedProduct);
+            if ($updatedProduct) {
+                return ApiHelper::successResponse('Product successfully updated.', $updatedProduct, 201);
             } else {
                 return ApiHelper::errorResponse('An error occurred while updating the product. Please try again.', 500);
             }
@@ -107,11 +112,11 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         try {
-        $product = Product::find($id);
+            $product = Product::find($id);
 
-        if ($product) {
-            $product->delete();
-        }
+            if ($product) {
+                $product->delete();
+            }
             return back()->with('success_message', 'Product deleted successfully');
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return ApiHelper::notFoundResponse('Product could not be found.', 404);

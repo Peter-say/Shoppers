@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\FacebookAuthController;
+use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Dashboard\Account\AddressController;
 use App\Http\Controllers\Dashboard\Account\ProfileController;
 use App\Http\Controllers\Dashboard\Admin\BrandController;
@@ -36,6 +38,7 @@ Auth::routes();
 
 Route::get('/', [WelcomeController::class, 'welcome']);
 Route::prefix('web')->as('web.')->group(function () {
+    Route::get('privacy-policy', [WelcomeController::class, 'privacy-policy'])->name('privacy-policy');
     Route::prefix('shop')->as('shop.')->group(function () {
         Route::get('index', [ShopController::class, 'index'])->name('index');
         Route::get('search/category/{name}/products', [ShopController::class, 'fetchProductsByCategory'])->name('search.category.products');
@@ -45,7 +48,6 @@ Route::prefix('web')->as('web.')->group(function () {
         Route::get('category', [CategoryController::class, 'category'])->name('category');
         Route::get('category/{subcategory}', [CategoryController::class, 'subcategory'])->name('category.sucategory')->where('subcategory', '[A-Za-z0-9\-]+');
         Route::get('category/{subcategory}/{name}/products', [CategoryController::class, 'categoryProducts'])->name('category.products');
-
     });
 });
 
@@ -77,7 +79,6 @@ Route::prefix('user')->as('user.')->group(function () {
         // payment method with flutterwave
         Route::get('/flutterwave/payment/initiate', [FlutterwaveController::class, 'initiatePayment'])->name('flutterwave.payment.initiate');
         Route::get('/flutterwave/payment/callback', [FlutterwaveController::class, 'paymentCallback'])->name('flutterwave.payment.callback');
-
     });
 });
 
@@ -88,3 +89,13 @@ Route::prefix('account')->as('account.')->group(function () {
     Route::post('address', [AddressController::class, 'saveAddress'])->name('address.save');
     Route::put('address', [AddressController::class, 'saveAddress'])->name('address.update');
 });
+
+Route::prefix('auth')->as('auth.')->group(function () {
+    Route::get('/login/facebook', [FacebookAuthController::class, 'redirectToFacebook'])->name('login.facebook');
+    Route::get('/login/facebook/callback', [FacebookAuthController::class, 'handleFacebookCallback'])->name('login.facebook.callback');
+
+    Route::get('/login/google', [GoogleAuthController::class, 'redirectToGoogle'])->name('login.google');
+    Route::get('/login/google/callback', [GoogleAuthController::class, 'handleGoogleCallback'])->name('login.google.callback');
+});
+
+Route::post('/facebook/data-deletion', [FacebookAuthController::class, 'handleDataDeletion']);

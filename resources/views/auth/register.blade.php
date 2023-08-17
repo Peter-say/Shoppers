@@ -76,7 +76,7 @@
                                 <div class="social-button">
                                     <button class="au-btn au-btn--block au-btn--blue m-b-20">register with
                                         facebook</button>
-                                    <button class="au-btn au-btn--block au-btn--blue2">register with twitter</button>
+                                    <button class="au-btn au-btn--block au-btn--blue2">register with Google</button>
                                 </div>
                             </div>
                         </form>
