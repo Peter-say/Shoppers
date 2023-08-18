@@ -25,36 +25,7 @@ class Cart extends Model
         return $this->belongsTo(User::class, 'cart_id');
     }
 
-    public static function countItems()
-    {
-        $count = 0;
-
-        if (Auth::check()) {
-            // User is authenticated
-            $user = Auth::user();
-            $cart = $user->cart()->first();
-
-            if ($cart) {
-                $count = $cart->cartItems()->count();
-            }
-
-            // Retrieve guest cart items from the session
-            $guestCartItems = session()->get('cartItems');
-            if ($guestCartItems) {
-                $count += count($guestCartItems);
-            }
-        } else {
-            // User is not authenticated (guest)
-            $sessionId = session()->getId();
-            $cart = Cart::where('session_id', $sessionId)->first();
-
-            if ($cart) {
-                $count = $cart->cartItems()->count();
-            }
-        }
-
-        return  $count;
-    }
+  
 
     // this function handle the calculation of the total price of items added to cart //
 

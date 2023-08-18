@@ -117,10 +117,17 @@
     <div class="site-section">
         <div class="container">
             <div class="d-flex justify-content-end">
-
-                <form wire:click.prevent="addToWishlist({{ $product->id }})" method="post" id="wishlistForm">
-                    <span style="cursor: pointer" class=" pl-5 icon  fa-lg icon-heart-o"></span>
-                </form>
+                @if ($product->wishlist()->exists())
+                    <form wire:click.prevent="removeFromWishlist({{ $product->id }})" method="post" id="wishlistForm"
+                        wire:key="remove-{{ $product->id }}">
+                        <span style="cursor: pointer; color: red;" class="pl-5 icon fa-lg icon-heart-o"></span>
+                    </form>
+                @else
+                    <form wire:click.prevent="addToWishlist({{ $product->id }})" method="post" id="wishlistForm"
+                        wire:key="add-{{ $product->id }}">
+                        <span style="cursor: pointer" class="pl-5 icon fa-lg icon-heart-o"></span>
+                    </form>
+                @endif
             </div>
             <form method="post">
                 @csrf

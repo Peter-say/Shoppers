@@ -70,8 +70,6 @@ class AddToCart extends Component
                 $userCart->status = 'User';
                 $userCart->save();
             }
-
-           
         } else {
             // User is not authenticated (guest)
             $userCart = $this->getGuestCart();
@@ -101,7 +99,7 @@ class AddToCart extends Component
         session()->flash('success_message', 'Item added to cart successfully');
     }
 
-  
+
 
     private function getGuestCart()
     {
@@ -129,15 +127,13 @@ class AddToCart extends Component
     public function mount($id)
     {
         $this->product = Product::with('cartItem')->where('status', 'active')->where('id', $id)->first();
-        // $this->related_products = Product::where('category_id', $this->product->category_id)
-        //     ->where('status', 'active')
-        //     ->where('id', '!=', $this->product->id)
-        //     ->get();
+        $this->countCartItems();
     }
 
 
     public function addToWishlist()
     {
+
         if (Auth::check()) {
             $this->addToAuthenticatedUserWishlist();
         } else {
@@ -160,10 +156,11 @@ class AddToCart extends Component
                 $wishlistItem->save();
 
                 // Flash a message to the user
-                return back()->with('success_message', 'Item added to wishlist successfully');
+                session()->flash('add-wishlist');
+                session()->flash('success_message', 'Item added to wishlist successfully');
             }
         } catch (Exception $e) {
-            return 'An error occured' . $e->getMessage();
+            return 'An error occured';
         }
     }
 
@@ -177,10 +174,55 @@ class AddToCart extends Component
 
             $wishlistItem->delete();
 
+            session()->flash('item_removed');
             session()->flash('success_message', 'Item removed from wishlist successfully');
         } else {
             session()->flash('error_message', 'You need to log in to remove item from wishlist');
         }
+    }
+
+    public static function countCartItems()
+    {
+        $count = 0;
+
+        if (Auth::check()) {
+            // User is authenticated
+            $user = Auth::user();
+            $cart = $user->cart()->first();
+            if ($cart) {
+                $count = $cart->cartItems()->count();
+            }
+            // Retrieve guest cart items from the session
+            $guestCartItems = session()->get('cartItems');
+            if ($guestCartItems) {
+                $count += count($guestCartItems);
+            }
+        } else {
+            // User is not authenticated (guest)
+            $sessionId = session()->getId();
+            $cart = Cart::where('session_id', $sessionId)->first();
+
+            if ($cart) {
+                $count = $cart->cartItems()->count();
+            }
+        }
+
+        return  $count;
+    }
+
+    public static function countWishlistItems()
+    {
+        $count = 0;
+
+        if (Auth::check()) {
+            $user = Auth::user();
+            $cart = $user->wishlist()->first();
+            if ($cart) {
+                $count = $cart->count();
+            }
+        }
+
+        return  $count;
     }
 
 

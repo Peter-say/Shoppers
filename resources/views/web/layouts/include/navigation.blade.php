@@ -20,7 +20,11 @@
                     <div class="site-top-icons">
                         <ul>
                             <li><a href="{{ route('account.profile.index') }}"><span class="icon icon-person"></span></a></li>
-                            <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
+                            <li><a href="#" class="site-cart">
+                                <span class="icon icon-heart-o"></span>
+                                <span class="count">{{$wishlistCount}}</span>
+                            </a>
+                        </li>
                             <li>
                                 <a href="{{ route('web.shop.cart') }}" class="site-cart">
                                     <span class="icon icon-shopping_cart"></span>
