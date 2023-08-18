@@ -1,8 +1,8 @@
 @extends('dashboard.admin.layouts.app')
 <div class="page-wrapper">
-    <div class="page-content--bge5">
+    <div class="">
         <div class="container">
-            <div class="login-wrap ">
+            <div class="register-wrap ">
                 <div class="login-content">
                     <div class="login-logo">
                         <a href="#">
@@ -76,7 +76,7 @@
                                 <div class="social-button">
                                     <button class="au-btn au-btn--block au-btn--blue m-b-20">register with
                                         facebook</button>
-                                    <button class="au-btn au-btn--block au-btn--blue2">register with Google</button>
+                                    <a href="{{route('auth.login.google')}}" class="au-btn au-btn--block au-btn--blue2">register with Google</a>
                                 </div>
                             </div>
                         </form>

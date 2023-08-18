@@ -71,23 +71,10 @@ class AddToCart extends Component
                 $userCart->save();
             }
 
-            // Check if the product is already in the cart
-            $existingCartItem = CartItem::where('cart_id', $userCart->id)
-                ->where('product_id', $id)
-                ->first();
-
-            $this->product->cartItem = $existingCartItem ? true : false;
+           
         } else {
             // User is not authenticated (guest)
             $userCart = $this->getGuestCart();
-
-            // Check if the product is already in the guest cart
-            $cartItems = session()->get('cartItems', []);
-            $existingCartItem = collect($cartItems)->first(function ($item) use ($id) {
-                return $item['product_id'] == $id;
-            });
-
-            $this->product->cartItem = $existingCartItem ? true : false;
 
             // Store the new item in the guest cart session
             $cartItems[] = [
@@ -114,20 +101,7 @@ class AddToCart extends Component
         session()->flash('success_message', 'Item added to cart successfully');
     }
 
-    public function removeFromCart($id)
-    {
-        $cartItem = CartItem::where('product_id', $this->product->id)
-            ->first();
-        if ($cartItem) {
-            $cartItem->delete();
-            session()->flash('item_removed');
-            session()->flash('success_message', 'Item added to cart successfully');
-        } else {
-            session()->flash('error_message', 'Can not remove cart');
-        }
-    }
-
-
+  
 
     private function getGuestCart()
     {

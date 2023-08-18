@@ -1,9 +1,9 @@
 @extends('web.layouts.app')
 
 <style>
-    .img-fluid {
+    /* .img-fluid {
         height: 30vh;
-    }
+    } */
 
     /* Custom Pagination Style */
     .pagination {
@@ -32,6 +32,22 @@
         color: #fff;
         border-color: #007bff;
     }
+
+    .block-4-image {
+        position: relative;
+        width: 100%;
+        padding-top: 100%;
+        overflow: hidden;
+    }
+
+    .block-4-image img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 80%;
+        object-fit: cover;
+    }
 </style>
 @section('contents')
     <div class="bg-light py-3">
@@ -43,7 +59,7 @@
         </div>
     </div>
 
-      <div class="site-section">
+    <div class="site-section">
         <div class="container">
 
             <div class="row mb-5">
@@ -91,17 +107,16 @@
                         @foreach ($products as $product)
                             <div class="col-sm-6 col-lg-4 mb-4 product-cover" data-aos="fade-up">
                                 <div class="block-4 text-center border">
-                                    <figure class="block-4-image ">
+                                    <figure class="block-4-image">
                                         <a href="{{ route('web.shop.product.details', $product->id) }}">
-                                           
-                                            <img class="img-fluid" src="{{ asset( $product->cover_image) }}" alt="Product Cover Image">
-
+                                            <img class="img-fluid product-cover-image" src="{{ asset($product->cover_image) }}" alt="{{basename($product->cover_image)}}">
+                                        </a>
                                     </figure>
                                     <div class="block-4-text p-4">
                                         <h3><a
                                                 href="{{ route('web.shop.product.details', $product->id) }}">{{ $product->name }}</a>
                                         </h3>
-                                        <p class="mb-0">{{ Str::limit($product->description, 20) }}</p>
+                                        <p class="mb-0">{!! Str::limit($product->description, 20) !!}</p>
                                         <p class="text-primary font-weight-bold">${{ $product->amount }}</p>
                                     </div>
                                 </div>
@@ -161,8 +176,8 @@
                         <div class="mb-4">
                             <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter by Price</h3>
                             <div id="slider-range" class="border-primary"></div>
-                            <input type="text" name="text" id="amount"
-                                class="form-control border-0 pl-0 bg-white" disabled="" />
+                            <input type="text" name="text" id="amount" class="form-control border-0 pl-0 bg-white"
+                                disabled="" />
                         </div>
 
                         <div class="mb-4">

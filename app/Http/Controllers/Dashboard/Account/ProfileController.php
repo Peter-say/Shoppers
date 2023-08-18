@@ -19,7 +19,7 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
-
+        //  dd($request->all());
         $user = Auth::user();
 
         $validator = Validator::make($request->all(), [
@@ -38,29 +38,20 @@ class ProfileController extends Controller
 
         if ($request->hasFile('avatar')) {
             // Get the path of the old avatar file
-            $oldAvatarPath = public_path('users/avatar' . $user->avatar, PATHINFO_BASENAME);
+            $oldAvatar =  $user->avatar;
             // Delete the old avatar file if it exists
             try {
-                if (file_exists($oldAvatarPath)) {
-                    echo "Old Avatar Path: $oldAvatarPath<br>";
-                    if (unlink($oldAvatarPath)) {
-                        echo "Old avatar file deleted successfully<br>";
-                    } else {
-                        echo "Failed to delete the old avatar file<br>";
-                    }
-                } else {
-                    echo "Old avatar file not found: $oldAvatarPath<br>";
+                if (file_exists( $oldAvatar)) {
+                    unlink($oldAvatar);
+                }else {
+                    $avatarPath = FileHelpers::saveImageRequest($request->file('avatar'), 'users/avatar');
+                    $avatarFileName = basename($avatarPath);
+                    $user->avatar = $avatarFileName;
                 }
-
-                $avatarPath = FileHelpers::saveImageRequest($request->file('avatar'), 'users/avatar');
-                $avatarFileName = basename($avatarPath);
-                $user->avatar = $avatarFileName;
             } catch (Exception $e) {
-                echo "Error: " . $e->getMessage();
                 return redirect()->back()->with('error_message', 'An error occurred. Please try again later.', $e);
             }
         }
-        // dd($request->all(), $user);
         $user->save();
         return back()->with('success_message', 'Profile updated successfully.');
     }

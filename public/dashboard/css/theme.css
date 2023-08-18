@@ -342,6 +342,13 @@ section {
     margin: 0 auto;
 }
 
+.register-wrap {
+    max-width: 480px;
+    padding-top: 8vh;
+    margin: 0 auto;
+    
+}
+
 
 .login-logo {
     text-align: center;

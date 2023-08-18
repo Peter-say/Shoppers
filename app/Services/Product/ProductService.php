@@ -20,7 +20,7 @@ class ProductService
             $validator = Validator::make($request->all(), [
                 'name' => 'required',
                 'basic_unit' => 'nullable',
-                'cover_image' => 'required|image',
+                'cover_image' => 'required|image|max:2048|min:8000|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000',
                 'amount' => 'required|numeric',
                 'discount_price' => 'nullable|numeric',
                 'description' => 'required',
