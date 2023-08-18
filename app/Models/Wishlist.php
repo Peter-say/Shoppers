@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Wishlist extends Model
 {
@@ -32,4 +34,6 @@ class Wishlist extends Model
 
         return false;
     }
+
+  
 }

@@ -14,10 +14,12 @@ use App\Http\Controllers\Dashboard\User\Cart\CheckOutController;
 use App\Http\Controllers\Dashboard\User\OrderController;
 use App\Http\Controllers\Dashboard\User\Payment\FlutterwaveController;
 use App\Http\Controllers\Dashboard\User\Payment\PayPalController;
+use App\Http\Controllers\Dashboard\User\WishlistController;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\Category\CategoryController;
 use App\Http\Controllers\Web\ShopController;
 use App\Http\Controllers\Web\WelcomeController;
+use App\Http\Livewire\Wishlist;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -75,8 +77,9 @@ Route::prefix('user')->as('user.')->group(function () {
         Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('place-order');
         Route::get('/orders', [OrderController::class, 'orders'])->name('orders');
         Route::get('/order/{id}/products', [OrderController::class, 'orderProducts'])->name('order.products');
+        Route::get('/wishlist', [WishlistController::class, 'wishlist'])->name('wishlist');
 
-        // payment method with flutterwave
+        // payment method with flutterwave moveWishlistItemToCart
         Route::get('/flutterwave/payment/initiate', [FlutterwaveController::class, 'initiatePayment'])->name('flutterwave.payment.initiate');
         Route::get('/flutterwave/payment/callback', [FlutterwaveController::class, 'paymentCallback'])->name('flutterwave.payment.callback');
     });
@@ -98,4 +101,3 @@ Route::prefix('auth')->as('auth.')->group(function () {
     Route::get('/login/google/callback', [GoogleAuthController::class, 'handleGoogleCallback'])->name('login.google.callback');
 });
 
-Route::post('/facebook/data-deletion', [FacebookAuthController::class, 'handleDataDeletion']);

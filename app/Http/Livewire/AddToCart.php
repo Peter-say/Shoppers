@@ -3,14 +3,12 @@
 namespace App\Http\Livewire;
 
 use App\Http\Livewire\Wishlist as LivewireWishlist;
+use App\Models\Wishlist;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Product;
-use App\Models\Wishlist;
-use Exception;
-use Illuminate\Contracts\Session\Session;
+
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 
@@ -131,54 +129,21 @@ class AddToCart extends Component
     }
 
 
-    public function addToWishlist()
+    public function addToWishlist($productID)
     {
 
         if (Auth::check()) {
-            $this->addToAuthenticatedUserWishlist();
+            LivewireWishlist::addToAuthenticatedUserWishlist($productID);
         } else {
             return back()->with('error_message', 'You need to log in to save item to wishlist');
         }
     }
 
-    private function addToAuthenticatedUserWishlist()
+
+
+    public function removeFromWishlist($productID)
     {
-        try {
-            $user = Auth::user();
-            $wishlistItem = Wishlist::where('user_id', $user->id)
-                ->where('product_id', $this->product->id)
-                ->first();
-
-            if (!$wishlistItem) {
-                $wishlistItem = new Wishlist();
-                $wishlistItem->user_id = $user->id;
-                $wishlistItem->product_id = $this->product->id;
-                $wishlistItem->save();
-
-                // Flash a message to the user
-                session()->flash('add-wishlist');
-                session()->flash('success_message', 'Item added to wishlist successfully');
-            }
-        } catch (Exception $e) {
-            return 'An error occured';
-        }
-    }
-
-    public function removeFromWishlist()
-    {
-        if (Auth::check()) {
-            $user = Auth::user();
-            $wishlistItem = Wishlist::where('user_id', $user->id)
-                ->where('product_id', $this->product->id)
-                ->first();
-
-            $wishlistItem->delete();
-
-            session()->flash('item_removed');
-            session()->flash('success_message', 'Item removed from wishlist successfully');
-        } else {
-            session()->flash('error_message', 'You need to log in to remove item from wishlist');
-        }
+        LivewireWishlist::removeFromWishlist($productID);
     }
 
     public static function countCartItems()
@@ -216,13 +181,14 @@ class AddToCart extends Component
 
         if (Auth::check()) {
             $user = Auth::user();
-            $cart = $user->wishlist()->first();
-            if ($cart) {
-                $count = $cart->count();
+            $wishlist = Wishlist::with('product')->where('user_id', $user->id)->get();
+            if ($wishlist) {
+                $count = $wishlist->count();
             }
+            // dd($count, $wishlist);
         }
-
-        return  $count;
+    
+        return $count;
     }
 
 

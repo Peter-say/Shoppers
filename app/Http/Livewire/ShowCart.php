@@ -124,7 +124,6 @@ class ShowCart extends Component
     }
     
 
-
     public function calculateTotalPrice()
     {
         $this->totalPrice = collect($this->cartItems)->sum(function ($cartItem) {
