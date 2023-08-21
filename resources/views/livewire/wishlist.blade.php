@@ -7,7 +7,7 @@
         </div>
     @else
         <div class="row mb-5">
-            <form class="col-md-12"">
+            <form class="col-md-12">
                 <div class="site-blocks-table">
                     <table class="table table-bordered">
                         <thead>
@@ -35,7 +35,7 @@
                                     </td>
                                     <td>${{ $wishlistItem->product->amount }}</td>
                                     <td><i style="font-size: 30px; cursor: pointer;" class="fas fa-arrows-alt"
-                                            wire:click="moveWishlistItemToCart({{$wishlistItem->product_id }})"></i>
+                                            wire:click="moveWishlistItemToCart({{ $wishlistItem->product_id }})"></i>
                                     </td>
                                     <td><button type="button" wire:click="removeFromWishlist({{ $wishlistItem->id }})"
                                             class="btn btn-primary btn-sm">X</a></td>
@@ -49,28 +49,27 @@
             </form>
 
         </div>
+    @endif
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row mb-5">
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="row mb-5">
-
-                    {{-- <div class="col-md-6 mb-3 mb-md-0">
+                {{-- <div class="col-md-6 mb-3 mb-md-0">
                     <form wire:submit.prevent="updatewishlistItems">
                         <button type="button" wire:click="updatewishlistItems()"
                             class="btn btn-primary btn-sm btn-block">Update wishlist</button>
                     </form>
                 </div> --}}
 
-                    <div class="col-md-6">
-                        <a href="{{ route('web.shop.index') }}"
-                            class="btn btn-outline-primary btn-sm btn-block">Continue Shopping</a>
-                    </div>
+                <div class="col-md-6">
+                    <a href="{{ route('web.shop.index') }}" class="btn btn-outline-primary btn-sm btn-block">Continue
+                        Shopping</a>
                 </div>
-
             </div>
 
         </div>
-    @endif
+
+    </div>
     @if (session()->has('success_message'))
         <div class="popup-message success" id="popup-message">
             <p class="text-white">{{ session('success_message') }}</p>

@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Shoppers'),
 
     /*
     |--------------------------------------------------------------------------
@@ -172,6 +172,7 @@ return [
         Livewire\LivewireServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
 
+
     ])->toArray(),
 
     /*
@@ -188,6 +189,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Stripe' => Cartalyst\Stripe\Laravel\Facades\Stripe::class,
     ])->toArray(),
 
 ];

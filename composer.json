@@ -15,6 +15,7 @@
         "laravel/ui": "v4.2.2",
         "livewire/livewire": "^2.12",
         "paypal/paypal-checkout-sdk": "^1.0",
+        "stripe/stripe-php": "^12.0",
         "tinymce/tinymce": "^6.6"
     },
     "require-dev": {

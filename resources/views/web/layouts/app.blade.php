@@ -5,7 +5,7 @@
     <title>Shoppers &mdash; Colorlib e-Commerce Template</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
     <link rel="stylesheet" href="{{ $web_assets }}/fonts/icomoon/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{ $web_assets }}/css/owl.theme.default.min.css">
     <link rel="stylesheet" href=" https://use.fontawesome.com/releases/v5.7.2/css/all.css">
     <link href="https://cdn.jsdelivr.net/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
-
+    <script src="https://js.stripe.com/v3/"></script>
     @livewireStyles
 
     <link rel="stylesheet" href="{{ $web_assets }}/css/aos.css">
@@ -169,22 +169,22 @@
 
     <script>
         var walletRadio = document.getElementById('wallet-check-input');
-        var paypalRadio = document.getElementById('paypal-check-input');
+        var stripeRadio = document.getElementById('stripe-check-input');
         var walletButton = document.getElementById('pay-with-wallet-button');
-        var paypalButton = document.getElementById('pay-with-paypal-button');
+        var stripeButton = document.getElementById('pay-with-stripe-button');
 
-        paypalButton.style.display = 'none';
+        stripeButton.style.display = 'none';
         walletRadio.addEventListener('change', function() {
             if (this.checked) {
                 walletButton.style.display = 'block';
-                paypalButton.style.display = 'none';
+                stripeButton.style.display = 'none';
             }
         });
 
-        paypalRadio.addEventListener('change', function() {
+        stripeRadio.addEventListener('change', function() {
             if (this.checked) {
                 walletButton.style.display = 'none';
-                paypalButton.style.display = 'block';
+                stripeButton.style.display = 'block';
             }
         });
 

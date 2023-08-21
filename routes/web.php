@@ -14,6 +14,7 @@ use App\Http\Controllers\Dashboard\User\Cart\CheckOutController;
 use App\Http\Controllers\Dashboard\User\OrderController;
 use App\Http\Controllers\Dashboard\User\Payment\FlutterwaveController;
 use App\Http\Controllers\Dashboard\User\Payment\PayPalController;
+use App\Http\Controllers\Dashboard\User\Payment\StripeController;
 use App\Http\Controllers\Dashboard\User\WishlistController;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\Category\CategoryController;
@@ -79,9 +80,13 @@ Route::prefix('user')->as('user.')->group(function () {
         Route::get('/order/{id}/products', [OrderController::class, 'orderProducts'])->name('order.products');
         Route::get('/wishlist', [WishlistController::class, 'wishlist'])->name('wishlist');
 
+        Route::post('/stripe/checkout', [StripeController::class, 'initiatePayment'])->name('stripe.checkout');
+        Route::get('/stripe/callback', [StripeController::class, 'paymentSuccessCallback'])->name('stripe.success.callback');
+        Route::get('/store-stripe-payment-info', [PaymentController::class, 'storePaymentInfo'])->name('store.stripe-payment.info');
+
         // payment method with flutterwave moveWishlistItemToCart
-        Route::get('/flutterwave/payment/initiate', [FlutterwaveController::class, 'initiatePayment'])->name('flutterwave.payment.initiate');
-        Route::get('/flutterwave/payment/callback', [FlutterwaveController::class, 'paymentCallback'])->name('flutterwave.payment.callback');
+        // Route::get('/flutterwave/payment/initiate', [FlutterwaveController::class, 'initiatePayment'])->name('flutterwave.payment.initiate');
+        // Route::get('/flutterwave/payment/callback', [FlutterwaveControprocessPaymentller::class, 'paymentCallback'])->name('flutterwave.payment.callback');
     });
 });
 
@@ -100,4 +105,3 @@ Route::prefix('auth')->as('auth.')->group(function () {
     Route::get('/login/google', [GoogleAuthController::class, 'redirectToGoogle'])->name('login.google');
     Route::get('/login/google/callback', [GoogleAuthController::class, 'handleGoogleCallback'])->name('login.google.callback');
 });
-

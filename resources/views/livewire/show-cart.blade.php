@@ -23,6 +23,7 @@
                                         <th class="product-thumbnail">Image</th>
                                         <th class="product-name">Product</th>
                                         <th class="product-price">Price</th>
+                                        <th class="product-price">Size</th>
                                         <th class="product-quantity">Quantity</th>
                                         <th class="product-total">Total</th>
                                         <th class="product-remove">Remove</th>
@@ -43,6 +44,7 @@
                                                 <h2 class="h5 text-black">{{ $cartItem->product->name }}</h2>
                                             </td>
                                             <td>${{ $cartItem->price }}</td>
+                                            <td>{{ $cartItem->size }}</td>
                                             <td>
                                                 <div class="input-group mb-3" style="max-width: 120px;">
                                                     <div class="input-group-prepend">

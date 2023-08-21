@@ -12,6 +12,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class OrderService
@@ -20,6 +21,7 @@ class OrderService
     {
 
         $user = Auth::user();
+
         $cart = Cart::where('user_id', $user->id)->first();
         $cartItems = null;
         $total = 0;
@@ -30,16 +32,11 @@ class OrderService
         } else {
             return back()->with('error_message', 'No Items found in your cart. Kindly add items to continue');
         }
-        if (!Address::where('user_id', $user->id)->exists()) {
-            return [
-                'success' => false,
-                'message' => 'Please update your shipping address before placing an order.',
-            ];
-        }
+
 
         // Retrieve the existing address
         $address = Address::where('user_id', $user->id)->where('mark_as_default', '1')->first();
-        // dd($address);
+        
         $order = Order::create([
             'user_id' => $user->id,
             'total' => $total,
@@ -60,7 +57,6 @@ class OrderService
         // clear the carts from database
         $cart->cartItems()->delete();
         $cart->delete();
-
 
         try {
             // get the payment from the input

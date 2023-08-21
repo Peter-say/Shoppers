@@ -38,7 +38,7 @@
     </p>
 
     <p>Best regards,<br>
-        Your Store Team
+        {{ config('app.name', 'Shoppers') }}
     </p>
 </body>
 
