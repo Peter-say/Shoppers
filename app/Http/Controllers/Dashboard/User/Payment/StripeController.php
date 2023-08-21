@@ -134,17 +134,13 @@ class StripeController extends Controller
                 'payment_method_types' => ['card'],
                 'line_items' => $lineItems,
                 'mode' => 'payment',
-                'success_url' => 'http://localhost:9000/user/dashboard/checkout',
+                'success_url' => '/user/dashboard/thank-you',
                 'cancel_url' => 'http://localhost:9000/user/dashboard/checkout',
             ]);
 
             // clear the carts from database if successful
             $cart->cartItems()->delete();
             $cart->delete();
-
-            // Update the transaction status if the payment was successful
-            $transaction->status = 'Completed';
-            $transaction->save();
 
 
             // Update the Order status if the order was successful

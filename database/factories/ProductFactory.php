@@ -32,12 +32,12 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         // cover images generation
-        $cover_image = glob(public_path('web/images/*'));
-        $randonCoverImages  = $cover_image[array_rand($cover_image)];
+        $cover_image = glob(public_path('product/cover_images/*'));
+        $randonCoverImages  = basename($cover_image[array_rand($cover_image)]);
 
         // other images generation
-        $images = glob(public_path('web/images/*'));
-        $random_images = $images[array_rand($images)];
+        $images = glob(public_path('product/cover_images/*'));
+        $random_images = basename($images[array_rand($images)]);
        
 
         $faker = \Faker\Factory::create();

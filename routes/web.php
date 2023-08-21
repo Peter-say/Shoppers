@@ -15,6 +15,7 @@ use App\Http\Controllers\Dashboard\User\OrderController;
 use App\Http\Controllers\Dashboard\User\Payment\FlutterwaveController;
 use App\Http\Controllers\Dashboard\User\Payment\PayPalController;
 use App\Http\Controllers\Dashboard\User\Payment\StripeController;
+use App\Http\Controllers\Dashboard\User\Payment\StripeWebhookController;
 use App\Http\Controllers\Dashboard\User\WishlistController;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\Category\CategoryController;
@@ -81,8 +82,8 @@ Route::prefix('user')->as('user.')->group(function () {
         Route::get('/wishlist', [WishlistController::class, 'wishlist'])->name('wishlist');
 
         Route::post('/stripe/checkout', [StripeController::class, 'initiatePayment'])->name('stripe.checkout');
-        Route::get('/stripe/callback', [StripeController::class, 'paymentSuccessCallback'])->name('stripe.success.callback');
-        Route::get('/store-stripe-payment-info', [PaymentController::class, 'storePaymentInfo'])->name('store.stripe-payment.info');
+        Route::get('/stripe/transaction/webhook', [StripeWebhookController::class, 'handleTransactionWebhook'])->name('stripe.transaction.webhook');
+        // Route::get('/store-stripe-payment-info', [PaymentController::class, 'storePaymentInfo'])->name('store.stripe-payment.info');
 
         // payment method with flutterwave moveWishlistItemToCart
         // Route::get('/flutterwave/payment/initiate', [FlutterwaveController::class, 'initiatePayment'])->name('flutterwave.payment.initiate');

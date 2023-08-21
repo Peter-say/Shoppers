@@ -43,7 +43,11 @@ class OrderService
             'status' => 'Pending',
             'shipping_address_id' => $address->id,
             'tracking_number' => Order::generateTrackingNumber(),
+           
         ]);
+
+        $order->update([ 'tracking_link' => route('user.dashboard.order.products', $order->id)]);
+        $order->save;
 
         foreach ($cartItems as $cartItemData) {
             OrderItem::create([

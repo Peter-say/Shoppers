@@ -141,7 +141,7 @@
                 <div class="row">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 ">
                         <div class="details-cover-image">
-                            <img class="img-fluid " src="{{ asset($product->cover_image) }}"
+                            <img class="img-fluid " src="{{ asset('product/cover_images/'.$product->cover_image) }}"
                                 alt="{{ basename($product->cover_image) }}">
                         </div>
                     </div>
@@ -238,7 +238,7 @@
                             </div>
                         </div>
                         <div class="col-4 container-popup-image">
-                            <img class="img-fluid" src="{{ asset($product->cover_image) }}"
+                            <img class="img-fluid" src="{{ asset('product/cover_images/'.$product->cover_image) }}"
                                 alt="{{ basename($product->cover_image) }}">
                         </div>
                         <div class="col-8">

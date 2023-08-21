@@ -16,7 +16,7 @@
                         <div class="block-4 text-center border">
                             <figure class="block-4-image ">
                                 <a href="{{ route('web.shop.product.details', $related->id) }}">
-                                    <img class="img-fluid " src="{{ asset($related->cover_image) }}"
+                                    <img class="img-fluid " src="{{ asset('product/cover_images/'.$related->cover_image) }}"
                                         alt="{{ basename($related->cover_image) }}"></a>
                             </figure>
                             <div class="block-4-text p-4">

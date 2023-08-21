@@ -56,12 +56,12 @@ class ShowCart extends Component
             $cart = Cart::where('user_id', $user->id)->first();
 
             if ($cart) {
-
                 // Merge guest cart items with the user's cart items
                 if (!empty($guestCartItems)) {
-                    $this->mergeGuestCartItems($cart, $guestCartItems); // Swap arguments
+                    $this->mergeGuestCartItems($cart, $guestCartItems);
                     session()->forget('cartItems');
                 }
+
 
                 // Retrieve updated cart items associated with the user's cart
                 $this->cartItems = $cart->cartItems;
@@ -78,7 +78,7 @@ class ShowCart extends Component
         }
     }
 
-    private function mergeGuestCartItems($userCart, $guestCartItems)
+    public static function mergeGuestCartItems($userCart, $guestCartItems)
     {
         foreach ($guestCartItems as $cartItemData) {
             $existingCartItem = CartItem::where('cart_id', $userCart->id)
@@ -108,21 +108,21 @@ class ShowCart extends Component
     {
         try {
             DB::beginTransaction();
-    
+
             $cartItem = $this->cartItems[$item];
             $cartItem->delete();
             $this->updateCartItems();
             $this->calculateTotalPrice();
-    
+
             DB::commit();
-    
+
             return back()->with('success_message', 'Item removed from cart successfully');
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error_message', 'An error occurred while removing the item from the cart.');
         }
     }
-    
+
 
     public function calculateTotalPrice()
     {

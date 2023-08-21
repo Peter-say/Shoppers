@@ -33,7 +33,7 @@
                                 @foreach ($orderItems as $items => $orderItem)
                                     <tr>
                                         <td class="product-thumbnail">
-                                            <a href="{{ asset($orderItem->product->cover_image) }}"
+                                            <a href="{{ asset('product/cover_images/'.$orderItem->product->cover_image) }}"
                                                 data-lightbox="product-gallery">
                                                 <img src="{{ asset($orderItem->product->cover_image) }}" alt="Image"
                                                     class="img-fluid show-cart-image">

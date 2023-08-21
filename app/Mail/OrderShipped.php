@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Crypt;
 
 class OrderShipped extends Mailable
 {
@@ -27,6 +28,7 @@ class OrderShipped extends Mailable
      */
     public function content(): Content
     {
+        $trackingLink = Crypt::encryptString($this->order->tracking_link);
 
         return new Content(
             view: 'emails.order-shipped',

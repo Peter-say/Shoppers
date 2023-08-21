@@ -75,7 +75,7 @@
                                             <td>{{ $product->created_at->format('d-m-y-h:m') }}</td>
                                             <td>{{ $product->id }}</td>
                                             <td>{{ $product->name }}</td>
-                                            <td class=" img-fluid"><img src="{{ asset($product->cover_image ?? 'N/A') }}"
+                                            <td class=" img-fluid"><img src="{{ asset('product/cover_images/'.$product->cover_image ?? 'N/A') }}"
                                                     alt=""></td>
                                             <td class="">{{ Str::limit($product->description, 50) }}</td>
                                             <td class="">{{ $product->currency->symbol }}{{ $product->amount }}</td>
