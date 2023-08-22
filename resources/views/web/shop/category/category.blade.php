@@ -33,7 +33,7 @@
                         <a class="block-2-item"
                             href="{{ route('web.shop.category.sucategory', urlencode($category->name)) }}">
                             <figure class="image">
-                                <img src="{{ asset($category->image) }}" alt="" class="img-fluid">
+                                <img src="{{ asset('product/category/images/'.$category->image) }}" alt="{{basename($category->image)}}" class="img-fluid">
                             </figure>
                             <div class="text">
                                 <span class="text-uppercase">Collections</span>

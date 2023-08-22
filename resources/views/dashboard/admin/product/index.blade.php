@@ -65,6 +65,7 @@
                                         <th class="">Brand</th>
                                         <th class="">Store</th>
                                         <th class="">Basic Unit</th>
+                                        <th class="">Is Featured</th>
                                         <th class="">Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -75,7 +76,8 @@
                                             <td>{{ $product->created_at->format('d-m-y-h:m') }}</td>
                                             <td>{{ $product->id }}</td>
                                             <td>{{ $product->name }}</td>
-                                            <td class=" img-fluid"><img src="{{ asset('product/cover_images/'.$product->cover_image ?? 'N/A') }}"
+                                            <td class=" img-fluid"><img
+                                                    src="{{ asset('product/cover_images/' . $product->cover_image ?? 'N/A') }}"
                                                     alt=""></td>
                                             <td class="">{{ Str::limit($product->description, 50) }}</td>
                                             <td class="">{{ $product->currency->symbol }}{{ $product->amount }}</td>
@@ -89,6 +91,21 @@
                                             <td class="">{{ $product->brand->name }}</td>
                                             <td class="">{{ $product->Store->name ?? 'N/A' }}</td>
                                             <td class="">{{ $product->basic_unit ?? 'N/A' }}</td>
+                                            <td class="">
+                                                <form class="featured-form" method="POST"
+                                                    action="{{ route('admin.dashboard.product.featured', $product->id) }}">
+                                                    @csrf @method('PUT')
+                                                    <label>
+                                                        <input type="radio" name="is_featured" value="1"
+                                                            {{ $product->is_featured ? 'checked' : '' }}> Yes
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" name="is_featured" value="0"
+                                                            {{ !$product->is_featured ? 'checked' : '' }}> No
+                                                    </label>
+                                                    <button type="submit">Update</button>
+                                                </form>
+                                            </td>
                                             <td class="">{{ $product->status }}</td>
                                             <td>
                                                 <div class="d-flex justify-content-between">
@@ -123,6 +140,12 @@
         @if (session()->has('success_message'))
             <div class="popup-message success" id="popup-message">
                 <p class="text-white">{{ session('success_message') }}</p>
+            </div>
+        @endif
+
+        @if (session()->has('error_message'))
+            <div class="popup-message error" id="popup-message">
+                <p class="text-white">{{ session('error_message') }}</p>
             </div>
         @endif
 

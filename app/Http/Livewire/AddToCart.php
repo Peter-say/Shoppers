@@ -187,7 +187,7 @@ class AddToCart extends Component
             }
             // dd($count, $wishlist);
         }
-    
+
         return $count;
     }
 

@@ -113,61 +113,29 @@
         heartIcon.addEventListener('click', function() {
             wishlistForm.submit();
         });
-
         // end wishlist form
 
-        Livewire.hook('afterDomUpdate', () => {
+        // pop up message script
+
+        document.addEventListener('DOMContentLoaded', function() {
             var popup = document.getElementById('popup-message');
+
             if (popup) {
                 setTimeout(function() {
                     popup.style.display = 'none';
                 }, 4000);
 
-                // Optional: Hide the pop-up when clicking outside of it
-                document.addEventListener('click', function(event) {
-                    if (event.target !== popup && !popup.contains(event.target)) {
+                // Hide the pop-up when clicking the close button
+                var closeButton = document.getElementById('cancel-popup');
+                if (closeButton) {
+                    closeButton.addEventListener('click', function() {
                         popup.style.display = 'none';
-                    }
-                });
+                    });
+                }
             }
         });
 
-        var popupMessage = document.querySelector('.popup-message');
-        var cancelPopUp = document.getElementById('cancel-popup');
 
-        cancelPopUp.addEventListener('click', function() {
-            popupMessage.style.display = 'none';
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $('.category-link').on('click', function(e) {
-                e.preventDefault();
-                var category = $(this).text().trim(); // Extract the category name from the link's text
-                fetchProductsByCategory(category);
-            });
-
-            function fetchProductsByCategory(category) {
-                $.ajax({
-                    url: '/web/shop/search/category/' + category + '/products',
-                    type: 'GET',
-                    dataType: 'html',
-                    success: function(response) {
-                        $('#product-container').html(response);
-                    },
-                    error: function(error) {
-                        console.log('Error fetching products:', error);
-                    }
-                });
-            }
-        });
-    </script>
-
-
-
-
-    <script>
         var walletRadio = document.getElementById('wallet-check-input');
         var stripeRadio = document.getElementById('stripe-check-input');
         var walletButton = document.getElementById('pay-with-wallet-button');

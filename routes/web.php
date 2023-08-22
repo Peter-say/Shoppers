@@ -60,6 +60,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
     Route::prefix('dashboard')->as('dashboard.')->middleware(['auth', 'admin'])->group(function () {
         Route::get('home', [HomeController::class, 'home'])->name('home');
         Route::resource('product', ProductController::class);
+        Route::put('/products/{id}/update-featured', [ProductController::class, 'updateFeatured'])->name('product.featured');
         Route::resource('product-category', ProductCategoryController::class);
 
         Route::get('create/subcategory/{id}', [SubcategoryController::class, 'createSubcategory'])->name('create.subcategory');

@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\Store;
 use App\Services\Product\ProductService;
+use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -54,24 +55,24 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      */
 
-     public function store(Request $request)
-     {
-         try {
-             $createdProduct = ProductService::storeProduct($request);
-     
-             if ($createdProduct) {
-                 return redirect()->route('admin.dashboard.product.index')
-                     ->with('success_message', 'Product successfully created.');
-             } else {
-                 return redirect()->back()
-                     ->with('error_message', 'An error occurred while creating the product. Please try again.');
-             }
-         } catch (ModelNotFoundException $e) {
-             return redirect()->back()
-                 ->with('error_message', 'An error occurred. Please try again later.');
-         }
-     }
-     
+    public function store(Request $request)
+    {
+        try {
+            $createdProduct = ProductService::storeProduct($request);
+
+            if ($createdProduct) {
+                return redirect()->route('admin.dashboard.product.index')
+                    ->with('success_message', 'Product successfully created.');
+            } else {
+                return redirect()->back()
+                    ->with('error_message', 'An error occurred while creating the product. Please try again.');
+            }
+        } catch (ModelNotFoundException $e) {
+            return redirect()->back()
+                ->with('error_message', 'An error occurred. Please try again later.');
+        }
+    }
+
 
 
     /**
@@ -113,7 +114,7 @@ class ProductController extends Controller
     {
         try {
             $createdProduct = ProductService::updateProduct($request, $id);
-    
+
             if ($createdProduct) {
                 return redirect()->route('admin.dashboard.product.index')
                     ->with('success_message', 'Product successfully updated.');
@@ -143,10 +144,15 @@ class ProductController extends Controller
     }
 
 
-    public function featuredProduct(Request $request, $id)
+    public function updateFeatured(Request $request, $id)
     {
-        $product = Product::findOrFail($id);
-        $product->update(['featured' => $request->input('featured')]);
-        session()->flash('seccess_message', 'Product featured updated');
+        try {
+            $product = Product::findOrFail($id);
+            $product->update(['is_featured' => $request->input('is_featured')]);
+            session()->flash('success_message', 'Product featured updated');
+        } catch (Exception $e) {
+            session()->flash('error_message', 'Can not update' . $e->getMessage());
+        }
+        return redirect()->back();
     }
 }

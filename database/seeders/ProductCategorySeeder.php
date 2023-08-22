@@ -13,8 +13,8 @@ class ProductCategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $images = glob(public_path('web/images/*'));
-        $random_images = $images[array_rand($images)];
+        $images = glob(public_path('product/category/images/*'));
+        $random_images = basename($images[array_rand($images)]);
 
         $datas = [
             [

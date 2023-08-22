@@ -1,8 +1,20 @@
 @extends('web.layouts.app')
 
 <style>
-    .img-fluid {
-        height: 40vh;
+    .block-4-image {
+        position: relative;
+        width: 100%;
+        padding-top: 100%;
+        overflow: hidden;
+    }
+
+    .block-4-image img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 80%;
+        object-fit: cover;
     }
 </style>
 @section('contents')
@@ -79,7 +91,7 @@
                                     <div class="block-4 text-center border">
                                         <figure class="block-4-image ">
                                             <a href="{{ route('web.shop.product.details', $product->id) }}">
-                                                <img class="img-fluid " src="{{ asset($product->cover_image) }}"
+                                                <img class="img-fluid " src="{{ asset('product/cover_images/'.$product->cover_image) }}"
                                                     alt="Image placeholder"></a>
                                         </figure>
                                         <div class="block-4-text p-4">
