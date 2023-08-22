@@ -63,100 +63,96 @@
         <div class="container">
 
             <div class="row mb-5">
+
                 <div class="col-md-9 order-2">
-
-                    <div class="row">
-                        <div class="col-md-12 mb-5">
-                            <div class="float-md-left mb-4">
-                                <h2 class="text-black h5">Shop All</h2>
-                            </div>
-                            <div class="d-flex">
-                                <div class="dropdown mr-1 ml-md-auto">
-                                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle"
-                                        id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                        Latest
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-                                        @foreach ( $categories as $category)
-                                            <a class="dropdown-item category-link"
-                                                href="{{ route('web.shop.category.sucategory', urlencode($category->name)) }}">{{ $category->name }}</a>
-                                        @endforeach
-                                    </div>
-                                    <div id="product-container">
-                                        <!-- The filtered products will be displayed here -->
-                                    </div>
+                    @if ($products->count())
+                        <div class="row">
+                            <div class="col-md-12 mb-5">
+                                <div class="float-md-left mb-4">
+                                    <h2 class="text-black h5">Shop All</h2>
                                 </div>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle"
-                                        id="dropdownMenuReference" data-toggle="dropdown">Reference</button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
-                                        <a class="dropdown-item" href="#">Relevance</a>
-                                        <a class="dropdown-item" href="#">Name, A to Z</a>
-                                        <a class="dropdown-item" href="#">Name, Z to A</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Price, low to high</a>
-                                        <a class="dropdown-item" href="#">Price, high to low</a>
+                                <div class="d-flex">
+                                    <div class="dropdown mr-1 ml-md-auto">
+                                        <button type="button" class="btn btn-secondary btn-sm dropdown-toggle"
+                                            id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            Latest
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
+                                            @foreach ($categories as $category)
+                                                <a class="dropdown-item category-link"
+                                                    href="{{ route('web.shop.category.sucategory', urlencode($category->name)) }}">{{ $category->name }}</a>
+                                            @endforeach
+                                        </div>
+                                        <div id="product-container">
+                                            <!-- The filtered products will be displayed here -->
+                                        </div>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-secondary btn-sm dropdown-toggle"
+                                            id="dropdownMenuReference" data-toggle="dropdown">Reference</button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
+                                            <a class="dropdown-item" href="#">Relevance</a>
+                                            <a class="dropdown-item" href="#">Name, A to Z</a>
+                                            <a class="dropdown-item" href="#">Name, Z to A</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Price, low to high</a>
+                                            <a class="dropdown-item" href="#">Price, high to low</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mb-5">
 
-                        @foreach ($products as $product)
-                            <div class="col-sm-6 col-lg-4 mb-4 product-cover" data-aos="fade-up">
-                                <div class="block-4 text-center border">
-                                    <figure class="block-4-image">
-                                        <a href="{{ route('web.shop.product.details', $product->id) }}">
-                                            <img class="img-fluid product-cover-image"
-                                                src="{{ asset('product/cover_images/'.$product->cover_image) }}"
-                                                alt="{{ basename($product->cover_image) }}">
-                                        </a>
-                                    </figure>
-                                    <div class="block-4-text p-4">
-                                        <h3><a
-                                                href="{{ route('web.shop.product.details', $product->id) }}">{{ $product->name }}</a>
-                                        </h3>
-                                        <p class="mb-0">{!! Str::limit($product->description, 20) !!}</p>
-                                        <p class="text-primary font-weight-bold">${{ $product->amount }}</p>
+                        <div class="row mb-5">
+
+                            @foreach ($products as $product)
+                                <div class="col-sm-6 col-lg-4 mb-4 product-cover" data-aos="fade-up">
+                                    <div class="block-4 text-center border">
+                                        <figure class="block-4-image">
+                                            <a href="{{ route('web.shop.product.details', $product->id) }}">
+                                                <img class="img-fluid product-cover-image"
+                                                    src="{{ asset('product/cover_images/' . $product->cover_image) }}"
+                                                    alt="{{ basename($product->cover_image) }}">
+                                            </a>
+                                        </figure>
+                                        <div class="block-4-text p-4">
+                                            <h3><a
+                                                    href="{{ route('web.shop.product.details', $product->id) }}">{{ $product->name }}</a>
+                                            </h3>
+                                            <p class="mb-0">{!! Str::limit($product->description, 20) !!}</p>
+                                            <p class="text-primary font-weight-bold">${{ $product->amount }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+
+
+                            <div class="col-md-12">
+                                <div class="row" data-aos="fade-up">
+                                    <div class="col-md-12 text-center justify-content-center">
+                                        @if (!empty($products))
+                                            <div class="d-flex justify-content-center mt-2 text-dark">
+                                                {!! $products->links('pagination::simple-bootstrap-4') !!}
+                                            </div>
+                                            <div class="text-center mb-2 text-dark">
+                                                Showing {{ $products->firstItem() }} to {{ $products->lastItem() }} of
+                                                {{ $products->total() }}
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
-
-
-                    </div>
-                    <div class="row" data-aos="fade-up">
-                        <div class="col-md-12 text-center justify-content-center">
-                            <div class="site-block-27">
-                                <ul class="pagination">
-                                    <!-- Previous Page Link -->
-                                    @if ($products->onFirstPage())
-                                        <li class="page-item disabled"><span class="page-link">&gt;</span></li>
-                                    @else
-                                        <li class="page-item"><a class="page-link"
-                                                href="{{ $products->previousPageUrl() }}">&lt;</a></li>
-                                    @endif
-
-                                    <!-- Numbered Pagination Links -->
-                                    @for ($i = 1; $i <= $products->lastPage(); $i++)
-                                        <li class="page-item @if ($i === $products->currentPage()) active @endif">
-                                            <a class="page-link" href="{{ $products->url($i) }}">{{ $i }}</a>
-                                        </li>
-                                    @endfor
-
-                                    <!-- Next Page Link -->
-                                    @if ($products->hasMorePages())
-                                        <li class="page-item"><a class="page-link"
-                                                href="{{ $products->nextPageUrl() }}">&gt;</a></li>
-                                    @else
-                                        <li class="page-item disabled"><span class="page-link">&gt;</span></li>
-                                    @endif
-                                </ul>
-                            </div>
                         </div>
-                    </div>
+                    @else
+                        <div class="justify-content-center">
+                            <div class="col-md-12 mb-5">
+                                <h5>The terms you are searching for is not available at the momment. You may like to try a
+                                    different keyword(s)</h5>
+                            </div>
+
+                        </div>
+                    @endif
 
                 </div>
 

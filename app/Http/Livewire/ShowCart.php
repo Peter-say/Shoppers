@@ -15,6 +15,13 @@ class ShowCart extends Component
 
     public $cartItems;
     public $totalPrice;
+    public $item;
+    public $sizeOptions = ['Small', 'Meduim', 'Large', 'Extra large'];
+
+    public function __construct($item)
+{
+    $this->item = $item;
+}
 
     public function mount()
     {
@@ -131,8 +138,27 @@ class ShowCart extends Component
         });
     }
 
+    // edit, update, and cancel cart size //
+
+
+
+    public function updateSize($item)
+    {
+        $cartItem = $this->cartItems[$item];
+        $selectedSize = $this->sizeOptions[$item]; // Get the selected size for the specific cart item
+        $cartItem->size = $selectedSize;
+        $cartItem->save();
+    
+    }
+    
+
+   
+
+
     public function render()
     {
-        return view('livewire.show-cart');
+        
+        return view('livewire.show-cart', [
+        ]);
     }
 }

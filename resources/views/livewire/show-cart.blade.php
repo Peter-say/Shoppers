@@ -30,12 +30,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($cartItems as $item => $cartItem)
+                                    
+                                </tbody>@foreach ($cartItems as $item => $cartItem)
                                         <tr>
                                             <td class="product-thumbnail">
-                                                <a href="{{ asset($cartItem->product->cover_image) }}"
+                                                <a href="{{ asset('product/cover_images/' . $cartItem->product->cover_image) }}"
                                                     data-lightbox="product-gallery">
-                                                    <img src="{{ asset('product/cover_images/'.$cartItem->product->cover_image) }}"
+                                                    <img src="{{ asset('product/cover_images/' . $cartItem->product->cover_image) }}"
                                                         alt="Image" class="img-fluid show-cart-image">
                                                 </a>
                                             </td>
@@ -44,7 +45,17 @@
                                                 <h2 class="h5 text-black">{{ $cartItem->product->name }}</h2>
                                             </td>
                                             <td>${{ $cartItem->price }}</td>
-                                            <td>{{ $cartItem->size }}</td>
+                                            <td>
+                                                {{ $cartItem->size }}
+                                                {{-- <select>
+                                                    <option value="" selected>Select Size</option>
+                                                    @foreach ($sizeOptions as $sizeOption)
+                                                        <option value="{{ $sizeOption }}">{{ $sizeOption }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <button wire:click="updateSize({{$item}})">Save</button>
+                                                
+                                            </td> --}}
                                             <td>
                                                 <div class="input-group mb-3" style="max-width: 120px;">
                                                     <div class="input-group-prepend">
@@ -68,7 +79,6 @@
                                                     class="btn btn-primary btn-sm">X</a></td>
                                         </tr>
                                     @endforeach
-                                </tbody>
                             </table>
                         </div>
 
@@ -113,7 +123,7 @@
                                     <div class="col-md-12 text-right border-bottom mb-5">
                                         <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
                                     </div>
-                            </div>
+                                </div>
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <span class="text-black">Subtotal</span>

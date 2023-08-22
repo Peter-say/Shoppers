@@ -38,13 +38,4 @@ class ShopController extends Controller
         ]);
     }
 
-    public function fetchProductsByCategory($name)
-    {
-        $category = ProductCategory::where('status', 'active')->where('name', $name)->firstOrFail();
-        $filteredProducts = $category->products()->where('status', 'active')->latest()->get();
-    
-        return view('web.shop.index', [
-            'filteredProducts' => $filteredProducts,
-        ]);
-    }
 }

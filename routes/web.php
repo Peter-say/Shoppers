@@ -45,7 +45,7 @@ Route::prefix('web')->as('web.')->group(function () {
     Route::get('privacy-policy', [WelcomeController::class, 'privacy-policy'])->name('privacy-policy');
     Route::prefix('shop')->as('shop.')->group(function () {
         Route::get('index', [ShopController::class, 'index'])->name('index');
-        Route::get('search/category/{name}/products', [ShopController::class, 'fetchProductsByCategory'])->name('search.category.products');
+        // Route::get('search/category/{name}/products', [ShopController::class, 'fetchProductsByCategory'])->name('search.category.products');
         Route::get('product/{id}/details', [ShopController::class, 'details'])->name('product.details');
         Route::post('/add-to-cart/{id}', [CartController::class, 'index'])->name('cart.store');
         Route::get('/cat', [CartController::class, 'cartList'])->name('cart');
@@ -53,6 +53,8 @@ Route::prefix('web')->as('web.')->group(function () {
         Route::get('category/{subcategory}', [CategoryController::class, 'subcategory'])->name('category.sucategory')->where('subcategory', '[A-Za-z0-9\-]+');
         Route::get('category/{subcategory}/{name}/products', [CategoryController::class, 'categoryProducts'])->name('category.products');
     });
+
+    Route::get('/search', [WelcomeController::class, 'search'])->name('search');
 });
 
 
