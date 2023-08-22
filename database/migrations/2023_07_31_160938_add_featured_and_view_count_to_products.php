@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->string('is_featured')->after('description')->default('0');
-            $table->string('is_trending')->after('is_featured')->default(0);
+            $table->integer('view_count')->after('is_featured')->default(0);
 
         });
     }

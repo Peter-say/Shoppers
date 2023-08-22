@@ -24,6 +24,7 @@ class ShopController extends Controller
     public function details($id, ProductCategory $category)
     {
         $product = Product::where('status', 'active')->findOrFail($id);
+        $product->increment('view_count');
         $related_products = Product::where('category_id', $product->category_id)
             ->where('status', 'active')
             ->where('id', '!=', $product->id)
