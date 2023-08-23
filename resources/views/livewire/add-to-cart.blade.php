@@ -117,6 +117,11 @@
     <div class="site-section">
         <div class="container">
             <div class="d-flex justify-content-end">
+
+                <div x-data="{ errorMessage: '' }" x-init="Livewire.on('showErrorMessage', message => errorMessage = message)">
+                    <p x-text="errorMessage" class="text-red-500"></p>
+                </div>
+
                 @if (Auth::check())
                     @php
                         $userWishlist = Auth::user()->wishlist;
@@ -133,6 +138,7 @@
                             <span style="cursor: pointer" class="pl-5 icon fa-lg icon-heart-o"></span>
                         </form>
                     @endif
+
                 @endif
 
             </div>
@@ -141,7 +147,7 @@
                 <div class="row">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 ">
                         <div class="details-cover-image">
-                            <img class="img-fluid " src="{{ asset('product/cover_images/'.$product->cover_image) }}"
+                            <img class="img-fluid " src="{{ asset('product/cover_images/' . $product->cover_image) }}"
                                 alt="{{ basename($product->cover_image) }}">
                         </div>
                     </div>
@@ -238,7 +244,7 @@
                             </div>
                         </div>
                         <div class="col-4 container-popup-image">
-                            <img class="img-fluid" src="{{ asset('product/cover_images/'.$product->cover_image) }}"
+                            <img class="img-fluid" src="{{ asset('product/cover_images/' . $product->cover_image) }}"
                                 alt="{{ basename($product->cover_image) }}">
                         </div>
                         <div class="col-8">

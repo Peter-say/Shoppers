@@ -9,6 +9,7 @@ use App\Models\CartItem;
 use App\Models\Product;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 
@@ -25,6 +26,7 @@ class AddToCart extends Component
     public $quantity;
     public $size;
     public $price;
+    protected $addToWishlist;
 
 
 
@@ -39,6 +41,11 @@ class AddToCart extends Component
         'quantity.min' => 'Quantity must be at least 1.',
         'size.required' => 'Please select a size.',
     ];
+
+    public function __construct()
+    {
+        $this->addToWishlist = new LivewireWishlist();
+    }
 
 
 
@@ -131,7 +138,6 @@ class AddToCart extends Component
 
     public function addToWishlist($productID)
     {
-
         if (Auth::check()) {
             LivewireWishlist::addToAuthenticatedUserWishlist($productID);
         } else {

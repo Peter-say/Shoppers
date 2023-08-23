@@ -79,6 +79,9 @@ class StripeController extends Controller
             'tracking_number' => Order::generateTrackingNumber(),
         ]);
 
+        $order->update(['tracking_link' => route('user.dashboard.order.products', $order->id)]);
+        $order->save;
+
         foreach ($cartItems as $cartItemData) {
             // Create order items
             OrderItem::create([
@@ -134,7 +137,7 @@ class StripeController extends Controller
                 'payment_method_types' => ['card'],
                 'line_items' => $lineItems,
                 'mode' => 'payment',
-                'success_url' => '/user/dashboard/thank-you',
+                'success_url' => 'http://localhost:9000/user/dashboard/thank-you',
                 'cancel_url' => 'http://localhost:9000/user/dashboard/checkout',
             ]);
 
@@ -146,6 +149,11 @@ class StripeController extends Controller
             // Update the Order status if the order was successful
             $order->status = 'Completed';
             $order->save();
+
+            // Update the Transaction status if the Transaction order was successful
+            $transaction->status = 'Completed';
+            $transaction->save();
+
 
             // send mail to user
             $buyerEmail = $user->email;

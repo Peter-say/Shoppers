@@ -25,6 +25,7 @@ class Wishlist extends Component
     public static function addToAuthenticatedUserWishlist($productID)
     {
         try {
+
             $user = Auth::user();
             $wishlistItem = WishlistModel::where('user_id', $user->id)
                 ->where('product_id', $productID)
@@ -38,13 +39,15 @@ class Wishlist extends Component
 
                 $wishlistComponent = new self();
                 $wishlistComponent->emitWishlistUpdated();
-
+                // dd($productID);
                 // Flash a message to the user
                 session()->flash('add-wishlist');
                 session()->flash('success_message', 'Item added to wishlist successfully');
+            } else {
+                session()->flash('error_message', 'Item already in your wishlist');
             }
         } catch (Exception $e) {
-            return 'An error occured';
+            return 'An error occured' . $e->getMessage();
         }
     }
 
@@ -78,7 +81,7 @@ class Wishlist extends Component
 
         // Retrieve the user's wishlist item by product_id
         $userWishlist = WishlistModel::where('product_id', $product_id)->where('user_id', $user->id)->first();
-    
+
         // Retrieve the user's cart
         $userCart = Cart::where('user_id', $user->id)->first();
         if (!$userCart) {
@@ -88,7 +91,7 @@ class Wishlist extends Component
             $userCart->status = 'User';
             $userCart->save();
         }
-    
+
         // Prepare data for the cart item
         $data = [
             'cart_id' => $userCart->id,
@@ -97,19 +100,19 @@ class Wishlist extends Component
             'price' => $userWishlist->product->amount,
             'size' => 'medium',
         ];
-    
+
         // Create the cart item
         CartItem::create($data);
-    
+
         // Delete the wishlist item since it has been moved to the cart
         $userWishlist->delete();
-    
+
         // Emit the event to update the UI
         $this->emit('wishlistUpdated');
-    
+
         return redirect()->route('web.shop.cart')->with('success_message', 'Item moved to cart successfully');
     }
-    
+
 
 
 

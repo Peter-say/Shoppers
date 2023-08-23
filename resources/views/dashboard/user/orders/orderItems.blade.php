@@ -35,7 +35,7 @@
                                         <td class="product-thumbnail">
                                             <a href="{{ asset('product/cover_images/'.$orderItem->product->cover_image) }}"
                                                 data-lightbox="product-gallery">
-                                                <img src="{{ asset($orderItem->product->cover_image) }}" alt="Image"
+                                                <img src="{{ asset('product/cover_images/'.$orderItem->product->cover_image) }}" alt="Image"
                                                     class="img-fluid show-cart-image">
                                             </a>
                                         </td>

@@ -5,16 +5,8 @@
 
                 <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
                     <form action="{{ route('web.search') }}" class="site-block-top-search">
-                        <div class="row">
-                            <div class="col-8">
-                                <span class="icon icon-search2"></span>
-                                <input type="text" name="keyword" class="form-control border-0" placeholder="Search">
-                            </div>
-                            <div class="col-4">
-                                <Button class="btn btn-primary">Search</Button>
-
-                            </div>
-                        </div>
+                        <span class="icon icon-search2"></span>
+                        <input type="text" name="keyword" class="form-control border-0" placeholder="Search">
                     </form>
                 </div>
 
@@ -27,22 +19,20 @@
                 <div class="col-6 col-md-4 order-3 order-md-3 text-right">
                     <div class="site-top-icons">
                         <ul>
-                            <li><a href="{{ route('account.profile.index') }}"><span
-                                        class="icon icon-person"></span></a></li>
-                            <li><a href="{{ route('user.dashboard.wishlist') }}" class="site-cart">
-                                    <span class="icon icon-heart-o"></span>
-                                    <span class="count">{{ $wishlistCount }}</span>
-                                </a>
-                            </li>
+                            <li><a href="{{ route('account.profile.index') }}"><span class="icon icon-person"></span></a></li>
+                            <li><a href="{{route('user.dashboard.wishlist')}}" class="site-cart">
+                                <span class="icon icon-heart-o"></span>
+                                <span class="count">{{$wishlistCount}}</span>
+                            </a>
+                        </li>
                             <li>
                                 <a href="{{ route('web.shop.cart') }}" class="site-cart">
                                     <span class="icon icon-shopping_cart"></span>
-                                    <span class="count">{{ $cartItemCount }}</span>
-
+                                    <span class="count">{{$cartItemCount}}</span>
+                                    
                                 </a>
                             </li>
-                            <li class="d-inline-block d-md-none ml-md-0"><a href="#"
-                                    class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
+                            <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
 
                         </ul>
                     </div>
@@ -67,7 +57,7 @@
                     <a href="about.html">About</a>
                 </li>
                 <li><a href="{{ route('web.shop.index') }}">Shop</a></li>
-                <li><a href="{{ route('web.shop.category') }}">Category</a></li>
+                <li><a href="{{route('web.shop.category')}}">Category</a></li>
                 <li><a href="#">New Arrivals</a></li>
                 @if (Auth::check())
                     <li>
