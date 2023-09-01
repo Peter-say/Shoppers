@@ -16,6 +16,7 @@ use App\Http\Controllers\Dashboard\User\Payment\FlutterwaveController;
 use App\Http\Controllers\Dashboard\User\Payment\PayPalController;
 use App\Http\Controllers\Dashboard\User\Payment\StripeController;
 use App\Http\Controllers\Dashboard\User\Payment\StripeWebhookController;
+use App\Http\Controllers\Dashboard\User\TransactionController;
 use App\Http\Controllers\Dashboard\User\WishlistController;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\Category\CategoryController;
@@ -83,6 +84,9 @@ Route::prefix('user')->as('user.')->group(function () {
         Route::get('/orders', [OrderController::class, 'orders'])->name('orders');
         Route::get('/order/{id}/products', [OrderController::class, 'orderProducts'])->name('order.products');
         Route::get('/wishlist', [WishlistController::class, 'wishlist'])->name('wishlist');
+
+        Route::get('transaction/{transaction_no}/view', [TransactionController::class, 'view'])->name('view.transaction');
+        Route::get('transaction/{id}/print', [TransactionController::class, 'print'])->name('print.transaction');
 
         Route::post('/stripe/checkout', [StripeController::class, 'initiatePayment'])->name('stripe.checkout');
         Route::get('/stripe/transaction/webhook', [StripeWebhookController::class, 'handleTransactionWebhook'])->name('stripe.transaction.webhook');

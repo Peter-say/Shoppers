@@ -19,17 +19,7 @@
         </div>
     </div>
 
-    @if (session()->has('success_message'))
-        <div class="popup-message success" id="popup-message">
-            <p class="text-white">{{ session('success_message') }}</p>
-        </div>
-    @endif
-
-    @if (session()->has('error_message'))
-        <div class="popup-message error" id="popup-message">
-            <p class="text-white">{{ session('error_message') }}</p>
-        </div>
-    @endif
+   @include('notifications.pop-up')
 
     <div class="site-section">
         <div class="container">

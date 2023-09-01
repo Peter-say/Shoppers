@@ -114,32 +114,36 @@ class StripeController extends Controller
         Stripe::setApiKey(config('services.stripe.secret'));
 
         try {
-            // Create a Stripe payment session
-            $lineItems = [];
-            // dd($lineItems);
-            foreach ($cartItems as $cartItemData) {
-                $product = Product::find($cartItemData['product_id']);
-                $unitAmountInCents = intval(floatval($cartItemData['price']) * 100);
-                $lineItems[] = [
-                    'price_data' => [
-                        'currency' => 'usd',
-                        'unit_amount' => $unitAmountInCents,
-                        'product_data' => [
-                            'name' => $product->name,
-                        ],
-                    ],
-                    'quantity' => $cartItemData['quantity'],
-                ];
-            }
 
-            // dd($lineItems);
-            $paymentIntent = \Stripe\Checkout\Session::create([
-                'payment_method_types' => ['card'],
-                'line_items' => $lineItems,
-                'mode' => 'payment',
-                'success_url' => 'http://localhost:9000/user/dashboard/thank-you',
-                'cancel_url' => 'http://localhost:9000/user/dashboard/checkout',
-            ]);
+            try {
+                // Create a Stripe payment session
+                $lineItems = [];
+
+                foreach ($cartItems as $cartItemData) {
+                    $product = Product::find($cartItemData['product_id']);
+                    $unitAmountInCents = intval(floatval($cartItemData['price']) * 100);
+                    $lineItems[] = [
+                        'price_data' => [
+                            'currency' => 'usd',
+                            'unit_amount' => $unitAmountInCents,
+                            'product_data' => [
+                                'name' => $product->name,
+                            ],
+                        ],
+                        'quantity' => $cartItemData['quantity'],
+                    ];
+                }
+
+                $paymentIntent = \Stripe\Checkout\Session::create([
+                    'payment_method_types' => ['card'],
+                    'line_items' => $lineItems,
+                    'mode' => 'payment',
+                    'success_url' => 'http://localhost:9000/user/dashboard/thank-you',
+                    'cancel_url' => 'http://localhost:9000/user/dashboard/checkout',
+                ]);
+            } catch (Exception) {
+                return back()->with('error_message', 'Something unexpected went wrong');
+            }
 
             // clear the carts from database if successful
             $cart->cartItems()->delete();

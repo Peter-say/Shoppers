@@ -109,12 +109,6 @@
     </div>
     </div>
 
-    @if (session()->has('error_message'))
-        <div class=" d-flex justify-content-around popup-message error" id="popup-message">
-            <p class="text-white">{{ session('error_message') }}</p>
-            <span id="cancel-popup">X</span>
-        </div>
-    @endif
 
     </div>
 @endsection

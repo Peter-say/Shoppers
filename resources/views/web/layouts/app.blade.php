@@ -117,7 +117,7 @@
 
         // pop up message script
 
-        document.addEventListener('DOMContentLoaded', function() {
+       
             var popup = document.getElementById('popup-message');
 
             if (popup) {
@@ -133,7 +133,7 @@
                     });
                 }
             }
-        });
+      
 
 
         var walletRadio = document.getElementById('wallet-check-input');

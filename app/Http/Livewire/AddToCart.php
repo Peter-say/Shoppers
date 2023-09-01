@@ -178,7 +178,7 @@ class AddToCart extends Component
             }
         }
 
-        return  $count;
+        return $count;
     }
 
     public static function countWishlistItems()
@@ -191,7 +191,6 @@ class AddToCart extends Component
             if ($wishlist) {
                 $count = $wishlist->count();
             }
-            // dd($count, $wishlist);
         }
 
         return $count;

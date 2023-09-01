@@ -118,9 +118,7 @@
         <div class="container">
             <div class="d-flex justify-content-end">
 
-                <div x-data="{ errorMessage: '' }" x-init="Livewire.on('showErrorMessage', message => errorMessage = message)">
-                    <p x-text="errorMessage" class="text-red-500"></p>
-                </div>
+                @include('notifications.pop-up')
 
                 @if (Auth::check())
                     @php
@@ -227,54 +225,44 @@
 
 
 
-    @if (session()->has('success_message'))
-        <div class=" d-flex justify-content-around popup-message success" id="popup-message">
-            <p class="text-white">{{ session('success_message') }}</p>
-            <span id="cancel-popup">X</span>
-        </div>
-
-        @if (session()->has('success_message') && !session()->has('item_removed') && !session()->has('add-wishlist'))
-            <div class="overlay">
-                <div class="container-popup">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class=" d-flex justify-content-around popup-message success" id="popup-message">
-                                <p class="text-white">{{ session('success_message') }}</p>
-                                <span id="cancel-popup">X</span>
-                            </div>
+    @if (session()->has('success_message') && !session()->has('item_removed') && !session()->has('add-wishlist'))
+        <div class="overlay">
+            <div class="container-popup">
+                <div class="row">
+                    <div class="col-12">
+                        @include('notifications.pop-up')
+                    </div>
+                    <div class="col-4 container-popup-image">
+                        <img class="img-fluid" src="{{ asset('product/cover_images/' . $product->cover_image) }}"
+                            alt="{{ basename($product->cover_image) }}">
+                    </div>
+                    <div class="col-8">
+                        <div class="text-black d-flex justify-content-between">
+                            <h5>{{ $product->name }}</h5> <a href="{{ url()->previous() }}"
+                                class="btn btn-secodary">Back</a>
                         </div>
-                        <div class="col-4 container-popup-image">
-                            <img class="img-fluid" src="{{ asset('product/cover_images/' . $product->cover_image) }}"
-                                alt="{{ basename($product->cover_image) }}">
+                        <div class="">
+
+                            <span class="text-black">
+                                <b>Price:</b>
+                                <b>{{ $product->currency->symbol }}{{ $product->amount }}</b>
+                            </span>
                         </div>
-                        <div class="col-8">
-                            <div class="text-black d-flex justify-content-between">
-                                <h5>{{ $product->name }}</h5> <a href="{{ url()->previous() }}"
-                                    class="btn btn-secodary">Back</a>
-                            </div>
-                            <div class="">
+                        <div class="bottom-section mt-5">
+                            <div class="d-flex justify-content-between">
 
-                                <span class="text-black">
-                                    <b>Price:</b>
-                                    <b>{{ $product->currency->symbol }}{{ $product->amount }}</b>
-                                </span>
-                            </div>
-                            <div class="bottom-section mt-5">
-                                <div class="d-flex justify-content-between">
-
-                                    <a href="{{ route('web.shop.cart') }}"
-                                        class="btn btn-primary btn-sm text-sm">Checkout</a>
+                                <a href="{{ route('web.shop.cart') }}"
+                                    class="btn btn-primary btn-sm text-sm">Checkout</a>
 
 
-                                    <a href="{{ route('web.shop.index') }}"
-                                        class="btn btn-primary btn-sm text-sm">Continue Shopping</a>
+                                <a href="{{ route('web.shop.index') }}"
+                                    class="btn btn-primary btn-sm text-sm">Continue Shopping</a>
 
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        @endif
-
+        </div>
     @endif
+</div>

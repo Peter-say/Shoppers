@@ -19,7 +19,7 @@ class Wishlist extends Component
 
     public function emitWishlistUpdated()
     {
-        $this->emit('wishlistUpdated');
+        $this->emit($this->refreshComponent);
     }
 
     public static function addToAuthenticatedUserWishlist($productID)
@@ -39,15 +39,14 @@ class Wishlist extends Component
 
                 $wishlistComponent = new self();
                 $wishlistComponent->emitWishlistUpdated();
-                // dd($productID);
-                // Flash a message to the user
+                
                 session()->flash('add-wishlist');
                 session()->flash('success_message', 'Item added to wishlist successfully');
             } else {
                 session()->flash('error_message', 'Item already in your wishlist');
             }
         } catch (Exception $e) {
-            return 'An error occured' . $e->getMessage();
+            return 'An error occured';
         }
     }
 
@@ -62,7 +61,6 @@ class Wishlist extends Component
 
 
             $wishlistItem->delete();
-
             $wishlistComponent = new self();
             $wishlistComponent->emitWishlistUpdated();
 
@@ -71,6 +69,9 @@ class Wishlist extends Component
         } else {
             session()->flash('error_message', 'You need to log in to remove item from wishlist');
         }
+
+       
+
     }
 
 

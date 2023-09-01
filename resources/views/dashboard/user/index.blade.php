@@ -184,7 +184,8 @@
                                             <td>{{ $transaction->created_at }}</td>
                                             <td>
                                                 <div class="d-flex justify-content-between">
-                                                    <a href="" class="btn btn-primary">view</a>
+                                                    <a href="{{route('user.dashboard.view.transaction', $transaction->id)}}" class="btn btn-primary">view</a>
+                                                     <a href="" class="btn btn-dark">Print</a>
                                                     <a href="" class="btn btn-danger">Discard</a>
                                                 </div>
                                             </td>
