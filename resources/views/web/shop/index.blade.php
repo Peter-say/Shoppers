@@ -78,7 +78,7 @@
                                         Latest
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-                                        @foreach ( $categories as $category)
+                                        @foreach ($categories as $category)
                                             <a class="dropdown-item category-link"
                                                 href="{{ route('web.shop.category.sucategory', urlencode($category->name)) }}">{{ $category->name }}</a>
                                         @endforeach
@@ -110,7 +110,7 @@
                                     <figure class="block-4-image">
                                         <a href="{{ route('web.shop.product.details', $product->id) }}">
                                             <img class="img-fluid product-cover-image"
-                                                src="{{ asset('product/cover_images/'.$product->cover_image) }}"
+                                                src="{{ asset('product/cover_images/' . $product->cover_image) }}"
                                                 alt="{{ basename($product->cover_image) }}">
                                         </a>
                                     </figure>
@@ -127,37 +127,15 @@
 
 
                     </div>
-                    <div class="row" data-aos="fade-up">
-                        <div class="col-md-12 text-center justify-content-center">
-                            <div class="site-block-27">
-                                <ul class="pagination">
-                                    <!-- Previous Page Link -->
-                                    @if ($products->onFirstPage())
-                                        <li class="page-item disabled"><span class="page-link">&gt;</span></li>
-                                    @else
-                                        <li class="page-item"><a class="page-link"
-                                                href="{{ $products->previousPageUrl() }}">&lt;</a></li>
-                                    @endif
-
-                                    <!-- Numbered Pagination Links -->
-                                    @for ($i = 1; $i <= $products->lastPage(); $i++)
-                                        <li class="page-item @if ($i === $products->currentPage()) active @endif">
-                                            <a class="page-link" href="{{ $products->url($i) }}">{{ $i }}</a>
-                                        </li>
-                                    @endfor
-
-                                    <!-- Next Page Link -->
-                                    @if ($products->hasMorePages())
-                                        <li class="page-item"><a class="page-link"
-                                                href="{{ $products->nextPageUrl() }}">&gt;</a></li>
-                                    @else
-                                        <li class="page-item disabled"><span class="page-link">&gt;</span></li>
-                                    @endif
-                                </ul>
-                            </div>
+                    @if (!empty($products))
+                        <div class="d-flex justify-content-center mt-2 text-dark">
+                            {!! $products->links('pagination::simple-bootstrap-4') !!}
                         </div>
-                    </div>
-
+                        <div class="text-center mb-2 text-dark">
+                            Showing {{ $products->firstItem() }} to {{ $products->lastItem() }} of
+                            {{ $products->total() }}
+                        </div>
+                    @endif
                 </div>
 
                 <div class="col-md-3 order-1 mb-5 mb-md-0">

@@ -35,7 +35,7 @@
                             <a class="block-2-item"
                                 href="{{ route('web.shop.category.products', [$category->name, 'name' => $subcategory->name]) }}">
                                 <figure class="image">
-                                    <img src="{{ asset('product/subcategory/images/'.$subcategory->image) }}" alt="" class="img-fluid">
+                                    <img src="{{ asset('product/category/subcategory/images/'.$subcategory->image) }}" alt="{{basename($subcategory->image)}}" class="img-fluid">
                                 </figure>
                                 <div class="text">
                                     <span class="text-uppercase">Collections</span>

@@ -100,12 +100,21 @@
             height: 50%;
             object-fit: cover;
         }
+
+        .price-and-discount {
+            display: flex;
+        }
+
+        .price-and-discount p {
+            padding: 10px;
+        }
     </style>
 
     <div class="bg-light py-3">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 mb-0"><a href="{{ route('web.shop.index') }}">Home</a> <span
+                <div class="col-md-12 mb-0"><a href="/">Home</a> <span
+                        class="mx-2 mb-0">/</span><a href="{{ route('web.shop.index') }}">Shop</a> <span
                         class="mx-2 mb-0">/</span>
                     <strong class="text-black">{{ $product->name }}</strong>
                 </div>
@@ -118,7 +127,7 @@
         <div class="container">
             <div class="d-flex justify-content-end">
 
-                @include('notifications.pop-up')
+                {{-- @include('notifications.pop-up') --}}
 
                 @if (Auth::check())
                     @php
@@ -152,9 +161,15 @@
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                         <h2 class="text-black">{{ $product->name }}</h2>
                         <p>{!! $product->description !!}</p>
-                        <p><strong
-                                class="text-primary h4">{{ $product->currency->symbol }}{{ $product->amount }}</strong>
-                        </p>
+                        <div class="price-and-discount">
+                            <p><strong
+                                    class="text-primary h4">{{ $product->currency->symbol }}{{ $product->amount }}</strong>
+                            </p>
+                            @if ($product->discount_price !== null)
+                                <p><b class="text-dark h5"> <strike>{{ $product->currency->symbol }}
+                                        {{ $product->discount_price }}</strike></b></p>
+                            @endif
+                        </div>
                         <div class="mb-1 d-flex">
                             <label for="option-sm" class="d-flex mr-3 mb-3">
                                 <span class="d-inline-block mr-2" style="top:-2px; position: relative;">

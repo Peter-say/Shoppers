@@ -34,8 +34,8 @@
                                         <h2 class="h5 text-black">{{ $wishlistItem->product->name }}</h2>
                                     </td>
                                     <td>${{ $wishlistItem->product->amount }}</td>
-                                    <td><i style="font-size: 30px; cursor: pointer;" class="fas fa-arrows-alt"
-                                            wire:click="moveWishlistItemToCart({{ $wishlistItem->product_id }})"></i>
+                                    <td><button style=" cursor: pointer;" class="btn btn-primary fa fa-arrows-alt"
+                                            wire:click="moveWishlistItemToCart({{ $wishlistItem->product_id }})">Move</button>
                                     </td>
                                     <td>
                                         <button type="button" wire:click="removeFromWishlist({{ $wishlistItem->id }})"
@@ -71,11 +71,7 @@
 
         </div>
     @endif
-    @if (session()->has('success_message'))
-        <div class="popup-message success" id="popup-message">
-            <p class="text-white">{{ session('success_message') }}</p>
-        </div>
-    @endif
+   @include('notifications.pop-up')
 
     <script>
         Livewire.on('wishlistUpdated', () => {

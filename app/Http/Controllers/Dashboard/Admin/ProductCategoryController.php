@@ -50,7 +50,8 @@ class ProductCategoryController extends Controller
             }
 
             if ($request->file('image')) {
-                $image_path = FileHelpers::saveImageRequest($request->image, 'product/category/images/');
+                $image = FileHelpers::saveImageRequest($request->image, 'product/category/images/');
+                $image_path = pathinfo($image, PATHINFO_BASENAME);
             } else {
                 return back()->withInput()->withErrors(['image' => 'Image upload failed.']);
             }
@@ -100,7 +101,8 @@ class ProductCategoryController extends Controller
 
             // Process image upload
             if ($request->file('image')) {
-                $image_path = FileHelpers::saveImageRequest($request->image, 'product/category/images/');
+                $image = FileHelpers::saveImageRequest($request->image, 'product/category/images/');
+                $image_path = pathinfo($image, PATHINFO_BASENAME);
             } else {
                 $image_path = $old_image;
             }

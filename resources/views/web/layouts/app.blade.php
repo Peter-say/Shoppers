@@ -117,13 +117,12 @@
 
         // pop up message script
 
-       
             var popup = document.getElementById('popup-message');
 
             if (popup) {
                 setTimeout(function() {
                     popup.style.display = 'none';
-                }, 4000);
+                }, 10000);
 
                 // Hide the pop-up when clicking the close button
                 var closeButton = document.getElementById('cancel-popup');

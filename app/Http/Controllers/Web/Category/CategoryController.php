@@ -35,7 +35,7 @@ class CategoryController extends Controller
     {
     $subcategory = ProductCategory::with('children.products')->where('name', $name)->firstOrFail();
     $productIds = $subcategory->children->pluck('products')->flatten()->pluck('id')->toArray();
-    $products = Product::whereIn('id', $productIds)->where('status', 'active')->get();
+    $products = Product::whereIn('id', $productIds)->where('status', 'active')->paginate(50);
 
         return view('web.shop.category.category-products', compact('products'));
     }

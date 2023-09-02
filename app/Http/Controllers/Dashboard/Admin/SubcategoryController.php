@@ -57,7 +57,8 @@ class SubcategoryController extends Controller
             }
 
             if ($request->file('image')) {
-                $image_path = FileHelpers::saveImageRequest($request->image, 'product/category/subcategory/images/');
+                $image = FileHelpers::saveImageRequest($request->image, 'product/category/subcategory/images/');
+                $image_path = pathinfo($image, PATHINFO_BASENAME);
             } else {
                 return back()->withInput()->withErrors(['image' => 'Image upload failed.']);
             }
@@ -116,7 +117,8 @@ class SubcategoryController extends Controller
             ]);
 
             if ($request->hasFile('image')) {
-                $image_path = FileHelpers::saveImageRequest($request->file('image'), 'product/category/subcategory/images/');
+                $image = FileHelpers::saveImageRequest($request->image, 'product/category/subcategory/images/');
+                $image_path = pathinfo($image, PATHINFO_BASENAME);
                 $subcategory->update(['image' => $image_path]);
             }
 

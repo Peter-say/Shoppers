@@ -89,40 +89,35 @@
                             @foreach ($products as $product)
                                 <div class="col-sm-6 col-lg-4 mb-4 product-cover" data-aos="fade-up">
                                     <div class="block-4 text-center border">
-                                        <figure class="block-4-image ">
+                                        <figure class="block-4-image">
                                             <a href="{{ route('web.shop.product.details', $product->id) }}">
-                                                <img class="img-fluid " src="{{ asset('product/cover_images/'.$product->cover_image) }}"
-                                                    alt="Image placeholder"></a>
+                                                <img class="img-fluid product-cover-image"
+                                                    src="{{ asset('product/cover_images/' . $product->cover_image) }}"
+                                                    alt="{{ basename($product->cover_image) }}">
+                                            </a>
                                         </figure>
                                         <div class="block-4-text p-4">
                                             <h3><a
-                                                    href="{{ route('web.shop.product.details', $product->id) }}">{{ $product->name }}</a>
+                                                    href="{{ route('web.shop.product.details', $product->id) }}">{{ Str::limit($product->name, 40) }}</a>
                                             </h3>
-                                            <p class="mb-0">{{ Str::limit($product->description, 20) }}</p>
+                                            <p class="mb-0">{!! Str::limit($product->description, 20) !!}</p>
                                             <p class="text-primary font-weight-bold">${{ $product->amount }}</p>
                                         </div>
                                     </div>
                                 </div>
                             @endforeach
 
-
-                            <div class="row" data-aos="fade-up">
-                                <div class="col-md-12 text-center">
-                                    <div class="site-block-27">
-                                        <ul>
-                                            <li><a href="#">&lt;</a></li>
-                                            <li class="active"><span>1</span></li>
-                                            <li><a href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#">4</a></li>
-                                            <li><a href="#">5</a></li>
-                                            <li><a href="#">&gt;</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
+
+                        @if (!empty($products))
+                            <div class="d-flex justify-content-center mt-2 text-dark">
+                                {!! $products->links('pagination::simple-bootstrap-4') !!}
+                            </div>
+                            <div class="text-center mb-2 text-dark">
+                                Showing {{ $products->firstItem() }} to {{ $products->lastItem() }} of
+                                {{ $products->total() }}
+                            </div>
+                        @endif
                     </div>
 
 
