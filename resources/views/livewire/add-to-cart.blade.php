@@ -210,7 +210,7 @@
                                     <button class="btn btn-outline-primary js-btn-minus"
                                         wire:click="decrementQuantity()" type="button">&minus;</button>
                                 </div>
-                                <input type="text" name="quantity" class="form-control text-center" value="1"
+                                <input type="text" name="quantity" class="form-control text-center" value="0"
                                     placeholder="Enter Quantity" aria-label="Example text with button addon"
                                     aria-describedby="button-addon1" wire:model="quantity">
                                 <div class="input-group-append">

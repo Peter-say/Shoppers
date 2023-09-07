@@ -89,9 +89,9 @@ class SubcategoryController extends Controller
     public function edit(string $id)
     {
         $statusOption = StatusConstants::ACTIVE_OPTIONS;
-        $category = ProductCategory::findOrFail($id);
+        $subcategory = ProductCategory::findOrFail($id);
         return view('dashboard.admin.product.category.subcategory.edit',[
-            'category' => $category,
+            'category' => $subcategory,
             'statusOptions' => $statusOption,
         ]);
     }

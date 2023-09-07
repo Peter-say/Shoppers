@@ -12,7 +12,6 @@
             border-radius: 10px;
             font-size: 18px
         }
-
     </style>
     <div class="main-content">
         <div class="section__content section__content--p30">
@@ -45,8 +44,8 @@
                                             <td>{{ $category->name }}
                                             </td>
                                             <td class="category-list-image">
-                                                <a href="{{ asset($category->image ?? 'N/A') }}" data-lightbox="">
-                                                    <img class=" img-fluid" src="{{ asset($category->image ?? 'N/A') }}"
+                                                <a href="{{ asset('product/category/images/' . $category->image ?? 'N/A') }}" data-lightbox="">
+                                                    <img class=" img-fluid" src="{{ asset('product/category/images/' . $category->image ?? 'N/A') }}"
                                                         alt="">
                                                 </a>
                                             </td>
@@ -76,7 +75,14 @@
                                                         @if (count($category->children))
                                                             @foreach ($category->children as $subcategory)
                                                                 <option id="style-option" value="{{ $subcategory->id }}">
-                                                                    {{ $subcategory->name }}</option>
+                                                                    <a
+                                                                        href="{{ route('admin.dashboard.subcategory.edit', $subcategory->id) }}">
+                                                                        {{ $subcategory->name }} <span> <a href="{{ asset($subcategory->image ?? 'N/A') }}" data-lightbox="">
+                                                                            <img class=" img-fluid" src="{{ asset('product/category/subcategory/images/' . $subcategory->image ?? 'N/A') }}"
+                                                                                alt="image">
+                                                                        </a></span>
+                                                                    </a>
+                                                                </option>
                                                             @endforeach
                                                         @else
                                                             <option value="" disabled>Not available

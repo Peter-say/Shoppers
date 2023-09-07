@@ -7,6 +7,9 @@
     </style>
     <div class="site-section">
         <div class="container">
+
+            @include('notifications.pop-up')
+
             @if ($cartItems == null)
                 <div class="d-flex justify-content-around">
                     <h4>You have not added any items to cart yet</h4> <span>
@@ -53,9 +56,9 @@
                                                         <option value="{{ $sizeOption }}">{{ $sizeOption }}</option>
                                                     @endforeach
                                                 </select>
-                                                <button wire:click="updateSize({{$item}})">Save</button>
+                                                <button wire:click="updateSize({{$item}})">Save</button> --}}
                                                 
-                                            </td> --}}
+                                            </td> 
                                             <td>
                                                 <div class="input-group mb-3" style="max-width: 120px;">
                                                     <div class="input-group-prepend">
@@ -152,7 +155,7 @@
                     </div>
                 </div>
             @endif
-            @include('notifications.pop-up')
+          
         </div>
     </div>
 </div>
