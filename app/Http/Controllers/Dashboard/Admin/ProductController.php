@@ -42,12 +42,17 @@ class ProductController extends Controller
         $stores = Store::get();
         $categories = ProductCategory::get();
         $currencies = Currency::get();
+        $statusOptions = StatusConstants::ACTIVE_OPTIONS;
+        $stockOptions = StatusConstants::STOCK_STATUS;
         return view('dashboard.admin.product.create', [
             'user' => $user,
             'brands' => $brands,
             'stores' => $stores,
             'categories' => $categories,
-            'currencies' => $currencies
+            'currencies' => $currencies,
+            'currencies' => $currencies,
+            'statusOptions' => $statusOptions,
+            'stockOptions' => $stockOptions,
         ]);
     }
 
@@ -57,6 +62,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         try {
             $createdProduct = ProductService::storeProduct($request);
 
@@ -67,7 +73,7 @@ class ProductController extends Controller
                 return redirect()->back()
                     ->with('error_message', 'An error occurred while creating the product. Please try again.');
             }
-        } catch (ModelNotFoundException $e) {
+        } catch (Exception $e) {
             return redirect()->back()
                 ->with('error_message', 'An error occurred. Please try again later.');
         }
@@ -93,6 +99,9 @@ class ProductController extends Controller
         $stores = Store::get();
         $categories = ProductCategory::get();
         $currencies = Currency::get();
+        $statusOptions = StatusConstants::ACTIVE_OPTIONS;
+        $stockOptions = StatusConstants::STOCK_STATUS;
+
         $product = Product::where('id', $id)
             ->where('status', 'active')
             ->with('currency')->with('brand')->first();
@@ -102,7 +111,9 @@ class ProductController extends Controller
             'brands' => $brands,
             'stores' => $stores,
             'categories' => $categories,
-            'currencies' => $currencies
+            'currencies' => $currencies,
+            'statusOptions' => $statusOptions,
+            'stockOptions' => $stockOptions,
 
         ]);
     }
@@ -122,7 +133,7 @@ class ProductController extends Controller
                 return redirect()->back()
                     ->with('error_message', 'An error occurred while updating the product. Please try again.');
             }
-        } catch (ModelNotFoundException $e) {
+        } catch (Exception $e) {
             return redirect()->back()
                 ->with('error_message', 'An error occurred. Please try again later.');
         }

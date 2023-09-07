@@ -10,7 +10,8 @@
                 </div>
             </div>
             <div class="container-fluid au-card mb-2">
-                <form action="{{ route('admin.dashboard.product.update', $product->id) }}" enctype="multipart/form-data" method="post">
+                <form action="{{ route('admin.dashboard.product.update', $product->id) }}" enctype="multipart/form-data"
+                    method="post">
                     @csrf @method('PUT')
 
                     <div class="row">
@@ -33,8 +34,7 @@
                                 <label for="basic_unit" class="control-label mb-1">Basic Unit</label>
                                 <input id="basic_unit" name="basic_unit" type="text"
                                     class="form-control @error('basic_unit') is-invalid @enderror" placeholder="E.g KG"
-                                    value="{{ old('basic_unit') ?? $product->basic_unit }}"
-                                    value="{{ old('basic_unit') }}">
+                                    value="{{ old('basic_unit') ?? $product->basic_unit }}" value="{{ old('basic_unit') }}">
 
                                 @error('basic_unit')
                                     <span class="invalid-feedback" role="alert">
@@ -92,7 +92,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="cc-payment" class="control-label mb-1">Description</label>
-                                <textarea name="description" id="editor">{{ old('description') }}{{ $product->description }}</textarea>
+                                <textarea name="description" class="form-control" cols="10" rows="5">{{ old('description') }}{{ $product->description }}</textarea>
                                 @error('description')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -131,7 +131,8 @@
 
                         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                             <div class="form-group">
-                                <label for="brand" class="control-label mb-1">Brand<span class="required"></span></label>
+                                <label for="brand" class="control-label mb-1">Brand<span
+                                        class="required"></span></label>
                                 <select id="brand" name="brand_id"
                                     class="form-control  @error('brand_id') is-invalid @enderror" required>
                                     <option value="">Select Brand</option>
@@ -193,7 +194,46 @@
                             </div>
                         </div>
 
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <label for="cc-payment" class="control-label mb-1">Status<span
+                                        class="required"></span></label>
+                                <select id="status" name="status"
+                                    class="form-control  @error('status') is-invalid @enderror" required>
+                                    <option value="">Select Status</option>
+                                    @foreach ($statusOptions as $status)
+                                        <option
+                                            value="{{ $status }}" {{ old('status', $product->status) == $status ? 'selected' : '' }}>
+                                            {{ $status }}</option>
+                                    @endforeach
+                                </select>
+                                @error('status')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
 
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <label for="cc-payment" class="control-label mb-1">Stock Status<span
+                                        class="required"></span></label>
+                                <select id="stock_ststus" name="stock_status"
+                                    class="form-control  @error('status') is-invalid @enderror" required>
+                                    <option value="">Select Stock Status</option>
+                                    @foreach ($stockOptions as $stock)
+                                        <option value="{{ $stock }}" {{ old('stock_status', $product->stock_status) ? 'selected' : '' }}>
+                                            {{ $stock }}</option>
+                                    @endforeach
+                                </select>
+                                @error('status')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
 
                         <hr>
                         <div class="col-12">
@@ -203,7 +243,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="cc-payment" class="control-label mb-1">Meta Description</label>
-                                <textarea id="cc-payment" rows="4" name="meta_description" type="text"
+                                <textarea id="cc-payment" rows="2" name="meta_description" type="text"
                                     class="form-control  @error('meta_description') is-invalid @enderror" placeholder="summarize your product">{{ $product->meta_description }}</textarea>
 
                             </div>

@@ -60,6 +60,7 @@ class ProductFactory extends Factory
             'meta_keyword' => $meta_keyword,
             'images' => $random_images,
             'cover_image' =>  $randonCoverImages ,
+            'stock_status' => 'Available',
             'status' => 'active',
 
         ];

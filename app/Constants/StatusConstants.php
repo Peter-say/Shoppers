@@ -18,6 +18,14 @@ class StatusConstants
     const ENDED = "Ended";
     const DELETED = "Deleted";
 
+
+    // STOCK STATUS
+    const AVAILABLE = "Available";
+    const UNAVAILABLE = "Unavailable";
+    const TO_BE_ANNOUNCED = "To Be Announced";
+
+
+
     const ACTIVE_OPTIONS = [
         self::ACTIVE => "Active",
         self::INACTIVE => "Inactive",
@@ -26,6 +34,13 @@ class StatusConstants
     const PUBLISH_OPTIONS = [
         self::ACTIVE => "Active",
         self::INACTIVE => "Inactive",
+    ];
+
+    const STOCK_STATUS = [
+        self::AVAILABLE => "Available",
+        self::UNAVAILABLE => "Unavailable",
+    self::TO_BE_ANNOUNCED => "To Be Announced",
+
     ];
 
     const BOOL_OPTIONS = [
@@ -47,4 +62,3 @@ class StatusConstants
         self::DECLINED => "Declined",
     ];
 }
-

@@ -27,6 +27,7 @@ return new class extends Migration
             $table->text('description'); // product spec and details
             $table->string('meta_description')->nullable();
             $table->string('meta_keyword')->nullable();
+            $table->string('stock_status');
             $table->string('status')->default('active');
             $table->softDeletes();
             $table->timestamps();

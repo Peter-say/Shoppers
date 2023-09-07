@@ -90,7 +90,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="cc-payment" class="control-label mb-1">Description</label>
-                                <textarea name="description" id="editor">{{ old('description') }}</textarea>
+                                <textarea name="description"  class="form-control" cols="10" rows="5" >{{ old('description') }}</textarea>
                                 @error('description')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -190,7 +190,45 @@
                             </div>
                         </div>
 
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <label for="cc-payment" class="control-label mb-1">Status<span
+                                        class="required"></span></label>
+                                <select id="status" name="status"
+                                    class="form-control  @error('status') is-invalid @enderror" required>
+                                    <option value="">Select Status</option>
+                                    @foreach ($statusOptions as $status)
+                                        <option value="{{ $status }} {{ old('status') ? 'selected' : '' }}">
+                                            {{ $status }}</option>
+                                    @endforeach
+                                </select>
+                                @error('status')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
 
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <label for="cc-payment" class="control-label mb-1">Status<span
+                                        class="required"></span></label>
+                                <select id="stock_ststus" name="stock_status"
+                                    class="form-control  @error('status') is-invalid @enderror" required>
+                                    <option value="">Select Stock Status</option>
+                                    @foreach ($stockOptions as $stock)
+                                        <option value="{{ $stock }} {{ old('stock_status') ? 'selected' : '' }}">
+                                            {{ $stock }}</option>
+                                    @endforeach
+                                </select>
+                                @error('status')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
 
                         <hr>
                         <div class="col-12">
@@ -200,8 +238,8 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="cc-payment" class="control-label mb-1">Meta Description</label>
-                                <textarea id="cc-payment" rows="4" name="meta_description" type="text"
-                                    class="form-control  @error('meta_description') is-invalid @enderror" placeholder="summarize your product"></textarea>
+                                <textarea id="cc-payment" rows="2" name="meta_description" type="text"
+                                    class="form-control   @error('meta_description') is-invalid @enderror" placeholder="summarize your product"></textarea>
 
                             </div>
                         </div>
