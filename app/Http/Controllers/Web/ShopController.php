@@ -11,9 +11,7 @@ class ShopController extends Controller
 {
     public function index()
     {
-        $categories = ProductCategory::where('status', 'active')
-            ->whereNull('parent_id')
-            ->get();
+        $categories = ProductCategory::where('status', 'active')->get();
         $products = Product::where('status', 'active')->paginate(50);
         return view('web.shop.index', [
             'products' => $products,
@@ -25,6 +23,7 @@ class ShopController extends Controller
     {
         $product = Product::where('status', 'active')->findOrFail($id);
         $product->increment('view_count');
+        $featuredProducts = $product->where('status', 'active')->where('is_featured', 1)->get();
         $related_products = Product::where('category_id', $product->category_id)
             ->where('status', 'active')
             ->where('id', '!=', $product->id)
@@ -35,6 +34,7 @@ class ShopController extends Controller
         return view('web.shop.product-details', [
             'product' => $product,
             'related_products' => $related_products,
+            'featuredProducts' => $featuredProducts,
         ]);
     }
 

@@ -56,7 +56,7 @@ class ProductFactory extends Factory
             'discount_period' => null,
             'basic_unit' =>  'kg',
             'description' => $this->faker->paragraph($nbSentences = 30),
-            'meta_description' => $this->faker->text($nbSentences  = 5),
+            'meta_description' => $this->faker->sentence(),
             'meta_keyword' => $meta_keyword,
             'images' => $random_images,
             'cover_image' =>  $randonCoverImages ,

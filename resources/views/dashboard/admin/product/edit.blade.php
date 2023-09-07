@@ -92,7 +92,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="cc-payment" class="control-label mb-1">Description</label>
-                                <textarea name="description" class="form-control" cols="10" rows="5">{{ old('description') }}{{ $product->description }}</textarea>
+                                <textarea name="description" id="editor" class="form-control" cols="10" rows="5">{{ old('description') }}{{ $product->description }}</textarea>
                                 @error('description')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

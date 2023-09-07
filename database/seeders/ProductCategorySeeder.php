@@ -20,7 +20,7 @@ class ProductCategorySeeder extends Seeder
             [
                 'image' => $random_images,
                 'name' => 'Wristwatch',
-                'parent_id' => null,
+                'parent_id' => 2,
             ],
 
             [

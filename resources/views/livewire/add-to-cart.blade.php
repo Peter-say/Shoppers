@@ -170,7 +170,7 @@
                             @endif
                         </div>
                         <p>
-                           <b> Shipping Cost :</b> <span>Depends On Location</span>
+                            <b> Shipping Cost :</b> <span>Depends On Location</span>
                         </p>
                         <p class="pt-1">
                             <b>Stock: </b> <span>{{ $product->stock_status }}</span>
