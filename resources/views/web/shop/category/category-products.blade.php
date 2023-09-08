@@ -21,8 +21,10 @@
     <div class="bg-light py-3">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 mb-0"><a href="/">Home</a> <span class="mx-2 mb-0">/</span> <strong
-                        class="text-black">Shop</strong></div>
+                <div class="col-md-12 mb-0"><a href="/">Home</a> <span class="mx-2 mb-0">/</span> <a
+                        href="{{ route('web.shop.category') }}">Categories</a> <span class="mx-2 mb-0">/</span><a
+                        href="{{ route('web.shop.category.sucategory', urlencode($subcategory->name)) }}">{{ $subcategory->name }}</a>
+                    <span class="mx-2 mb-0">/</span><strong class="text-black">{{ 'Products' }}</strong></div>
             </div>
         </div>
     </div>
@@ -201,39 +203,24 @@
                             <h2>Categories</h2>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
-                            <a class="block-2-item" href="#">
-                                <figure class="image">
-                                    <img src="images/women.jpg" alt="" class="img-fluid">
-                                </figure>
-                                <div class="text">
-                                    <span class="text-uppercase">Collections</span>
-                                    <h3>Women</h3>
+                    <div class="container">
+                        <div class="row">
+                            @foreach ($categories as $category)
+                                <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
+                                    <a class="block-2-item"
+                                        href="{{ route('web.shop.category.sucategory', urlencode($category->name)) }}">
+                                        <figure class="image category-image">
+                                            <img src="{{ asset('product/category/images/' . $category->image) }}"
+                                                alt="{{ basename($category->image) }}" class="img-fluid">
+                                        </figure>
+                                        <div class="text">
+                                            <span class="text-uppercase">Collections</span>
+                                            <h3>{{ $category->name }}</h3>
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="100">
-                            <a class="block-2-item" href="#">
-                                <figure class="image">
-                                    <img src="images/children.jpg" alt="" class="img-fluid">
-                                </figure>
-                                <div class="text">
-                                    <span class="text-uppercase">Collections</span>
-                                    <h3>Children</h3>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="200">
-                            <a class="block-2-item" href="#">
-                                <figure class="image">
-                                    <img src="images/men.jpg" alt="" class="img-fluid">
-                                </figure>
-                                <div class="text">
-                                    <span class="text-uppercase">Collections</span>
-                                    <h3>Men</h3>
-                                </div>
-                            </a>
+                            @endforeach
+
                         </div>
                     </div>
 

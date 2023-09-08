@@ -81,6 +81,22 @@
             color: black;
             font-size: 14px;
         }
+
+        .category-image {
+        position: relative;
+        width: 100%;
+        padding-top: 100%;
+        overflow: hidden;
+    }
+
+    .category-image img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
     </style>
 
 </head>

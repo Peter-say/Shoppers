@@ -212,8 +212,8 @@
                         <div class="row">
                             @foreach ($categories as $category)
                             <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
-                                <a class="block-2-item" href="#">
-                                    <figure class="image">
+                                <a class="block-2-item " href="{{route('web.shop.category.sucategory', urlencode($category->name))}}">
+                                    <figure class="image category-image">
                                         <img src="{{asset('product/category/images/' . $category->image)}}" alt="{{basename($category->image)}}" class="img-fluid">
                                     </figure>
                                     <div class="text">

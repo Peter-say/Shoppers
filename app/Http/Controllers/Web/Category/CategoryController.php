@@ -11,11 +11,11 @@ class CategoryController extends Controller
 {
     public function category()
     {
-        $categories = ProductCategory::where('status', 'active')
-            ->whereNull('parent_id')
-            ->get();
+        $featuredProducts = Product::where('status', 'active')->where('is_featured', 1)->get();
+        $categories = ProductCategory::where('status', 'active') ->whereNull('parent_id')->get();
         return view('web.shop.category.category', [
             'categories' => $categories,
+            'featuredProducts' => $featuredProducts,
         ]);
     }
 
@@ -33,10 +33,18 @@ class CategoryController extends Controller
 
     public function categoryProducts($name)
     {
-    $subcategory = ProductCategory::with('children.products')->where('name', $name)->firstOrFail();
-    $productIds = $subcategory->children->pluck('products')->flatten()->pluck('id')->toArray();
-    $products = Product::whereIn('id', $productIds)->where('status', 'active')->paginate(50);
+        $categories = ProductCategory::where('status', 'active')->whereNull('parent_id')->get();
+        $subcategory = ProductCategory::with('children.products')->where('name', $name)->firstOrFail();
+        $subcategoryChild = $subcategory->where('name', $name)->firstOrFail();
+        $productIds = $subcategory->children->pluck('products')->flatten()->pluck('id')->toArray();
+        $products = Product::whereIn('id', $productIds)->where('status', 'active')->paginate(50);
+        
 
-        return view('web.shop.category.category-products', compact('products'));
+        return view('web.shop.category.category-products',[
+            'products' => $products,
+            'categories' => $categories,
+            'subcategory' =>  $subcategory,
+            'subcategoryChild' => $subcategoryChild
+        ]);
     }
 }

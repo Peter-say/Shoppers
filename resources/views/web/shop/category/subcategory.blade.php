@@ -32,9 +32,9 @@
                 @if ($category->children->count())
                     @foreach ($category->children as $subcategory)
                         <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
-                            <a class="block-2-item"
+                            <a class="block-2-item "
                                 href="{{ route('web.shop.category.products', [$category->name, 'name' => $subcategory->name]) }}">
-                                <figure class="image">
+                                <figure class="image category-image">
                                     <img src="{{ asset('product/category/subcategory/images/'.$subcategory->image) }}" alt="{{basename($subcategory->image)}}" class="img-fluid">
                                 </figure>
                                 <div class="text">
