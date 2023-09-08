@@ -16,7 +16,7 @@
                                 <th class="product-thumbnail">Image</th>
                                 <th class="product-name">Product</th>
                                 <th class="product-price">Price</th>
-                                <th class="product-remove">Move to cart</th>
+                                <th class="product-move">Move to cart</th>
                                 <th class="product-remove">Remove</th>
                             </tr>
                         </thead>
@@ -73,9 +73,9 @@
     @endif
    @include('notifications.pop-up')
 
-    <script>
+    {{-- <script>
         Livewire.on('wishlistUpdated', () => {
             Livewire.emit('refreshComponent');
         })
-    </script>
+    </script> --}}
 </div>

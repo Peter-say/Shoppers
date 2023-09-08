@@ -16,7 +16,9 @@ class Wishlist extends Component
     public $product;
     public $wishlist;
     public $refreshComponent = false;
+    public $item;
 
+  
     public function emitWishlistUpdated()
     {
         $this->emit($this->refreshComponent);
@@ -37,7 +39,7 @@ class Wishlist extends Component
                 $wishlistItem->product_id = $productID;
                 $wishlistItem->save();
 
-                $wishlistComponent = new self();
+                $wishlistComponent = new self($productID);
                 $wishlistComponent->emitWishlistUpdated();
                 
                 session()->flash('add-wishlist');
@@ -50,25 +52,19 @@ class Wishlist extends Component
         }
     }
 
-    public static function removeFromWishlist($productID)
+    public function removeFromWishlist($productID)
     {
 
-        if (Auth::check()) {
-            $user = Auth::user();
-            $wishlistItem = $user->wishlist
-                ->where('product_id', $productID)
-                ->first();
+        // if (Auth::check()) {
+        //    $wishlistItem = $this->wishlist[$productID];
+        //     $wishlistItem->delete();
+        //     $this->emitWishlistUpdated();
 
-
-            $wishlistItem->delete();
-            $wishlistComponent = new self();
-            $wishlistComponent->emitWishlistUpdated();
-
-            session()->flash('item_removed');
-            session()->flash('success_message', 'Item removed from wishlist successfully');
-        } else {
-            session()->flash('error_message', 'You need to log in to remove item from wishlist');
-        }
+        //     session()->flash('item_removed');
+        //     session()->flash('success_message', 'Item removed from wishlist successfully');
+        // } else {
+        //     session()->flash('error_message', 'You need to log in to remove item from wishlist');
+        // }
 
        
 
@@ -109,7 +105,7 @@ class Wishlist extends Component
         $userWishlist->delete();
 
         // Emit the event to update the UI
-        $this->emit('wishlistUpdated');
+        // $this->emit('wishlistUpdated');
 
         return redirect()->route('web.shop.cart')->with('success_message', 'Item moved to cart successfully');
     }

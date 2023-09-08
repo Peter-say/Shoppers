@@ -12,12 +12,11 @@ use App\Http\Controllers\Dashboard\Admin\ProductController;
 use App\Http\Controllers\Dashboard\Admin\SubcategoryController;
 use App\Http\Controllers\Dashboard\User\Cart\CheckOutController;
 use App\Http\Controllers\Dashboard\User\OrderController;
-use App\Http\Controllers\Dashboard\User\Payment\FlutterwaveController;
-use App\Http\Controllers\Dashboard\User\Payment\PayPalController;
 use App\Http\Controllers\Dashboard\User\Payment\StripeController;
 use App\Http\Controllers\Dashboard\User\Payment\StripeWebhookController;
 use App\Http\Controllers\Dashboard\User\TransactionController;
 use App\Http\Controllers\Dashboard\User\WishlistController;
+use App\Http\Controllers\Supscription\EmailSubscriptionController;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\Category\CategoryController;
 use App\Http\Controllers\Web\ShopController;
@@ -56,6 +55,8 @@ Route::prefix('web')->as('web.')->group(function () {
     });
 
     Route::get('/search', [WelcomeController::class, 'search'])->name('search');
+    Route::post('/email/subscribe', [EmailSubscriptionController::class, 'subscribe'])->name('email.subscribe');
+
 });
 
 

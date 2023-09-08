@@ -126,7 +126,7 @@
         <div class="container">
             <div class="d-flex justify-content-end">
 
-                {{-- @include('notifications.pop-up') --}}
+                @include('notifications.pop-up')
 
                 @if (Auth::check())
                     @php
