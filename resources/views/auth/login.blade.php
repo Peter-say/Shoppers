@@ -26,8 +26,8 @@
                         <div class="form-group">
                             <label>Password</label>
                             <input id="password" type="password"
-                                class="form-control  @error('password') is-invalid @enderror" name="password"
-                                required autocomplete="current-password">
+                                class="form-control  @error('password') is-invalid @enderror" name="password" required
+                                autocomplete="current-password">
                             @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -48,14 +48,16 @@
                         <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button>
                         <div class="social-login-content">
                             <div class="social-button">
-                                <a href="{{route('auth.login.facebook')}}" class="au-btn au-btn--block au-btn--blue m-b-20">sign in with facebook</a>
-                                <a href="{{route('auth.login.google')}}" class="au-btn au-btn--block au-btn--blue2">sign in with Google</a>
+                                <a href="{{ route('auth.login.facebook') }}"
+                                    class="au-btn au-btn--block au-btn--blue m-b-20">sign in with facebook</a>
+                                <a href="{{ route('auth.login.google') }}"
+                                    class="au-btn au-btn--block au-btn--blue2">sign in with Google</a>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
                             <p>
                                 Don't you have account?
-                                <a href="{{route('register')}}" class="text-danger">Sign Up Here</a>
+                                <a href="{{ route('register') }}" class="text-danger">Sign Up Here</a>
                             </p>
                         </div>
                     </form>

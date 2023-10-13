@@ -182,7 +182,7 @@
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}"
                                             {{ old('category_id', $product->category_id) == $category->id ? 'selected' : '' }}>
-                                            {{ $category->name }}
+                                            {{ $category->name}}
                                         </option>
                                     @endforeach
                                 </select>
@@ -205,6 +205,8 @@
                                         <option
                                             value="{{ $status }}" {{ old('status', $product->status) == $status ? 'selected' : '' }}>
                                             {{ $status }}</option>
+
+                                            
                                     @endforeach
                                 </select>
                                 @error('status')
