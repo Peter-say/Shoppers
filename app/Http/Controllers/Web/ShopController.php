@@ -38,4 +38,9 @@ class ShopController extends Controller
         ]);
     }
 
+    public function newArrival()
+    {
+        return view('web.shop.new-arrival');
+    }
+
 }

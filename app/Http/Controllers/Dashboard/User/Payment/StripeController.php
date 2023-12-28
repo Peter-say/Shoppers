@@ -95,7 +95,7 @@ class StripeController extends Controller
         try {
             // Create a new transaction instance
             $payment_method = $request->input('payment_method');
-            $amount = $request->input('amount'); // Corrected variable assignment
+            $amount = $request->input('amount'); 
 
             $transaction = $this->transaction->create([
                 'user_id' => $user->id,

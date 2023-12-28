@@ -47,6 +47,7 @@ Route::prefix('web')->as('web.')->group(function () {
         Route::get('index', [ShopController::class, 'index'])->name('index');
         // Route::get('search/category/{name}/products', [ShopController::class, 'fetchProductsByCategory'])->name('search.category.products');
         Route::get('product/{id}/details', [ShopController::class, 'details'])->name('product.details');
+        Route::get('new-arrival', [ShopController::class, 'newArrival'])->name('new-arrival');
         Route::post('/add-to-cart/{id}', [CartController::class, 'index'])->name('cart.store');
         Route::get('/cat', [CartController::class, 'cartList'])->name('cart');
         Route::get('category', [CategoryController::class, 'category'])->name('category');

@@ -149,7 +149,7 @@ class AddToCart extends Component
 
     public function removeFromWishlist($productID)
     {
-        LivewireWishlist::removeFromWishlist($productID);
+        (new LivewireWishlist )->removeFromWishlist($productID);
     }
 
     public static function countCartItems()

@@ -68,7 +68,7 @@ class ProductController extends Controller
 
             $productResource = new ProductResource($product);
             return ApiHelper::successResponse('Product retrieved successfully.', $productResource);
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
             return ApiHelper::notFoundResponse('Product could not be found.', 404);
         } catch (\Exception $e) {
             return ApiHelper::errorResponse('An error occurred while fetching products. Please try again later.', 500);
@@ -118,7 +118,7 @@ class ProductController extends Controller
                 $product->delete();
             }
             return back()->with('success_message', 'Product deleted successfully');
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
             return ApiHelper::notFoundResponse('Product could not be found.', 404);
         }
     }
